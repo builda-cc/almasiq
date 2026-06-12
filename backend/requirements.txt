@@ -1,0 +1,19 @@
+# Minimum-version constraints (not hard pins) so pip can resolve prebuilt
+# wheels for your Python version. If you need reproducible builds, freeze
+# exact versions with: pip freeze > requirements.lock.txt
+fastapi>=0.115
+uvicorn[standard]>=0.34
+pydantic>=2.10
+pydantic-settings>=2.7
+python-dotenv>=1.0
+
+# Database (SQLAlchemy 2.x; SQLite for dev, PostgreSQL-ready)
+SQLAlchemy>=2.0
+alembic>=1.13
+
+# Auth / security
+python-jose[cryptography]>=3.3
+passlib[bcrypt]>=1.7
+bcrypt>=4.0,<5.0
+python-multipart>=0.0.9
+email-validator>=2.1
