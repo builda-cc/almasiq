@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import { Boxes, ArrowRightLeft, CheckCircle, Sparkles, Wallet } from 'lucide-react';
 import { useDashboardStats, useMyMatches, useMyAssets } from '../hooks/queries';
@@ -6,6 +7,7 @@ import { formatKzt } from '../utils/helpers';
 import { MatchCard } from '../components/matches/MatchCard';
 
 export function Dashboard() {
+  const { t } = useTranslation();
   const user = useAuthStore((s) => s.user);
   const { data: stats } = useDashboardStats();
   const { data: matches } = useMyMatches();
@@ -13,10 +15,10 @@ export function Dashboard() {
   const myAssetIds = (myAssets ?? []).map((a) => a.id);
 
   const cards = [
-    { label: 'My Assets', value: stats?.total_assets ?? 0, icon: Boxes },
-    { label: 'Active Exchanges', value: stats?.active_exchanges ?? 0, icon: ArrowRightLeft },
-    { label: 'Completed', value: stats?.completed_exchanges ?? 0, icon: CheckCircle },
-    { label: 'AI Matches', value: stats?.ai_matches ?? 0, icon: Sparkles },
+    { label: t('dashboard.myAssets'), value: stats?.total_assets ?? 0, icon: Boxes },
+    { label: t('dashboard.activeExchanges'), value: stats?.active_exchanges ?? 0, icon: ArrowRightLeft },
+    { label: t('dashboard.completed'), value: stats?.completed_exchanges ?? 0, icon: CheckCircle },
+    { label: t('dashboard.aiMatches'), value: stats?.ai_matches ?? 0, icon: Sparkles },
   ];
 
   const topMatches = (matches ?? []).slice(0, 3);
@@ -24,9 +26,9 @@ export function Dashboard() {
   return (
     <div>
       <h1 className="text-2xl font-bold text-slate-900">
-        Welcome back{user ? `, ${user.full_name.split(' ')[0]}` : ''}
+        {t('dashboard.welcomeBack', { name: user ? user.full_name.split(' ')[0] : '' })}
       </h1>
-      <p className="mt-1 text-slate-500">Here's your exchange activity.</p>
+      <p className="mt-1 text-slate-500">{t('dashboard.activitySubtitle')}</p>
 
       <div className="mt-6 grid grid-cols-2 lg:grid-cols-4 gap-4">
         {cards.map((card) => (
@@ -43,7 +45,7 @@ export function Dashboard() {
       <div className="mt-4 bg-emerald-600 text-white rounded-xl p-5 flex items-center gap-4">
         <Wallet className="w-8 h-8" />
         <div>
-          <p className="text-sm text-emerald-50">Total value listed</p>
+          <p className="text-sm text-emerald-50">{t('dashboard.totalValueListed')}</p>
           <p className="text-2xl font-bold">
             {formatKzt(stats?.total_value_listed ?? 0)}
           </p>
@@ -51,12 +53,12 @@ export function Dashboard() {
       </div>
 
       <div className="mt-8 flex items-center justify-between">
-        <h2 className="text-lg font-semibold text-slate-900">Recommended Exchanges</h2>
+        <h2 className="text-lg font-semibold text-slate-900">{t('dashboard.recommendedExchanges')}</h2>
         <Link
           to="/dashboard/matches"
           className="text-sm text-emerald-600 font-medium hover:text-emerald-700"
         >
-          View all →
+          {t('dashboard.viewAll')}
         </Link>
       </div>
 
@@ -68,10 +70,9 @@ export function Dashboard() {
         </div>
       ) : (
         <div className="mt-4 bg-white border border-dashed border-slate-300 rounded-xl p-8 text-center text-slate-500">
-          No matches yet. Publish an asset to start finding exchange
-          opportunities.
+          {t('dashboard.noMatchesYet')}
           <Link to="/assets/new" className="block mt-3 text-emerald-600 font-medium">
-            Publish your first asset
+            {t('dashboard.publishFirstAsset')}
           </Link>
         </div>
       )}

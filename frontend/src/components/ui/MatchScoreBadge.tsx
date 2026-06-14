@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import { Sparkles } from 'lucide-react';
 import { getMatchScoreColor } from '../../utils/helpers';
 
@@ -7,6 +8,7 @@ interface MatchScoreBadgeProps {
 }
 
 export function MatchScoreBadge({ score, size = 'md' }: MatchScoreBadgeProps) {
+  const { t } = useTranslation();
   const sizeClasses =
     size === 'lg'
       ? 'text-lg px-3 py-1.5'
@@ -21,7 +23,7 @@ export function MatchScoreBadge({ score, size = 'md' }: MatchScoreBadgeProps) {
       )} ${sizeClasses}`}
     >
       <Sparkles className={size === 'sm' ? 'w-3 h-3' : 'w-4 h-4'} />
-      {Math.round(score)} match
+      {t('matches.matchScore', { score: Math.round(score) })}
     </span>
   );
 }

@@ -1,29 +1,31 @@
+import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import { Trash2, Plus } from 'lucide-react';
 import { useMyAssets, useDeleteAsset } from '../hooks/queries';
 import { formatKzt } from '../utils/helpers';
 
 export function MyAssets() {
+  const { t } = useTranslation();
   const { data: assets, isLoading } = useMyAssets();
   const deleteAsset = useDeleteAsset();
 
   return (
     <div>
       <div className="flex items-center justify-between">
-        <h1 className="text-2xl font-bold text-slate-900">My Assets</h1>
+        <h1 className="text-2xl font-bold text-slate-900">{t('dashboard.myAssetsTitle')}</h1>
         <Link
           to="/assets/new"
           className="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-medium rounded-lg flex items-center gap-1.5"
         >
-          <Plus className="w-4 h-4" /> Add Asset
+          <Plus className="w-4 h-4" /> {t('dashboard.addAsset')}
         </Link>
       </div>
 
       {isLoading ? (
-        <div className="py-16 text-center text-slate-500">Loading…</div>
+        <div className="py-16 text-center text-slate-500">{t('common.loading')}</div>
       ) : (assets ?? []).length === 0 ? (
         <div className="mt-6 bg-white border border-dashed border-slate-300 rounded-xl p-8 text-center text-slate-500">
-          You haven't published any assets yet.
+          {t('dashboard.noAssetsYet')}
         </div>
       ) : (
         <div className="mt-6 space-y-3">
@@ -63,10 +65,10 @@ export function MyAssets() {
               </span>
               <button
                 onClick={() => {
-                  if (confirm('Delete this asset?')) deleteAsset.mutate(asset.id);
+                  if (confirm(t('dashboard.deleteConfirm'))) deleteAsset.mutate(asset.id);
                 }}
                 className="p-2 text-slate-400 hover:text-red-500 hover:bg-red-50 rounded-lg"
-                aria-label="Delete asset"
+                aria-label={t('dashboard.deleteAsset')}
               >
                 <Trash2 className="w-5 h-5" />
               </button>

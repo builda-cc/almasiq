@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { ArrowRightLeft, Check, X } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useExchanges, useUpdateExchangeStatus } from '../hooks/queries';
@@ -8,9 +9,11 @@ import type { ExchangeRequest } from '../types';
 function RequestRow({
   request,
   direction,
+  t,
 }: {
   request: ExchangeRequest;
   direction: 'incoming' | 'outgoing';
+  t: (key: string, opts?: Record<string, unknown>) => string;
 }) {
   const update = useUpdateExchangeStatus();
   const canRespond = direction === 'incoming' && request.status === 'pending';
@@ -59,7 +62,7 @@ function RequestRow({
         <p className="mt-3 text-sm text-slate-600 bg-slate-50 rounded-lg px-3 py-2">
           {direction === 'incoming'
             ? request.from_user.full_name
-            : 'You'}
+            : t('exchanges.you')}
           : {request.message}
         </p>
       )}
@@ -72,13 +75,13 @@ function RequestRow({
                 onClick={() => update.mutate({ id: request.id, status: 'accepted' })}
                 className="flex-1 py-2 bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-medium rounded-lg flex items-center justify-center gap-1"
               >
-                <Check className="w-4 h-4" /> Accept
+                <Check className="w-4 h-4" /> {t('exchanges.accept')}
               </button>
               <button
                 onClick={() => update.mutate({ id: request.id, status: 'rejected' })}
                 className="flex-1 py-2 border border-slate-300 text-slate-700 text-sm font-medium rounded-lg flex items-center justify-center gap-1 hover:bg-slate-50"
               >
-                <X className="w-4 h-4" /> Reject
+                <X className="w-4 h-4" /> {t('exchanges.reject')}
               </button>
             </>
           )}
@@ -87,7 +90,7 @@ function RequestRow({
               onClick={() => update.mutate({ id: request.id, status: 'completed' })}
               className="flex-1 py-2 bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-medium rounded-lg"
             >
-              Mark Completed
+              {t('exchanges.markCompleted')}
             </button>
           )}
         </div>
@@ -97,12 +100,13 @@ function RequestRow({
 }
 
 export function ExchangeRequests() {
+  const { t } = useTranslation();
   const [tab, setTab] = useState<'incoming' | 'outgoing'>('incoming');
   const { data: requests, isLoading } = useExchanges(tab);
 
   return (
     <div>
-      <h1 className="text-2xl font-bold text-slate-900">Exchange Requests</h1>
+      <h1 className="text-2xl font-bold text-slate-900">{t('exchanges.title')}</h1>
 
       <div className="mt-4 inline-flex rounded-lg border border-slate-200 p-1 bg-white">
         {(['incoming', 'outgoing'] as const).map((t) => (
@@ -119,15 +123,15 @@ export function ExchangeRequests() {
       </div>
 
       {isLoading ? (
-        <div className="py-16 text-center text-slate-500">Loading…</div>
+        <div className="py-16 text-center text-slate-500">{t('common.loading')}</div>
       ) : (requests ?? []).length === 0 ? (
         <div className="mt-6 bg-white border border-dashed border-slate-300 rounded-xl p-8 text-center text-slate-500">
-          No {tab} requests.
+          {t('exchanges.noRequests', { tab })}
         </div>
       ) : (
         <div className="mt-6 space-y-3">
           {(requests ?? []).map((request) => (
-            <RequestRow key={request.id} request={request} direction={tab} />
+            <RequestRow key={request.id} request={request} direction={tab} t={t} />
           ))}
         </div>
       )}

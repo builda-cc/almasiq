@@ -1,29 +1,32 @@
 import { useState } from 'react';
 import { Link, NavLink, useNavigate } from 'react-router-dom';
 import { Menu, X, ArrowRightLeft } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import { useAuthStore } from '../../store/authStore';
 import { useUIStore } from '../../store/uiStore';
-
-const publicNav = [
-  { label: 'Browse Assets', to: '/assets' },
-  { label: 'AI Matching', to: '/matches' },
-  { label: 'How It Works', to: '/how-it-works' },
-];
-
-const authedNav = [
-  { label: 'Dashboard', to: '/dashboard' },
-  { label: 'Browse', to: '/assets' },
-  { label: 'AI Matches', to: '/dashboard/matches' },
-  { label: 'Exchanges', to: '/dashboard/exchanges' },
-  { label: 'Favorites', to: '/dashboard/favorites' },
-];
+import { LanguageSwitcher } from '../ui/LanguageSwitcher';
 
 export function Header() {
+  const { t } = useTranslation();
   const [mobileOpen, setMobileOpen] = useState(false);
   const navigate = useNavigate();
   const isAuthenticated = useAuthStore((s) => s.isAuthenticated);
   const logout = useAuthStore((s) => s.logout);
   const openAuth = useUIStore((s) => s.openAuth);
+
+  const publicNav = [
+    { label: t('nav.browseAssets'), to: '/assets' },
+    { label: t('nav.aiMatching'), to: '/matches' },
+    { label: t('nav.howItWorks'), to: '/how-it-works' },
+  ];
+
+  const authedNav = [
+    { label: t('nav.dashboard'), to: '/dashboard' },
+    { label: t('nav.browse'), to: '/assets' },
+    { label: t('nav.aiMatches'), to: '/dashboard/matches' },
+    { label: t('nav.exchanges'), to: '/dashboard/exchanges' },
+    { label: t('nav.favorites'), to: '/dashboard/favorites' },
+  ];
 
   const navItems = isAuthenticated ? authedNav : publicNav;
 
@@ -48,7 +51,7 @@ export function Header() {
             <div className="w-8 h-8 bg-emerald-600 rounded-lg flex items-center justify-center">
               <ArrowRightLeft className="w-5 h-5 text-white" />
             </div>
-            <span className="ml-2 text-xl font-bold text-slate-900">QG Exchange</span>
+            <span className="ml-2 text-xl font-bold text-slate-900">{t('common.appName')}</span>
           </Link>
 
           <nav className="hidden md:flex items-center space-x-1">
@@ -59,26 +62,27 @@ export function Header() {
             ))}
           </nav>
 
-          <div className="hidden md:flex items-center space-x-3">
+          <div className="hidden md:flex items-center space-x-2">
+            <LanguageSwitcher />
             {isAuthenticated ? (
               <>
                 <Link
                   to="/assets/new"
                   className="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-medium rounded-lg transition-colors"
                 >
-                  Publish Asset
+                  {t('nav.publishAsset')}
                 </Link>
                 <Link
                   to="/dashboard/profile"
                   className="px-4 py-2 text-slate-600 hover:text-slate-900 text-sm font-medium"
                 >
-                  Profile
+                  {t('nav.profile')}
                 </Link>
                 <button
                   onClick={handleLogout}
                   className="px-4 py-2 text-slate-600 hover:text-slate-900 text-sm font-medium"
                 >
-                  Logout
+                  {t('nav.logout')}
                 </button>
               </>
             ) : (
@@ -87,13 +91,13 @@ export function Header() {
                   onClick={() => openAuth('login')}
                   className="px-4 py-2 text-slate-600 hover:text-slate-900 text-sm font-medium"
                 >
-                  Login
+                  {t('nav.login')}
                 </button>
                 <button
                   onClick={() => openAuth('register')}
                   className="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-medium rounded-lg transition-colors"
                 >
-                  Register
+                  {t('nav.register')}
                 </button>
               </>
             )}
@@ -128,13 +132,13 @@ export function Header() {
                   onClick={() => setMobileOpen(false)}
                   className="block px-3 py-2 bg-emerald-600 text-white text-sm font-medium rounded-lg"
                 >
-                  Publish Asset
+                  {t('nav.publishAsset')}
                 </Link>
                 <button
                   onClick={handleLogout}
                   className="w-full text-left px-3 py-2 text-slate-600 text-sm font-medium"
                 >
-                  Logout
+                  {t('nav.logout')}
                 </button>
               </>
             ) : (
@@ -146,7 +150,7 @@ export function Header() {
                   }}
                   className="w-full text-left px-3 py-2 text-slate-600 text-sm font-medium"
                 >
-                  Login
+                  {t('nav.login')}
                 </button>
                 <button
                   onClick={() => {
@@ -155,10 +159,13 @@ export function Header() {
                   }}
                   className="w-full text-left px-3 py-2 bg-emerald-600 text-white text-sm font-medium rounded-lg"
                 >
-                  Register
+                  {t('nav.register')}
                 </button>
               </>
             )}
+            <div className="pt-2 border-t border-slate-100">
+              <LanguageSwitcher />
+            </div>
           </div>
         </div>
       )}

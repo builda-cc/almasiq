@@ -1,9 +1,10 @@
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import { X, Plus } from 'lucide-react';
 import { useCategories, useCreateAsset } from '../hooks/queries';
-import { CATEGORY_LABELS, CATEGORY_SLUGS } from '../utils/helpers';
+import { CATEGORY_SLUGS } from '../utils/helpers';
 import type { CategorySlug } from '../types';
 
 interface FormValues {
@@ -20,6 +21,7 @@ const inputClass =
   'w-full px-3 py-2.5 border border-slate-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none';
 
 export function AddAsset() {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const { data: categories } = useCategories();
   const createAsset = useCreateAsset();
@@ -88,26 +90,26 @@ export function AddAsset() {
 
   return (
     <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-      <h1 className="text-2xl font-bold text-slate-900">Publish Asset</h1>
+      <h1 className="text-2xl font-bold text-slate-900">{t('addAsset.title')}</h1>
       <p className="mt-1 text-slate-500">
-        List an asset and tell us what you'd accept in exchange.
+        {t('addAsset.subtitle')}
       </p>
 
       <form onSubmit={onSubmit} className="mt-8 space-y-6">
         {/* Basic info */}
         <section className="bg-white border border-slate-200 rounded-xl p-6 space-y-4">
-          <h2 className="font-semibold text-slate-900">Basic Information</h2>
+          <h2 className="font-semibold text-slate-900">{t('addAsset.basicInfo')}</h2>
           <div>
-            <label className="block text-sm font-medium text-slate-700 mb-1">Title</label>
+            <label className="block text-sm font-medium text-slate-700 mb-1">{t('addAsset.assetTitle')}</label>
             <input
               className={inputClass}
-              placeholder="3-room apartment in Almaty center"
+              placeholder={t('addAsset.assetTitlePlaceholder')}
               {...register('title', { required: true })}
             />
-            {errors.title && <p className="mt-1 text-xs text-red-600">Title is required</p>}
+            {errors.title && <p className="mt-1 text-xs text-red-600">{t('addAsset.titleRequired')}</p>}
           </div>
           <div>
-            <label className="block text-sm font-medium text-slate-700 mb-1">Category</label>
+            <label className="block text-sm font-medium text-slate-700 mb-1">{t('addAsset.category')}</label>
             <select className={inputClass} {...register('category_slug', { required: true })}>
               {(categories ?? []).map((cat) => (
                 <option key={cat.id} value={cat.slug}>
@@ -118,12 +120,12 @@ export function AddAsset() {
           </div>
           <div>
             <label className="block text-sm font-medium text-slate-700 mb-1">
-              Description
+              {t('addAsset.description')}
             </label>
             <textarea
               rows={4}
               className={inputClass}
-              placeholder="Describe your asset…"
+              placeholder={t('addAsset.descriptionPlaceholder')}
               {...register('description')}
             />
           </div>
@@ -131,14 +133,14 @@ export function AddAsset() {
 
         {/* Photos */}
         <section className="bg-white border border-slate-200 rounded-xl p-6 space-y-4">
-          <h2 className="font-semibold text-slate-900">Photos (image URLs)</h2>
+          <h2 className="font-semibold text-slate-900">{t('addAsset.photos')}</h2>
           {imageUrls.map((url, idx) => (
             <div key={idx} className="flex gap-2">
               <input
                 value={url}
                 onChange={(e) => updateImage(idx, e.target.value)}
                 className={inputClass}
-                placeholder="https://…"
+                placeholder={t('addAsset.photoPlaceholder')}
               />
               {imageUrls.length > 1 && (
                 <button
@@ -157,42 +159,42 @@ export function AddAsset() {
               onClick={addImageField}
               className="flex items-center gap-1 text-sm text-emerald-600 font-medium"
             >
-              <Plus className="w-4 h-4" /> Add another image
+              <Plus className="w-4 h-4" /> {t('addAsset.addAnotherImage')}
             </button>
           )}
         </section>
 
         {/* Location + value */}
         <section className="bg-white border border-slate-200 rounded-xl p-6 space-y-4">
-          <h2 className="font-semibold text-slate-900">Location & Value</h2>
+          <h2 className="font-semibold text-slate-900">{t('addAsset.locationValue')}</h2>
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-sm font-medium text-slate-700 mb-1">Region</label>
-              <input className={inputClass} placeholder="Almaty" {...register('region')} />
+              <label className="block text-sm font-medium text-slate-700 mb-1">{t('addAsset.region')}</label>
+              <input className={inputClass} placeholder={t('addAsset.regionPlaceholder')} {...register('region')} />
             </div>
             <div>
-              <label className="block text-sm font-medium text-slate-700 mb-1">City</label>
-              <input className={inputClass} placeholder="Almaty" {...register('city')} />
+              <label className="block text-sm font-medium text-slate-700 mb-1">{t('addAsset.city')}</label>
+              <input className={inputClass} placeholder={t('addAsset.cityPlaceholder')} {...register('city')} />
             </div>
           </div>
           <div className="grid grid-cols-2 gap-4">
             <div>
               <label className="block text-sm font-medium text-slate-700 mb-1">
-                Estimated value (KZT)
+                {t('addAsset.estimatedValue')}
               </label>
               <input
                 type="number"
                 className={inputClass}
-                placeholder="50000000"
+                placeholder={t('addAsset.valuePlaceholder')}
                 {...register('estimated_value', { required: true, min: 0 })}
               />
               {errors.estimated_value && (
-                <p className="mt-1 text-xs text-red-600">Value is required</p>
+                <p className="mt-1 text-xs text-red-600">{t('addAsset.valueRequired')}</p>
               )}
             </div>
             <div>
               <label className="block text-sm font-medium text-slate-700 mb-1">
-                Liquidity score (0-100)
+                {t('addAsset.liquidityScore')}
               </label>
               <input
                 type="number"
@@ -207,9 +209,9 @@ export function AddAsset() {
 
         {/* Preferences */}
         <section className="bg-white border border-slate-200 rounded-xl p-6 space-y-3">
-          <h2 className="font-semibold text-slate-900">Preferred Exchange Assets</h2>
+          <h2 className="font-semibold text-slate-900">{t('addAsset.preferredExchange')}</h2>
           <p className="text-sm text-slate-500">
-            Select categories you'd accept in exchange.
+            {t('addAsset.preferredSubtitle')}
           </p>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
             {CATEGORY_SLUGS.map((slug) => {
@@ -227,7 +229,7 @@ export function AddAsset() {
                       checked={!!pref}
                       onChange={() => togglePreference(slug)}
                     />
-                    {CATEGORY_LABELS[slug]}
+                    {t(`categories.${slug}`)}
                   </label>
                   {pref && (
                     <label className="flex items-center gap-1 text-xs text-slate-500">
@@ -236,7 +238,7 @@ export function AddAsset() {
                         checked={pref.cash_accepted}
                         onChange={() => toggleCash(slug)}
                       />
-                      + cash
+                      {t('addAsset.plusCash')}
                     </label>
                   )}
                 </div>
@@ -250,7 +252,7 @@ export function AddAsset() {
           disabled={createAsset.isPending}
           className="w-full py-3 bg-emerald-600 hover:bg-emerald-700 disabled:opacity-60 text-white font-semibold rounded-lg"
         >
-          {createAsset.isPending ? 'Publishing…' : 'Publish Asset'}
+          {createAsset.isPending ? t('common.publishing') : t('addAsset.publish')}
         </button>
       </form>
     </div>

@@ -1,18 +1,24 @@
+import { useEffect, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import {
   ArrowRightLeft,
+  ArrowRight,
   Building2,
   Home as HomeIcon,
   Map,
   Car,
   Store,
   Sparkles,
+  ListPlus,
+  Handshake,
 } from 'lucide-react';
 import { useUIStore } from '../store/uiStore';
 import { useAuthStore } from '../store/authStore';
 import { useCategories, useMatches, useAssets } from '../hooks/queries';
 import { AssetCard } from '../components/assets/AssetCard';
 import { MatchScoreBadge } from '../components/ui/MatchScoreBadge';
+import { formatKzt } from '../utils/helpers';
 import type { CategorySlug } from '../types';
 
 const CATEGORY_ICONS: Record<CategorySlug, typeof Building2> = {
@@ -23,39 +29,130 @@ const CATEGORY_ICONS: Record<CategorySlug, typeof Building2> = {
   commercial: Store,
 };
 
+const HERO_IMAGE =
+  'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1200&q=80';
+
+// Reveals an element on first scroll into view. Honors reduced motion via CSS.
+function useReveal<T extends HTMLElement>() {
+  const ref = useRef<T>(null);
+  const [visible, setVisible] = useState(false);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el || visible) return;
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0]?.isIntersecting) {
+          setVisible(true);
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.15 },
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, [visible]);
+
+  return { ref, className: `reveal ${visible ? 'reveal-visible' : ''}` };
+}
+
 function Hero() {
+  const { t } = useTranslation();
   const isAuthenticated = useAuthStore((s) => s.isAuthenticated);
-  const openAuth = useUIStore((s) => s.openAuth);
+  const { data: categories } = useCategories();
+  const { data: assetData } = useAssets({ sort: 'newest', page_size: 1 });
+
+  const totalAssets = assetData?.total ?? 0;
+  const categoryCount = categories?.length ?? 5;
+
+  const stats = [
+    { value: totalAssets > 0 ? `${totalAssets}+` : '—', label: t('home.statAssets') },
+    { value: `${categoryCount}`, label: t('home.statCategories') },
+    { value: '93%', label: t('home.statMatchAccuracy') },
+  ];
 
   return (
-    <section className="bg-gradient-to-br from-emerald-600 to-emerald-800 text-white">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 lg:py-28">
-        <div className="max-w-3xl">
-          <h1 className="text-4xl lg:text-5xl font-bold leading-tight">
-            Exchange Assets Without Selling
-          </h1>
-          <p className="mt-5 text-lg text-emerald-50">
-            Find apartments, houses, land, vehicles, and commercial properties
-            available for exchange. Let AI discover the best opportunities for
-            you across Kazakhstan and Central Asia.
-          </p>
-          <div className="mt-8 flex flex-wrap gap-3">
-            <Link
-              to="/assets"
-              className="px-6 py-3 bg-white text-emerald-700 font-semibold rounded-lg hover:bg-emerald-50 transition-colors"
-            >
-              Browse Assets
-            </Link>
-            <button
-              onClick={() => (isAuthenticated ? undefined : openAuth('register'))}
-              className="px-6 py-3 bg-emerald-500/30 border border-white/40 text-white font-semibold rounded-lg hover:bg-emerald-500/50 transition-colors"
-            >
+    <section className="relative overflow-hidden bg-slate-900">
+      {/* Layered emerald background, no AI-purple */}
+      <div className="absolute inset-0 bg-gradient-to-br from-emerald-700 via-emerald-800 to-slate-900" />
+      <div
+        className="absolute inset-0 opacity-[0.18]"
+        style={{
+          backgroundImage:
+            'radial-gradient(circle at 20% 20%, rgba(16,185,129,0.5), transparent 45%), radial-gradient(circle at 85% 0%, rgba(5,150,105,0.4), transparent 40%)',
+        }}
+      />
+
+      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-20 pb-16 lg:pt-24 lg:pb-20">
+        <div className="grid lg:grid-cols-12 gap-10 lg:gap-8 items-center">
+          {/* Left: message */}
+          <div className="lg:col-span-7">
+            <span className="inline-flex items-center gap-2 rounded-full bg-white/10 px-3 py-1 text-xs font-medium uppercase tracking-wide text-emerald-100 ring-1 ring-inset ring-white/20">
+              <Sparkles className="w-3.5 h-3.5" />
+              {t('home.heroEyebrow')}
+            </span>
+            <h1 className="mt-5 text-4xl md:text-5xl lg:text-6xl font-bold leading-[1.05] tracking-tight text-white">
+              {t('home.heroTitle')}
+            </h1>
+            <p className="mt-5 max-w-xl text-lg leading-relaxed text-emerald-50/90">
+              {t('home.heroDescription')}
+            </p>
+            <div className="mt-8 flex flex-wrap items-center gap-3">
+              <Link
+                to="/assets"
+                className="inline-flex items-center gap-2 rounded-lg bg-white px-6 py-3 font-semibold text-emerald-700 shadow-sm transition-all hover:bg-emerald-50 active:scale-[0.98]"
+              >
+                {t('nav.browseAssets')}
+                <ArrowRight className="w-4 h-4" />
+              </Link>
               {isAuthenticated ? (
-                <Link to="/assets/new">Publish Asset</Link>
+                <Link
+                  to="/assets/new"
+                  className="inline-flex items-center rounded-lg border border-white/40 bg-white/10 px-6 py-3 font-semibold text-white transition-all hover:bg-white/20 active:scale-[0.98]"
+                >
+                  {t('nav.publishAsset')}
+                </Link>
               ) : (
-                'Publish Asset'
+                <Link
+                  to="/how-it-works"
+                  className="inline-flex items-center rounded-lg border border-white/40 bg-white/10 px-6 py-3 font-semibold text-white transition-all hover:bg-white/20 active:scale-[0.98]"
+                >
+                  {t('home.heroSecondaryCta')}
+                </Link>
               )}
-            </button>
+            </div>
+
+            <dl className="mt-12 grid max-w-lg grid-cols-3 gap-6 border-t border-white/15 pt-6">
+              {stats.map((s) => (
+                <div key={s.label}>
+                  <dt className="text-2xl font-bold text-white">{s.value}</dt>
+                  <dd className="mt-1 text-sm text-emerald-100/70">{s.label}</dd>
+                </div>
+              ))}
+            </dl>
+          </div>
+
+          {/* Right: visual asset */}
+          <div className="lg:col-span-5">
+            <div className="relative">
+              <div className="overflow-hidden rounded-2xl ring-1 ring-white/15 shadow-2xl">
+                <img
+                  src={HERO_IMAGE}
+                  alt=""
+                  className="h-72 w-full object-cover sm:h-96 lg:h-[28rem]"
+                  loading="eager"
+                />
+              </div>
+              {/* Floating match chip overlaid on the visual */}
+              <div className="absolute -bottom-5 -left-3 sm:left-6 rounded-xl bg-white p-4 shadow-xl ring-1 ring-slate-900/5">
+                <MatchScoreBadge score={91} size="md" />
+                <div className="mt-3 flex items-center gap-2 text-sm font-medium text-slate-700">
+                  <Building2 className="w-4 h-4 text-emerald-600 shrink-0" />
+                  <ArrowRightLeft className="w-4 h-4 text-emerald-600 shrink-0" />
+                  <Map className="w-4 h-4 text-emerald-600 shrink-0" />
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -64,25 +161,34 @@ function Hero() {
 }
 
 function Categories() {
+  const { t } = useTranslation();
   const { data: categories } = useCategories();
+  const reveal = useReveal<HTMLDivElement>();
+
   return (
-    <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-      <h2 className="text-2xl font-bold text-slate-900">Browse by Category</h2>
-      <p className="mt-1 text-slate-500">Five asset categories, one exchange platform.</p>
-      <div className="mt-8 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+    <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+      <div className="max-w-2xl">
+        <h2 className="text-3xl font-bold tracking-tight text-slate-900">
+          {t('home.browseByCategory')}
+        </h2>
+        <p className="mt-2 text-slate-500">{t('home.categorySubtitle')}</p>
+      </div>
+      <div ref={reveal.ref} className={`${reveal.className} mt-10 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4`}>
         {(categories ?? []).map((cat) => {
           const Icon = CATEGORY_ICONS[cat.slug] ?? Building2;
           return (
             <Link
               key={cat.id}
               to={`/assets?category=${cat.slug}`}
-              className="group bg-white border border-slate-200 rounded-xl p-5 hover:border-emerald-300 hover:shadow-md transition-all"
+              className="group rounded-xl border border-slate-200 bg-white p-5 transition-all hover:-translate-y-0.5 hover:border-emerald-300 hover:shadow-md"
             >
-              <div className="w-11 h-11 bg-emerald-50 rounded-lg flex items-center justify-center group-hover:bg-emerald-100 transition-colors">
-                <Icon className="w-6 h-6 text-emerald-600" />
+              <div className="flex h-11 w-11 items-center justify-center rounded-lg bg-emerald-50 transition-colors group-hover:bg-emerald-100">
+                <Icon className="h-6 w-6 text-emerald-600" />
               </div>
               <h3 className="mt-3 font-semibold text-slate-900">{cat.name}</h3>
-              <p className="text-sm text-slate-500">{cat.asset_count} listings</p>
+              <p className="text-sm text-slate-500">
+                {t('home.listings', { count: cat.asset_count })}
+              </p>
             </Link>
           );
         })}
@@ -91,87 +197,288 @@ function Categories() {
   );
 }
 
-function Featured() {
-  const { data } = useAssets({ sort: 'newest', page_size: 6 });
-  const assets = data?.items ?? [];
-  if (assets.length === 0) return null;
+const STEP_ICONS = [ListPlus, Sparkles, Handshake] as const;
+
+function HowItWorks() {
+  const { t } = useTranslation();
+  const reveal = useReveal<HTMLDivElement>();
+
+  const steps = [
+    { title: t('home.step1Title'), body: t('home.step1Body') },
+    { title: t('home.step2Title'), body: t('home.step2Body') },
+    { title: t('home.step3Title'), body: t('home.step3Body') },
+  ];
+
   return (
-    <section className="bg-slate-50">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-        <div className="flex items-end justify-between">
-          <div>
-            <h2 className="text-2xl font-bold text-slate-900">Featured Opportunities</h2>
-            <p className="mt-1 text-slate-500">Recently published assets ready for exchange.</p>
-          </div>
-          <Link to="/assets" className="text-emerald-600 font-medium hover:text-emerald-700">
-            View all →
-          </Link>
+    <section className="bg-slate-50 border-y border-slate-200">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+        <div className="max-w-2xl">
+          <h2 className="text-3xl font-bold tracking-tight text-slate-900">
+            {t('home.howTitle')}
+          </h2>
+          <p className="mt-2 text-slate-500">{t('home.howSubtitle')}</p>
         </div>
-        <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {assets.map((asset) => (
-            <AssetCard key={asset.id} asset={asset} />
-          ))}
+
+        <div ref={reveal.ref} className={`${reveal.className} mt-12 grid gap-8 md:grid-cols-3`}>
+          {steps.map((step, i) => {
+            const Icon = STEP_ICONS[i];
+            return (
+              <div key={step.title} className="relative">
+                <div className="flex items-center gap-3">
+                  <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-emerald-600 text-white shadow-sm">
+                    <Icon className="h-6 w-6" />
+                  </div>
+                  <span className="font-mono text-sm font-semibold text-emerald-600">
+                    0{i + 1}
+                  </span>
+                </div>
+                <h3 className="mt-5 text-lg font-semibold text-slate-900">{step.title}</h3>
+                <p className="mt-2 text-sm leading-relaxed text-slate-600">{step.body}</p>
+              </div>
+            );
+          })}
         </div>
       </div>
     </section>
   );
 }
 
-function MatchShowcase() {
-  const { data: matches } = useMatches(70);
-  const top = (matches ?? []).slice(0, 3);
+function Featured() {
+  const { t } = useTranslation();
+  const { data, isLoading } = useAssets({ sort: 'newest', page_size: 6 });
+  const assets = data?.items ?? [];
+  const reveal = useReveal<HTMLDivElement>();
 
   return (
-    <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-      <div className="flex items-center gap-2">
-        <Sparkles className="w-6 h-6 text-emerald-600" />
-        <h2 className="text-2xl font-bold text-slate-900">AI Matching in Action</h2>
+    <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+      <div className="flex items-end justify-between gap-4">
+        <div>
+          <h2 className="text-3xl font-bold tracking-tight text-slate-900">
+            {t('home.featuredTitle')}
+          </h2>
+          <p className="mt-2 text-slate-500">{t('home.featuredSubtitle')}</p>
+        </div>
+        <Link
+          to="/assets"
+          className="hidden sm:inline-flex items-center gap-1 font-medium text-emerald-600 transition-colors hover:text-emerald-700"
+        >
+          {t('home.viewAll')}
+        </Link>
       </div>
-      <p className="mt-1 text-slate-500">
-        Our engine scores every possible exchange on value, preference,
-        location, and liquidity.
-      </p>
 
-      {top.length > 0 ? (
-        <div className="mt-8 grid grid-cols-1 md:grid-cols-3 gap-6">
-          {top.map((m) => (
-            <div key={m.id} className="bg-white border border-slate-200 rounded-xl p-5">
-              <MatchScoreBadge score={m.match_score} size="lg" />
-              <div className="mt-4 flex items-center justify-between text-sm font-medium text-slate-700">
-                <span className="line-clamp-1">{m.asset_a.category.name}</span>
-                <ArrowRightLeft className="w-4 h-4 text-emerald-600 mx-2 shrink-0" />
-                <span className="line-clamp-1 text-right">{m.asset_b.category.name}</span>
+      {isLoading ? (
+        <div className="mt-10 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          {Array.from({ length: 3 }).map((_, i) => (
+            <div
+              key={i}
+              className="overflow-hidden rounded-xl border border-slate-200 bg-white"
+            >
+              <div className="h-48 animate-pulse bg-slate-100" />
+              <div className="space-y-3 p-4">
+                <div className="h-4 w-3/4 animate-pulse rounded bg-slate-100" />
+                <div className="h-4 w-1/3 animate-pulse rounded bg-slate-100" />
+                <div className="h-5 w-1/2 animate-pulse rounded bg-slate-100" />
               </div>
-              {m.explanation && (
-                <p className="mt-3 text-xs text-slate-500 line-clamp-3">{m.explanation}</p>
-              )}
             </div>
           ))}
         </div>
+      ) : assets.length === 0 ? (
+        <div className="mt-10 rounded-xl border border-dashed border-slate-300 bg-slate-50 p-12 text-center">
+          <p className="text-slate-500">{t('home.featuredSubtitle')}</p>
+        </div>
       ) : (
-        <div className="mt-8 grid grid-cols-1 md:grid-cols-3 gap-6">
-          {[
-            'Apartment → Land + Vehicle',
-            'House → Commercial Property',
-            'Land → Apartment',
-          ].map((label) => (
-            <div key={label} className="bg-white border border-slate-200 rounded-xl p-5">
-              <span className="inline-flex items-center gap-1 rounded-full font-semibold bg-emerald-100 text-emerald-700 text-sm px-2.5 py-1">
-                <Sparkles className="w-4 h-4" /> 87 match
-              </span>
-              <p className="mt-4 text-sm font-medium text-slate-700">{label}</p>
-            </div>
+        <div ref={reveal.ref} className={`${reveal.className} mt-10 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3`}>
+          {assets.map((asset) => (
+            <AssetCard key={asset.id} asset={asset} />
           ))}
         </div>
       )}
+    </section>
+  );
+}
 
-      <div className="mt-8">
-        <Link
-          to="/matches"
-          className="px-6 py-3 bg-emerald-600 text-white font-semibold rounded-lg hover:bg-emerald-700 transition-colors inline-block"
-        >
-          Explore AI Matches
-        </Link>
+function MatchShowcase() {
+  const { t } = useTranslation();
+  const { data: matches } = useMatches(70);
+  const top = (matches ?? []).slice(0, 3);
+  const reveal = useReveal<HTMLDivElement>();
+
+  const featured = top[0];
+  const rest = top.slice(1);
+
+  return (
+    <section className="bg-slate-900">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+        <div className="max-w-2xl">
+          <div className="flex items-center gap-2 text-emerald-400">
+            <Sparkles className="h-6 w-6" />
+            <h2 className="text-3xl font-bold tracking-tight text-white">
+              {t('home.aiMatchingTitle')}
+            </h2>
+          </div>
+          <p className="mt-2 text-slate-400">{t('home.aiMatchingDescription')}</p>
+        </div>
+
+        {/* Asymmetric panel: one large featured match + supporting list */}
+        <div ref={reveal.ref} className={`${reveal.className} mt-12 grid gap-6 lg:grid-cols-12`}>
+          <div className="lg:col-span-7">
+            {featured ? (
+              <MatchPanelLarge match={featured} />
+            ) : (
+              <PlaceholderMatchLarge />
+            )}
+          </div>
+          <div className="grid gap-6 lg:col-span-5">
+            {rest.length > 0
+              ? rest.map((m) => <MatchPanelSmall key={m.id} match={m} />)
+              : [
+                  { label: 'House', toLabel: 'Commercial', score: 84 },
+                  { label: 'Land', toLabel: 'Apartment', score: 81 },
+                ].map((p) => (
+                  <PlaceholderMatchSmall key={p.label} {...p} />
+                ))}
+          </div>
+        </div>
+
+        <div className="mt-10">
+          <Link
+            to="/matches"
+            className="inline-flex items-center gap-2 rounded-lg bg-emerald-500 px-6 py-3 font-semibold text-white transition-all hover:bg-emerald-400 active:scale-[0.98]"
+          >
+            {t('home.exploreAIMatches')}
+            <ArrowRight className="h-4 w-4" />
+          </Link>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function MatchPanelLarge({ match }: { match: import('../types').AIMatch }) {
+  return (
+    <div className="flex h-full flex-col rounded-2xl border border-white/10 bg-white/[0.04] p-6 backdrop-blur">
+      <MatchScoreBadge score={match.match_score} size="lg" />
+      <div className="mt-6 grid gap-3 sm:grid-cols-2">
+        <AssetMini asset={match.asset_a} />
+        <AssetMini asset={match.asset_b} />
+      </div>
+      {match.explanation && (
+        <p className="mt-5 text-sm leading-relaxed text-slate-400 line-clamp-3">
+          {match.explanation}
+        </p>
+      )}
+    </div>
+  );
+}
+
+function AssetMini({ asset }: { asset: import('../types').Asset }) {
+  return (
+    <div className="rounded-xl bg-white/5 p-4 ring-1 ring-inset ring-white/10">
+      <p className="text-xs font-medium uppercase tracking-wide text-emerald-400">
+        {asset.category.name}
+      </p>
+      <p className="mt-1 line-clamp-1 font-semibold text-white">{asset.title}</p>
+      <p className="mt-2 text-sm font-bold text-emerald-300">
+        {formatKzt(asset.estimated_value)}
+      </p>
+    </div>
+  );
+}
+
+function MatchPanelSmall({ match }: { match: import('../types').AIMatch }) {
+  return (
+    <div className="rounded-xl border border-white/10 bg-white/[0.04] p-5">
+      <div className="flex items-center justify-between gap-3">
+        <MatchScoreBadge score={match.match_score} size="sm" />
+        <ArrowRightLeft className="h-4 w-4 shrink-0 text-emerald-400" />
+      </div>
+      <div className="mt-3 flex items-center justify-between gap-2 text-sm font-medium text-slate-300">
+        <span className="line-clamp-1">{match.asset_a.category.name}</span>
+        <span className="line-clamp-1 text-right">{match.asset_b.category.name}</span>
+      </div>
+    </div>
+  );
+}
+
+function PlaceholderMatchLarge() {
+  const { t } = useTranslation();
+  return (
+    <div className="flex h-full flex-col justify-center rounded-2xl border border-white/10 bg-white/[0.04] p-6 backdrop-blur">
+      <MatchScoreBadge score={87} size="lg" />
+      <div className="mt-6 grid gap-3 sm:grid-cols-2">
+        <div className="rounded-xl bg-white/5 p-4 ring-1 ring-inset ring-white/10">
+          <p className="text-xs font-medium uppercase tracking-wide text-emerald-400">
+            {t('categories.apartments')}
+          </p>
+          <p className="mt-1 font-semibold text-white">Almaty, Esentai</p>
+        </div>
+        <div className="rounded-xl bg-white/5 p-4 ring-1 ring-inset ring-white/10">
+          <p className="text-xs font-medium uppercase tracking-wide text-emerald-400">
+            {t('categories.land')}
+          </p>
+          <p className="mt-1 font-semibold text-white">Talgar + Vehicle</p>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function PlaceholderMatchSmall({
+  label,
+  toLabel,
+  score,
+}: {
+  label: string;
+  toLabel: string;
+  score: number;
+}) {
+  return (
+    <div className="rounded-xl border border-white/10 bg-white/[0.04] p-5">
+      <div className="flex items-center justify-between gap-3">
+        <MatchScoreBadge score={score} size="sm" />
+        <ArrowRightLeft className="h-4 w-4 shrink-0 text-emerald-400" />
+      </div>
+      <div className="mt-3 flex items-center justify-between gap-2 text-sm font-medium text-slate-300">
+        <span>{label}</span>
+        <span className="text-right">{toLabel}</span>
+      </div>
+    </div>
+  );
+}
+
+function CallToAction() {
+  const { t } = useTranslation();
+  const isAuthenticated = useAuthStore((s) => s.isAuthenticated);
+  const openAuth = useUIStore((s) => s.openAuth);
+
+  return (
+    <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+      <div className="overflow-hidden rounded-2xl bg-gradient-to-br from-emerald-600 to-emerald-700 px-6 py-12 sm:px-12 sm:py-16">
+        <div className="flex flex-col items-start justify-between gap-6 md:flex-row md:items-center">
+          <div className="max-w-xl">
+            <h2 className="text-2xl font-bold tracking-tight text-white sm:text-3xl">
+              {t('home.ctaTitle')}
+            </h2>
+            <p className="mt-2 text-emerald-50/90">{t('home.ctaBody')}</p>
+          </div>
+          {isAuthenticated ? (
+            <Link
+              to="/assets/new"
+              className="inline-flex shrink-0 items-center gap-2 rounded-lg bg-white px-6 py-3 font-semibold text-emerald-700 transition-all hover:bg-emerald-50 active:scale-[0.98]"
+            >
+              {t('nav.publishAsset')}
+              <ArrowRight className="h-4 w-4" />
+            </Link>
+          ) : (
+            <button
+              onClick={() => openAuth('register')}
+              className="inline-flex shrink-0 items-center gap-2 rounded-lg bg-white px-6 py-3 font-semibold text-emerald-700 transition-all hover:bg-emerald-50 active:scale-[0.98]"
+            >
+              {t('nav.publishAsset')}
+              <ArrowRight className="h-4 w-4" />
+            </button>
+          )}
+        </div>
       </div>
     </section>
   );
@@ -182,8 +489,10 @@ export function Home() {
     <>
       <Hero />
       <Categories />
+      <HowItWorks />
       <Featured />
       <MatchShowcase />
+      <CallToAction />
     </>
   );
 }

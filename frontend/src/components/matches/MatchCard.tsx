@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import { ArrowRightLeft } from 'lucide-react';
 import type { AIMatch } from '../../types';
@@ -13,7 +14,7 @@ interface MatchCardProps {
 const PLACEHOLDER =
   'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=400';
 
-function MiniAsset({ asset, mine }: { asset: AIMatch['asset_a']; mine: boolean }) {
+function MiniAsset({ asset, mine, t }: { asset: AIMatch['asset_a']; mine: boolean; t: (key: string) => string }) {
   return (
     <Link to={`/assets/${asset.id}`} className="flex-1 min-w-0 group">
       <div className="relative h-24 rounded-lg overflow-hidden bg-slate-100">
@@ -24,7 +25,7 @@ function MiniAsset({ asset, mine }: { asset: AIMatch['asset_a']; mine: boolean }
         />
         {mine && (
           <span className="absolute top-1.5 left-1.5 px-2 py-0.5 bg-emerald-600 text-white text-[10px] font-semibold rounded-full">
-            Yours
+            {t('matches.yours')}
           </span>
         )}
       </div>
@@ -57,28 +58,29 @@ function ScoreBar({ label, value }: { label: string; value: number }) {
 }
 
 export function MatchCard({ match, myAssetIds = [] }: MatchCardProps) {
+  const { t } = useTranslation();
   return (
     <div className="bg-white rounded-xl border border-slate-200 p-4">
       <div className="flex items-center justify-between mb-3">
         <MatchScoreBadge score={match.match_score} />
         <span className="text-xs text-slate-500">
-          Δ {formatKzt(match.value_difference)}
+          {t('matches.valueDiff', { amount: formatKzt(match.value_difference) })}
         </span>
       </div>
 
       <div className="flex items-center gap-3">
-        <MiniAsset asset={match.asset_a} mine={myAssetIds.includes(match.asset_a.id)} />
+        <MiniAsset asset={match.asset_a} mine={myAssetIds.includes(match.asset_a.id)} t={t} />
         <div className="shrink-0 w-9 h-9 rounded-full bg-emerald-50 flex items-center justify-center">
           <ArrowRightLeft className="w-4 h-4 text-emerald-600" />
         </div>
-        <MiniAsset asset={match.asset_b} mine={myAssetIds.includes(match.asset_b.id)} />
+        <MiniAsset asset={match.asset_b} mine={myAssetIds.includes(match.asset_b.id)} t={t} />
       </div>
 
       <div className="mt-4 grid grid-cols-2 gap-x-4 gap-y-2">
-        <ScoreBar label="Value (40%)" value={match.value_score} />
-        <ScoreBar label="Preference (25%)" value={match.preference_score} />
-        <ScoreBar label="Location (15%)" value={match.location_score} />
-        <ScoreBar label="Liquidity (20%)" value={match.liquidity_score} />
+        <ScoreBar label={t('matches.valueWeight')} value={match.value_score} />
+        <ScoreBar label={t('matches.preferenceWeight')} value={match.preference_score} />
+        <ScoreBar label={t('matches.locationWeight')} value={match.location_score} />
+        <ScoreBar label={t('matches.liquidityWeight')} value={match.liquidity_score} />
       </div>
 
       {match.explanation && (

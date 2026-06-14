@@ -1,40 +1,43 @@
+import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import { UserPlus, FileText, Sparkles, ArrowRightLeft, CheckCircle } from 'lucide-react';
 
-const steps = [
-  {
-    icon: UserPlus,
-    title: 'Create an account',
-    body: 'Register with your name, email, and phone to start exchanging.',
-  },
-  {
-    icon: FileText,
-    title: 'Publish your asset',
-    body: 'List an apartment, house, land, vehicle, or commercial property and set what you want in return.',
-  },
-  {
-    icon: Sparkles,
-    title: 'Get AI matches',
-    body: 'Our engine scores every possible exchange on value, preference, location, and liquidity.',
-  },
-  {
-    icon: ArrowRightLeft,
-    title: 'Propose an exchange',
-    body: 'Send a proposal with one of your assets. The owner can accept, reject, or negotiate.',
-  },
-  {
-    icon: CheckCircle,
-    title: 'Complete the deal',
-    body: 'Once both sides agree, mark the exchange completed and update your portfolio.',
-  },
-];
-
 export function HowItWorks() {
+  const { t } = useTranslation();
+
+  const steps = [
+    {
+      icon: UserPlus,
+      title: t('howItWorks.step1Title'),
+      body: t('howItWorks.step1Desc'),
+    },
+    {
+      icon: FileText,
+      title: t('howItWorks.step2Title'),
+      body: t('howItWorks.step2Desc'),
+    },
+    {
+      icon: Sparkles,
+      title: t('howItWorks.step3Title'),
+      body: t('howItWorks.step3Desc'),
+    },
+    {
+      icon: ArrowRightLeft,
+      title: t('howItWorks.step4Title'),
+      body: t('howItWorks.step4Desc'),
+    },
+    {
+      icon: CheckCircle,
+      title: t('howItWorks.step5Title'),
+      body: t('howItWorks.step5Desc'),
+    },
+  ];
+
   return (
     <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-      <h1 className="text-3xl font-bold text-slate-900">How It Works</h1>
+      <h1 className="text-3xl font-bold text-slate-900">{t('howItWorks.title')}</h1>
       <p className="mt-2 text-slate-500">
-        Exchange assets without selling them first — powered by AI matching.
+        {t('howItWorks.subtitle')}
       </p>
 
       <div className="mt-10 space-y-6">
@@ -56,13 +59,13 @@ export function HowItWorks() {
 
       <div className="mt-10 bg-emerald-50 rounded-xl p-6 text-center">
         <p className="font-medium text-slate-900">
-          Ready to find your next exchange?
+          {t('howItWorks.ctaTitle')}
         </p>
         <Link
           to="/assets"
           className="mt-3 inline-block px-6 py-3 bg-emerald-600 text-white font-semibold rounded-lg hover:bg-emerald-700"
         >
-          Browse Assets
+          {t('howItWorks.ctaButton')}
         </Link>
       </div>
     </div>

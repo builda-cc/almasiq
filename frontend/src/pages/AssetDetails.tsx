@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useParams, Link } from 'react-router-dom';
 import {
   MapPin,
@@ -26,6 +27,7 @@ const PLACEHOLDER =
   'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=1200';
 
 export function AssetDetails() {
+  const { t } = useTranslation();
   const { assetId } = useParams<{ assetId: string }>();
   const id = assetId ? Number(assetId) : null;
 
@@ -47,14 +49,14 @@ export function AssetDetails() {
   const [submitted, setSubmitted] = useState(false);
 
   if (isLoading) {
-    return <div className="py-32 text-center text-slate-500">Loading…</div>;
+    return <div className="py-32 text-center text-slate-500">{t('common.loading')}</div>;
   }
   if (!asset) {
     return (
       <div className="py-32 text-center text-slate-500">
-        Asset not found.{' '}
+        {t('assets.assetNotFound')}{' '}
         <Link to="/assets" className="text-emerald-600">
-          Back to browse
+          {t('assets.backToBrowseAlt')}
         </Link>
       </div>
     );
@@ -88,7 +90,7 @@ export function AssetDetails() {
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
       <Link to="/assets" className="text-sm text-slate-500 hover:text-slate-700">
-        ← Back to browse
+        {t('assets.backToBrowse')}
       </Link>
 
       <div className="mt-4 grid grid-cols-1 lg:grid-cols-3 gap-8">
@@ -135,7 +137,7 @@ export function AssetDetails() {
 
             {asset.preferences.length > 0 && (
               <div className="mt-6">
-                <h2 className="font-semibold text-slate-900">Preferred Exchanges</h2>
+                <h2 className="font-semibold text-slate-900">{t('assets.preferredExchanges')}</h2>
                 <ul className="mt-2 flex flex-wrap gap-2">
                   {asset.preferences.map((p) => (
                     <li
@@ -143,7 +145,7 @@ export function AssetDetails() {
                       className="px-3 py-1.5 bg-slate-100 text-slate-700 text-sm rounded-full"
                     >
                       {p.category_slug}
-                      {p.cash_accepted ? ' + cash' : ''}
+                      {p.cash_accepted ? ` ${t('assets.plusCash')}` : ''}
                     </li>
                   ))}
                 </ul>
@@ -155,16 +157,16 @@ export function AssetDetails() {
         {/* Sidebar */}
         <div className="lg:col-span-1">
           <div className="bg-white border border-slate-200 rounded-xl p-6 lg:sticky lg:top-24">
-            <p className="text-sm text-slate-500">Estimated value</p>
+            <p className="text-sm text-slate-500">{t('assets.estimatedValue')}</p>
             <p className="text-3xl font-bold text-emerald-600">
               {formatKzt(asset.estimated_value)}
             </p>
             <p className="mt-1 text-sm text-slate-500">
-              Liquidity score: {asset.liquidity_score}/100
+              {t('assets.liquidityScore', { score: asset.liquidity_score })}
             </p>
 
             <div className="mt-6 border-t border-slate-100 pt-4">
-              <p className="text-sm text-slate-500">Owner</p>
+              <p className="text-sm text-slate-500">{t('assets.owner')}</p>
               <p className="font-medium text-slate-900">{asset.owner.full_name}</p>
               {asset.owner.phone && (
                 <p className="mt-1 flex items-center text-sm text-slate-600">
@@ -187,7 +189,7 @@ export function AssetDetails() {
                   className="w-full py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold rounded-lg flex items-center justify-center gap-2"
                 >
                   <ArrowRightLeft className="w-5 h-5" />
-                  Propose Exchange
+                  {t('assets.proposeExchange')}
                 </button>
                 <button
                   onClick={toggleFavorite}
@@ -198,13 +200,13 @@ export function AssetDetails() {
                       isFavorite ? 'fill-red-500 text-red-500' : ''
                     }`}
                   />
-                  {isFavorite ? 'Saved' : 'Save to Favorites'}
+                  {isFavorite ? t('assets.saved') : t('assets.saveToFavorites')}
                 </button>
               </div>
             )}
 
             <p className="mt-4 text-xs text-slate-400">
-              Listed {formatDate(asset.created_at)}
+              {t('assets.listed', { date: formatDate(asset.created_at) })}
             </p>
           </div>
         </div>
@@ -219,7 +221,7 @@ export function AssetDetails() {
           />
           <div className="relative bg-white rounded-2xl shadow-xl w-full max-w-md mx-4 p-6">
             <div className="flex justify-between items-center mb-4">
-              <h2 className="text-xl font-bold text-slate-900">Propose Exchange</h2>
+              <h2 className="text-xl font-bold text-slate-900">{t('assets.exchangeProposal')}</h2>
               <button
                 onClick={() => setExchangeOpen(false)}
                 className="p-2 hover:bg-slate-100 rounded-lg"
@@ -230,36 +232,36 @@ export function AssetDetails() {
 
             {submitted ? (
               <div className="py-6 text-center">
-                <p className="text-emerald-600 font-semibold">Proposal sent!</p>
+                <p className="text-emerald-600 font-semibold">{t('assets.proposalSent')}</p>
                 <p className="mt-1 text-sm text-slate-500">
-                  Track it under Exchange Requests.
+                  {t('assets.proposalSentDesc')}
                 </p>
                 <Link
                   to="/dashboard/exchanges"
                   className="mt-4 inline-block px-4 py-2 bg-emerald-600 text-white rounded-lg"
                 >
-                  Go to exchanges
+                  {t('assets.goToExchanges')}
                 </Link>
               </div>
             ) : eligibleAssets.length === 0 ? (
               <div className="py-4 text-center text-sm text-slate-500">
-                You need at least one active asset to propose an exchange.
+                {t('assets.noEligibleAssets')}
                 <Link to="/assets/new" className="block mt-3 text-emerald-600 font-medium">
-                  Publish an asset
+                  {t('assets.publishAnAsset')}
                 </Link>
               </div>
             ) : (
               <div className="space-y-4">
                 <div>
                   <label className="block text-sm font-medium text-slate-700 mb-1">
-                    Offer one of your assets
+                    {t('assets.offerYourAsset')}
                   </label>
                   <select
                     value={offeredId ?? ''}
                     onChange={(e) => setOfferedId(Number(e.target.value))}
                     className="w-full px-3 py-2.5 border border-slate-300 rounded-lg focus:ring-2 focus:ring-emerald-500 outline-none"
                   >
-                    <option value="">Select an asset…</option>
+                    <option value="">{t('assets.selectAsset')}</option>
                     {eligibleAssets.map((a) => (
                       <option key={a.id} value={a.id}>
                         {a.title} — {formatKzt(a.estimated_value)}
@@ -269,14 +271,14 @@ export function AssetDetails() {
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-slate-700 mb-1">
-                    Message
+                    {t('assets.message')}
                   </label>
                   <textarea
                     value={message}
                     onChange={(e) => setMessage(e.target.value)}
                     rows={3}
                     className="w-full px-3 py-2.5 border border-slate-300 rounded-lg focus:ring-2 focus:ring-emerald-500 outline-none"
-                    placeholder="Introduce your offer…"
+                    placeholder={t('assets.messagePlaceholder')}
                   />
                 </div>
                 <button
@@ -284,7 +286,7 @@ export function AssetDetails() {
                   disabled={!offeredId || createExchange.isPending}
                   className="w-full py-3 bg-emerald-600 hover:bg-emerald-700 disabled:opacity-60 text-white font-semibold rounded-lg"
                 >
-                  {createExchange.isPending ? 'Sending…' : 'Send Proposal'}
+                  {createExchange.isPending ? t('common.sending') : t('assets.sendProposal')}
                 </button>
               </div>
             )}

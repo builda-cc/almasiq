@@ -1,7 +1,19 @@
+import i18n from 'i18next';
 import type { CategorySlug, ExchangeStatus } from '../types';
 
+const LOCALE_MAP: Record<string, string> = {
+  en: 'en-US',
+  kk: 'kk-KZ',
+  ru: 'ru-RU',
+  zh: 'zh-CN',
+};
+
+function currentLocale(): string {
+  return LOCALE_MAP[i18n.language] ?? 'en-US';
+}
+
 export function formatKzt(value: number): string {
-  return new Intl.NumberFormat('ru-KZ', {
+  return new Intl.NumberFormat(currentLocale(), {
     style: 'currency',
     currency: 'KZT',
     maximumFractionDigits: 0,
@@ -10,7 +22,7 @@ export function formatKzt(value: number): string {
 
 export function formatDate(date: string | Date): string {
   const d = typeof date === 'string' ? new Date(date) : date;
-  return new Intl.DateTimeFormat('en-US', {
+  return new Intl.DateTimeFormat(currentLocale(), {
     year: 'numeric',
     month: 'long',
     day: 'numeric',
@@ -25,10 +37,10 @@ export function formatRelativeTime(date: string | Date): string {
   const diffHours = Math.floor(diffMs / (1000 * 60 * 60));
   const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24));
 
-  if (diffMins < 1) return 'just now';
-  if (diffMins < 60) return `${diffMins} minutes ago`;
-  if (diffHours < 24) return `${diffHours} hours ago`;
-  if (diffDays < 7) return `${diffDays} days ago`;
+  if (diffMins < 1) return i18n.t('common.justNow');
+  if (diffMins < 60) return i18n.t('common.minutesAgo', { count: diffMins });
+  if (diffHours < 24) return i18n.t('common.hoursAgo', { count: diffHours });
+  if (diffDays < 7) return i18n.t('common.daysAgo', { count: diffDays });
   return formatDate(d);
 }
 
@@ -54,21 +66,12 @@ export function getStatusColor(status: ExchangeStatus): string {
   }
 }
 
-// Tailwind color for a 0-100 match score badge.
 export function getMatchScoreColor(score: number): string {
   if (score >= 85) return 'bg-emerald-100 text-emerald-700';
   if (score >= 70) return 'bg-lime-100 text-lime-700';
   if (score >= 55) return 'bg-amber-100 text-amber-700';
   return 'bg-slate-100 text-slate-700';
 }
-
-export const CATEGORY_LABELS: Record<CategorySlug, string> = {
-  apartments: 'Apartments',
-  houses: 'Houses',
-  land: 'Land Plots',
-  vehicles: 'Vehicles',
-  commercial: 'Commercial Properties',
-};
 
 export const CATEGORY_SLUGS: CategorySlug[] = [
   'apartments',

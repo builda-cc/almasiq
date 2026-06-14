@@ -7,9 +7,12 @@ pydantic>=2.10
 pydantic-settings>=2.7
 python-dotenv>=1.0
 
-# Database (SQLAlchemy 2.x; SQLite for dev, PostgreSQL-ready)
+# Database (SQLAlchemy 2.x; SQLite for dev, PostgreSQL in production)
 SQLAlchemy>=2.0
 alembic>=1.13
+# PostgreSQL driver (psycopg 3) for Railway / production. Ships binary wheels,
+# so no system libpq build step is required.
+psycopg[binary]>=3.1
 
 # Auth / security
 python-jose[cryptography]>=3.3

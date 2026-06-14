@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Navigate, Outlet, useLocation } from 'react-router-dom';
 import { useAuthStore } from '../../store/authStore';
 import { useUIStore } from '../../store/uiStore';
@@ -14,11 +15,13 @@ export function ProtectedRoute() {
     }
   }, [token, isAuthenticated, openAuth]);
 
+  const { t } = useTranslation();
+
   // While we still have a token but haven't verified the user yet, wait.
   if (token && !isAuthenticated && isLoading) {
     return (
       <div className="flex items-center justify-center py-32 text-slate-500">
-        Loading…
+        {t('protectedRoute.loading')}
       </div>
     );
   }

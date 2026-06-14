@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import { MapPin, Heart } from 'lucide-react';
 import type { Asset } from '../../types';
@@ -13,6 +14,7 @@ const PLACEHOLDER =
   'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=800';
 
 export function AssetCard({ asset, isFavorite, onToggleFavorite }: AssetCardProps) {
+  const { t } = useTranslation();
   const image = asset.images[0]?.url ?? PLACEHOLDER;
   const location = [asset.city, asset.region].filter(Boolean).join(', ');
 
@@ -38,7 +40,7 @@ export function AssetCard({ asset, isFavorite, onToggleFavorite }: AssetCardProp
               onToggleFavorite(asset.id);
             }}
             className="absolute top-3 right-3 p-2 bg-white/90 backdrop-blur rounded-full hover:bg-white transition-colors"
-            aria-label="Toggle favorite"
+            aria-label={t('assets.toggleFavorite')}
           >
             <Heart
               className={`w-4 h-4 ${
@@ -61,7 +63,7 @@ export function AssetCard({ asset, isFavorite, onToggleFavorite }: AssetCardProp
         </p>
         {asset.preferences.length > 0 && (
           <p className="mt-1 text-xs text-slate-500 line-clamp-1">
-            Wants:{' '}
+            {t('assets.wants')}{' '}
             {asset.preferences.map((p) => p.category_slug).join(', ')}
           </p>
         )}

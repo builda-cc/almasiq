@@ -26,6 +26,10 @@ class Settings(BaseSettings):
     # AI / OpenAI (optional; matching falls back to the rule-based engine).
     openai_api_key: str = ""
 
+    # Auto-seed categories + sample data on startup when the DB is empty.
+    # Enabled by default so a freshly-provisioned production DB is usable.
+    seed_on_startup: bool = True
+
     model_config = SettingsConfigDict(env_file=".env", env_file_encoding="utf-8")
 
     @property
@@ -33,6 +37,21 @@ class Settings(BaseSettings):
         return [
             origin.strip() for origin in self.cors_origins.split(",") if origin.strip()
         ]
+
+    @property
+    def sqlalchemy_database_url(self) -> str:
+        """Return a SQLAlchemy-compatible database URL.
+
+        Managed Postgres providers (Railway, Heroku, etc.) expose URLs starting
+        with ``postgres://`` or ``postgresql://``. SQLAlchemy + psycopg 3 needs
+        the explicit ``postgresql+psycopg://`` driver prefix, so normalize here.
+        """
+        url = self.database_url
+        if url.startswith("postgres://"):
+            url = "postgresql://" + url[len("postgres://") :]
+        if url.startswith("postgresql://"):
+            url = "postgresql+psycopg://" + url[len("postgresql://") :]
+        return url
 
 
 settings = Settings()

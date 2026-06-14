@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import { NavLink, Outlet } from 'react-router-dom';
 import {
   LayoutDashboard,
@@ -9,17 +10,19 @@ import {
   User as UserIcon,
 } from 'lucide-react';
 
-const items = [
-  { to: '/dashboard', label: 'Dashboard', icon: LayoutDashboard, end: true },
-  { to: '/dashboard/assets', label: 'My Assets', icon: Boxes, end: false },
-  { to: '/assets/new', label: 'Add Asset', icon: PlusCircle, end: false },
-  { to: '/dashboard/matches', label: 'AI Matches', icon: Sparkles, end: false },
-  { to: '/dashboard/exchanges', label: 'Exchange Requests', icon: ArrowRightLeft, end: false },
-  { to: '/dashboard/favorites', label: 'Favorites', icon: Heart, end: false },
-  { to: '/dashboard/profile', label: 'Profile', icon: UserIcon, end: false },
-];
-
 export function DashboardLayout() {
+  const { t } = useTranslation();
+
+  const items = [
+    { to: '/dashboard', label: t('nav.dashboard'), icon: LayoutDashboard, end: true },
+    { to: '/dashboard/assets', label: t('dashboard.myAssetsTitle'), icon: Boxes, end: false },
+    { to: '/assets/new', label: t('dashboard.addAsset'), icon: PlusCircle, end: false },
+    { to: '/dashboard/matches', label: t('nav.aiMatches'), icon: Sparkles, end: false },
+    { to: '/dashboard/exchanges', label: t('exchanges.title'), icon: ArrowRightLeft, end: false },
+    { to: '/dashboard/favorites', label: t('nav.favorites'), icon: Heart, end: false },
+    { to: '/dashboard/profile', label: t('nav.profile'), icon: UserIcon, end: false },
+  ];
+
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
       <div className="flex flex-col lg:flex-row gap-8">

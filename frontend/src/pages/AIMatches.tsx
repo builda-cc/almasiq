@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Sparkles, RefreshCw } from 'lucide-react';
 import {
   useMatches,
@@ -14,6 +15,7 @@ interface AIMatchesProps {
 }
 
 export function AIMatches({ scope }: AIMatchesProps) {
+  const { t } = useTranslation();
   const [minScore, setMinScore] = useState(0);
   const isAuthenticated = useAuthStore((s) => s.isAuthenticated);
   const recompute = useRecomputeMatches();
@@ -34,12 +36,11 @@ export function AIMatches({ scope }: AIMatchesProps) {
           <div className="flex items-center gap-2">
             <Sparkles className="w-6 h-6 text-emerald-600" />
             <h1 className="text-2xl font-bold text-slate-900">
-              {isMine ? 'Your AI Matches' : 'AI Matching'}
+              {isMine ? t('matches.yourMatches') : t('matches.aiMatching')}
             </h1>
           </div>
           <p className="mt-1 text-slate-500">
-            Exchange opportunities scored on value, preference, location, and
-            liquidity.
+            {t('matches.description')}
           </p>
         </div>
         {isAuthenticated && (
@@ -51,13 +52,13 @@ export function AIMatches({ scope }: AIMatchesProps) {
             <RefreshCw
               className={`w-4 h-4 ${recompute.isPending ? 'animate-spin' : ''}`}
             />
-            Recompute
+            {t('matches.recompute')}
           </button>
         )}
       </div>
 
       <div className="mt-6 flex items-center gap-3">
-        <label className="text-sm text-slate-600">Minimum score: {minScore}</label>
+        <label className="text-sm text-slate-600">{t('matches.minScore', { score: minScore })}</label>
         <input
           type="range"
           min={0}
@@ -70,10 +71,10 @@ export function AIMatches({ scope }: AIMatchesProps) {
       </div>
 
       {query.isLoading ? (
-        <div className="py-16 text-center text-slate-500">Computing matches…</div>
+        <div className="py-16 text-center text-slate-500">{t('matches.computing')}</div>
       ) : matches.length === 0 ? (
         <div className="mt-6 bg-white border border-dashed border-slate-300 rounded-xl p-8 text-center text-slate-500">
-          No matches at this score threshold.
+          {t('matches.noMatches')}
         </div>
       ) : (
         <div className="mt-6 grid grid-cols-1 lg:grid-cols-2 gap-4">

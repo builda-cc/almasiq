@@ -1,3 +1,4 @@
+import logging
 from contextlib import asynccontextmanager
 
 from fastapi import FastAPI
@@ -24,6 +25,20 @@ from . import models  # noqa: F401
 async def lifespan(app: FastAPI):
     # Create tables on startup (for local/SQLite dev; use Alembic in prod).
     Base.metadata.create_all(bind=engine)
+
+    # Optionally seed categories + sample data so a freshly-provisioned
+    # production database is immediately usable. Idempotent: categories are
+    # never duplicated and sample assets are only added when the table is empty.
+    if settings.seed_on_startup:
+        try:
+            from .seed import main as seed_main
+
+            seed_main()
+        except Exception as exc:  # noqa: BLE001 - never block startup on seeding
+            logging.getLogger("uvicorn.error").warning(
+                "Startup seeding skipped: %s", exc
+            )
+
     yield
 
 

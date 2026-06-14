@@ -1,4 +1,5 @@
 import { useForm } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
 import { X, Mail, Lock, User as UserIcon, Phone } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { useUIStore } from '../../store/uiStore';
@@ -15,6 +16,7 @@ const inputClass =
   'w-full pl-10 pr-4 py-2.5 border border-slate-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none transition-all';
 
 export function AuthModal() {
+  const { t } = useTranslation();
   const { authModalOpen, authMode, closeAuth, switchAuthMode } = useUIStore();
   const navigate = useNavigate();
   const loginMutation = useLogin();
@@ -72,7 +74,7 @@ export function AuthModal() {
         <div className="p-6">
           <div className="flex justify-between items-center mb-6">
             <h2 className="text-2xl font-bold text-slate-900">
-              {isLogin ? 'Welcome Back' : 'Create Account'}
+              {isLogin ? t('auth.welcomeBack') : t('auth.createAccount')}
             </h2>
             <button
               onClick={onClose}
@@ -93,32 +95,32 @@ export function AuthModal() {
               <>
                 <div>
                   <label className="block text-sm font-medium text-slate-700 mb-1">
-                    Full Name
+                    {t('auth.fullName')}
                   </label>
                   <div className="relative">
                     <UserIcon className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" />
                     <input
                       type="text"
                       className={inputClass}
-                      placeholder="Aliya Nurlanovna"
+                      placeholder={t('auth.fullNamePlaceholder')}
                       {...register('full_name', { required: !isLogin })}
                     />
                   </div>
                   {errors.full_name && (
-                    <p className="mt-1 text-xs text-red-600">Full name is required</p>
+                    <p className="mt-1 text-xs text-red-600">{t('auth.fullNameRequired')}</p>
                   )}
                 </div>
 
                 <div>
                   <label className="block text-sm font-medium text-slate-700 mb-1">
-                    Phone Number
+                    {t('auth.phone')}
                   </label>
                   <div className="relative">
                     <Phone className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" />
                     <input
                       type="tel"
                       className={inputClass}
-                      placeholder="+7 701 000 0000"
+                      placeholder={t('auth.phonePlaceholder')}
                       {...register('phone')}
                     />
                   </div>
@@ -128,39 +130,37 @@ export function AuthModal() {
 
             <div>
               <label className="block text-sm font-medium text-slate-700 mb-1">
-                Email
+                {t('auth.email')}
               </label>
               <div className="relative">
                 <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" />
                 <input
                   type="email"
                   className={inputClass}
-                  placeholder="you@example.kz"
+                  placeholder={t('auth.emailPlaceholder')}
                   {...register('email', { required: true })}
                 />
               </div>
               {errors.email && (
-                <p className="mt-1 text-xs text-red-600">Email is required</p>
+                <p className="mt-1 text-xs text-red-600">{t('auth.emailRequired')}</p>
               )}
             </div>
 
             <div>
               <label className="block text-sm font-medium text-slate-700 mb-1">
-                Password
+                {t('auth.password')}
               </label>
               <div className="relative">
                 <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" />
                 <input
                   type="password"
                   className={inputClass}
-                  placeholder="********"
+                  placeholder={t('auth.passwordPlaceholder')}
                   {...register('password', { required: true, minLength: 6 })}
                 />
               </div>
               {errors.password && (
-                <p className="mt-1 text-xs text-red-600">
-                  Password must be at least 6 characters
-                </p>
+                <p className="mt-1 text-xs text-red-600">{t('auth.passwordMin')}</p>
               )}
             </div>
 
@@ -169,18 +169,18 @@ export function AuthModal() {
               disabled={pending}
               className="w-full py-3 bg-emerald-600 hover:bg-emerald-700 disabled:opacity-60 text-white font-semibold rounded-lg transition-colors"
             >
-              {pending ? 'Please wait…' : isLogin ? 'Sign In' : 'Create Account'}
+              {pending ? t('auth.pleaseWait') : isLogin ? t('auth.signIn') : t('auth.createAccount')}
             </button>
           </form>
 
           <div className="mt-6 text-center">
             <p className="text-sm text-slate-600">
-              {isLogin ? "Don't have an account?" : 'Already have an account?'}
+              {isLogin ? t('auth.noAccount') : t('auth.hasAccount')}
               <button
                 onClick={switchAuthMode}
                 className="ml-1 text-emerald-600 font-medium hover:text-emerald-700"
               >
-                {isLogin ? 'Sign up' : 'Sign in'}
+                {isLogin ? t('auth.signUp') : t('auth.signIn')}
               </button>
             </p>
           </div>

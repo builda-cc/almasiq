@@ -11,12 +11,13 @@ from ..config import settings
 
 # SQLite needs ``check_same_thread=False`` to be used across FastAPI's
 # threadpool. For other databases (PostgreSQL) no special args are needed.
+_database_url = settings.sqlalchemy_database_url
 _connect_args: dict = {}
-if settings.database_url.startswith("sqlite"):
+if _database_url.startswith("sqlite"):
     _connect_args = {"check_same_thread": False}
 
 engine = create_engine(
-    settings.database_url,
+    _database_url,
     connect_args=_connect_args,
     pool_pre_ping=True,
     future=True,

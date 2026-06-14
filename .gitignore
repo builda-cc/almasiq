@@ -10,6 +10,9 @@ backend/__pycache__/
 backend/app/__pycache__/
 *.pyc
 .env
+# Local SQLite database (production uses Postgres on Railway)
+backend/*.db
+backend/*.sqlite3
 
 # Editor / OS
 .DS_Store
