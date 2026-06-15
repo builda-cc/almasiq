@@ -10,7 +10,7 @@ created when the assets table is empty.
 
 from __future__ import annotations
 
-from sqlalchemy import select
+from sqlalchemy import delete, select, update
 from sqlalchemy.orm import Session
 
 from .core.security import hash_password
@@ -28,6 +28,17 @@ CATEGORIES = [
     {"slug": "business-industry", "name": "Business & Industry", "icon": "Factory"},
 ]
 
+# Maps deprecated category slugs to their replacement in the new taxonomy.
+# Used to migrate any existing prod data (assets / preferences) off the old
+# categories before the old category rows are deleted.
+LEGACY_CATEGORY_MAP = {
+    "apartments": "real-estate",
+    "houses": "real-estate",
+    "land": "land-agro",
+    "vehicles": "auto-equipment",
+    "commercial": "business-industry",
+}
+
 
 def _ensure_categories(db: Session) -> dict[str, Category]:
     by_slug: dict[str, Category] = {}
@@ -38,9 +49,67 @@ def _ensure_categories(db: Session) -> dict[str, Category]:
         if existing is None:
             existing = Category(**data)
             db.add(existing)
+        else:
+            # Keep name/icon in sync with the canonical definition.
+            existing.name = data["name"]
+            existing.icon = data["icon"]
         by_slug[data["slug"]] = existing
     db.commit()
-    return {slug: db.merge(c) for slug, c in by_slug.items()}
+    cats = {slug: db.merge(c) for slug, c in by_slug.items()}
+    _prune_legacy_categories(db, cats)
+    return cats
+
+
+def _prune_legacy_categories(db: Session, cats: dict[str, Category]) -> None:
+    """Remove categories that are no longer part of the taxonomy.
+
+    Any asset or exchange preference still pointing at a deprecated slug is
+    first remapped to its replacement (see ``LEGACY_CATEGORY_MAP``); slugs with
+    no known replacement are removed only if nothing references them. Safe to
+    run repeatedly — a no-op once the old categories are gone.
+    """
+    valid_slugs = {data["slug"] for data in CATEGORIES}
+    stale = (
+        db.execute(select(Category).where(Category.slug.not_in(valid_slugs)))
+        .scalars()
+        .all()
+    )
+    if not stale:
+        return
+
+    removed: list[str] = []
+    for old in stale:
+        new_slug = LEGACY_CATEGORY_MAP.get(old.slug)
+        if new_slug and new_slug in cats:
+            new_cat = cats[new_slug]
+            # Reassign assets to the replacement category.
+            db.execute(
+                update(Asset)
+                .where(Asset.category_id == old.id)
+                .values(category_id=new_cat.id)
+            )
+            # Reassign exchange preferences that target the old slug.
+            db.execute(
+                update(ExchangePreference)
+                .where(ExchangePreference.category_slug == old.slug)
+                .values(category_slug=new_slug)
+            )
+        else:
+            # No mapping: only safe to drop if nothing still references it.
+            in_use = (
+                db.execute(
+                    select(Asset.id).where(Asset.category_id == old.id).limit(1)
+                ).first()
+                is not None
+            )
+            if in_use:
+                continue
+        db.execute(delete(Category).where(Category.id == old.id))
+        removed.append(old.slug)
+
+    if removed:
+        db.commit()
+        print(f"Pruned legacy categories: {', '.join(removed)}")
 
 
 def _ensure_users(db: Session) -> list[User]:

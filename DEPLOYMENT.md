@@ -39,7 +39,7 @@ Set these on the backend service (Railway → Variables):
 | `JWT_SECRET_KEY` | A long random string. Generate: `python -c "import secrets; print(secrets.token_urlsafe(48))"` |
 | `CORS_ORIGINS` | Your Vercel URL, e.g. `https://your-app.vercel.app` (no trailing slash). Add more comma-separated if needed. |
 | `DEBUG` | `false` |
-| `SEED_ON_STARTUP` | `true` for the first deploy (seeds the 5 categories + demo data), then set to `false`. |
+| `SEED_ON_STARTUP` | `true` for the first deploy (seeds the 6 categories + demo data), then set to `false`. Also set this back to `true` for one deploy after a category-taxonomy change — the seeder migrates assets off deprecated categories and prunes the old rows. |
 | `OPENAI_API_KEY` | Optional. Leave empty to use the rule-based matcher. |
 
 > `PORT` is provided by Railway automatically — do **not** set it yourself.
