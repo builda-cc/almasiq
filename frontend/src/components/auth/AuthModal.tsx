@@ -13,7 +13,7 @@ interface FormValues {
 }
 
 const inputClass =
-  'w-full pl-10 pr-4 py-2.5 border border-slate-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none transition-all';
+  'w-full pl-10 pr-4 py-2.5 border border-beige-300 rounded-lg focus:ring-2 focus:ring-gold-500 focus:border-gold-500 outline-none transition-all';
 
 export function AuthModal() {
   const { t } = useTranslation();
@@ -67,20 +67,20 @@ export function AuthModal() {
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center">
       <div
-        className="absolute inset-0 bg-slate-900/50 backdrop-blur-sm"
+        className="absolute inset-0 bg-beige-900/50 backdrop-blur-sm"
         onClick={onClose}
       />
       <div className="relative bg-white rounded-2xl shadow-xl w-full max-w-md mx-4 overflow-hidden">
         <div className="p-6">
           <div className="flex justify-between items-center mb-6">
-            <h2 className="text-2xl font-bold text-slate-900">
+            <h2 className="text-2xl font-bold text-beige-900">
               {isLogin ? t('auth.welcomeBack') : t('auth.createAccount')}
             </h2>
             <button
               onClick={onClose}
-              className="p-2 hover:bg-slate-100 rounded-lg transition-colors"
+              className="p-2 hover:bg-beige-100 rounded-lg transition-colors"
             >
-              <X className="w-5 h-5 text-slate-500" />
+              <X className="w-5 h-5 text-beige-500" />
             </button>
           </div>
 
@@ -94,11 +94,11 @@ export function AuthModal() {
             {!isLogin && (
               <>
                 <div>
-                  <label className="block text-sm font-medium text-slate-700 mb-1">
+                  <label className="block text-sm font-medium text-beige-700 mb-1">
                     {t('auth.fullName')}
                   </label>
                   <div className="relative">
-                    <UserIcon className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" />
+                    <UserIcon className="absolute left-3 top-1/2 -tranbeige-y-1/2 w-5 h-5 text-beige-400" />
                     <input
                       type="text"
                       className={inputClass}
@@ -112,11 +112,11 @@ export function AuthModal() {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-slate-700 mb-1">
+                  <label className="block text-sm font-medium text-beige-700 mb-1">
                     {t('auth.phone')}
                   </label>
                   <div className="relative">
-                    <Phone className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" />
+                    <Phone className="absolute left-3 top-1/2 -tranbeige-y-1/2 w-5 h-5 text-beige-400" />
                     <input
                       type="tel"
                       className={inputClass}
@@ -129,11 +129,11 @@ export function AuthModal() {
             )}
 
             <div>
-              <label className="block text-sm font-medium text-slate-700 mb-1">
+              <label className="block text-sm font-medium text-beige-700 mb-1">
                 {t('auth.email')}
               </label>
               <div className="relative">
-                <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" />
+                <Mail className="absolute left-3 top-1/2 -tranbeige-y-1/2 w-5 h-5 text-beige-400" />
                 <input
                   type="email"
                   className={inputClass}
@@ -147,11 +147,11 @@ export function AuthModal() {
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-slate-700 mb-1">
+              <label className="block text-sm font-medium text-beige-700 mb-1">
                 {t('auth.password')}
               </label>
               <div className="relative">
-                <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" />
+                <Lock className="absolute left-3 top-1/2 -tranbeige-y-1/2 w-5 h-5 text-beige-400" />
                 <input
                   type="password"
                   className={inputClass}
@@ -167,18 +167,18 @@ export function AuthModal() {
             <button
               type="submit"
               disabled={pending}
-              className="w-full py-3 bg-emerald-600 hover:bg-emerald-700 disabled:opacity-60 text-white font-semibold rounded-lg transition-colors"
+              className="w-full py-3 bg-gold-gradient hover:bg-gold-gradient-hover disabled:opacity-60 text-dark font-semibold rounded-lg shadow-sm transition-colors"
             >
               {pending ? t('auth.pleaseWait') : isLogin ? t('auth.signIn') : t('auth.createAccount')}
             </button>
           </form>
 
           <div className="mt-6 text-center">
-            <p className="text-sm text-slate-600">
+            <p className="text-sm text-beige-600">
               {isLogin ? t('auth.noAccount') : t('auth.hasAccount')}
               <button
                 onClick={switchAuthMode}
-                className="ml-1 text-emerald-600 font-medium hover:text-emerald-700"
+                className="ml-1 text-gold-600 font-medium hover:text-gold-700"
               >
                 {isLogin ? t('auth.signUp') : t('auth.signIn')}
               </button>

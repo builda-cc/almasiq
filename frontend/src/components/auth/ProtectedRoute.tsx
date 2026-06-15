@@ -20,7 +20,7 @@ export function ProtectedRoute() {
   // While we still have a token but haven't verified the user yet, wait.
   if (token && !isAuthenticated && isLoading) {
     return (
-      <div className="flex items-center justify-center py-32 text-slate-500">
+      <div className="flex items-center justify-center py-32 text-beige-500">
         {t('protectedRoute.loading')}
       </div>
     );

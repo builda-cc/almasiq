@@ -18,7 +18,7 @@ interface FormValues {
 }
 
 const inputClass =
-  'w-full px-3 py-2.5 border border-slate-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none';
+  'w-full px-3 py-2.5 border border-beige-300 rounded-lg focus:ring-2 focus:ring-gold-500 focus:border-gold-500 outline-none';
 
 export function AddAsset() {
   const { t } = useTranslation();
@@ -90,17 +90,17 @@ export function AddAsset() {
 
   return (
     <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-      <h1 className="text-2xl font-bold text-slate-900">{t('addAsset.title')}</h1>
-      <p className="mt-1 text-slate-500">
+      <h1 className="text-2xl font-bold text-beige-900">{t('addAsset.title')}</h1>
+      <p className="mt-1 text-beige-500">
         {t('addAsset.subtitle')}
       </p>
 
       <form onSubmit={onSubmit} className="mt-8 space-y-6">
         {/* Basic info */}
-        <section className="bg-white border border-slate-200 rounded-xl p-6 space-y-4">
-          <h2 className="font-semibold text-slate-900">{t('addAsset.basicInfo')}</h2>
+        <section className="bg-white border border-beige-200 rounded-xl p-6 space-y-4">
+          <h2 className="font-semibold text-beige-900">{t('addAsset.basicInfo')}</h2>
           <div>
-            <label className="block text-sm font-medium text-slate-700 mb-1">{t('addAsset.assetTitle')}</label>
+            <label className="block text-sm font-medium text-beige-700 mb-1">{t('addAsset.assetTitle')}</label>
             <input
               className={inputClass}
               placeholder={t('addAsset.assetTitlePlaceholder')}
@@ -109,7 +109,7 @@ export function AddAsset() {
             {errors.title && <p className="mt-1 text-xs text-red-600">{t('addAsset.titleRequired')}</p>}
           </div>
           <div>
-            <label className="block text-sm font-medium text-slate-700 mb-1">{t('addAsset.category')}</label>
+            <label className="block text-sm font-medium text-beige-700 mb-1">{t('addAsset.category')}</label>
             <select className={inputClass} {...register('category_slug', { required: true })}>
               {(categories ?? []).map((cat) => (
                 <option key={cat.id} value={cat.slug}>
@@ -119,7 +119,7 @@ export function AddAsset() {
             </select>
           </div>
           <div>
-            <label className="block text-sm font-medium text-slate-700 mb-1">
+            <label className="block text-sm font-medium text-beige-700 mb-1">
               {t('addAsset.description')}
             </label>
             <textarea
@@ -132,8 +132,8 @@ export function AddAsset() {
         </section>
 
         {/* Photos */}
-        <section className="bg-white border border-slate-200 rounded-xl p-6 space-y-4">
-          <h2 className="font-semibold text-slate-900">{t('addAsset.photos')}</h2>
+        <section className="bg-white border border-beige-200 rounded-xl p-6 space-y-4">
+          <h2 className="font-semibold text-beige-900">{t('addAsset.photos')}</h2>
           {imageUrls.map((url, idx) => (
             <div key={idx} className="flex gap-2">
               <input
@@ -146,7 +146,7 @@ export function AddAsset() {
                 <button
                   type="button"
                   onClick={() => removeImage(idx)}
-                  className="px-3 border border-slate-300 rounded-lg text-slate-500 hover:bg-slate-50"
+                  className="px-3 border border-beige-300 rounded-lg text-beige-500 hover:bg-beige-50"
                 >
                   <X className="w-4 h-4" />
                 </button>
@@ -157,7 +157,7 @@ export function AddAsset() {
             <button
               type="button"
               onClick={addImageField}
-              className="flex items-center gap-1 text-sm text-emerald-600 font-medium"
+              className="flex items-center gap-1 text-sm text-gold-600 font-medium"
             >
               <Plus className="w-4 h-4" /> {t('addAsset.addAnotherImage')}
             </button>
@@ -165,21 +165,21 @@ export function AddAsset() {
         </section>
 
         {/* Location + value */}
-        <section className="bg-white border border-slate-200 rounded-xl p-6 space-y-4">
-          <h2 className="font-semibold text-slate-900">{t('addAsset.locationValue')}</h2>
+        <section className="bg-white border border-beige-200 rounded-xl p-6 space-y-4">
+          <h2 className="font-semibold text-beige-900">{t('addAsset.locationValue')}</h2>
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-sm font-medium text-slate-700 mb-1">{t('addAsset.region')}</label>
+              <label className="block text-sm font-medium text-beige-700 mb-1">{t('addAsset.region')}</label>
               <input className={inputClass} placeholder={t('addAsset.regionPlaceholder')} {...register('region')} />
             </div>
             <div>
-              <label className="block text-sm font-medium text-slate-700 mb-1">{t('addAsset.city')}</label>
+              <label className="block text-sm font-medium text-beige-700 mb-1">{t('addAsset.city')}</label>
               <input className={inputClass} placeholder={t('addAsset.cityPlaceholder')} {...register('city')} />
             </div>
           </div>
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-sm font-medium text-slate-700 mb-1">
+              <label className="block text-sm font-medium text-beige-700 mb-1">
                 {t('addAsset.estimatedValue')}
               </label>
               <input
@@ -193,7 +193,7 @@ export function AddAsset() {
               )}
             </div>
             <div>
-              <label className="block text-sm font-medium text-slate-700 mb-1">
+              <label className="block text-sm font-medium text-beige-700 mb-1">
                 {t('addAsset.liquidityScore')}
               </label>
               <input
@@ -208,9 +208,9 @@ export function AddAsset() {
         </section>
 
         {/* Preferences */}
-        <section className="bg-white border border-slate-200 rounded-xl p-6 space-y-3">
-          <h2 className="font-semibold text-slate-900">{t('addAsset.preferredExchange')}</h2>
-          <p className="text-sm text-slate-500">
+        <section className="bg-white border border-beige-200 rounded-xl p-6 space-y-3">
+          <h2 className="font-semibold text-beige-900">{t('addAsset.preferredExchange')}</h2>
+          <p className="text-sm text-beige-500">
             {t('addAsset.preferredSubtitle')}
           </p>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
@@ -220,10 +220,10 @@ export function AddAsset() {
                 <div
                   key={slug}
                   className={`flex items-center justify-between px-3 py-2.5 rounded-lg border ${
-                    pref ? 'border-emerald-300 bg-emerald-50' : 'border-slate-200'
+                    pref ? 'border-gold-300 bg-gold-50' : 'border-beige-200'
                   }`}
                 >
-                  <label className="flex items-center gap-2 text-sm text-slate-700">
+                  <label className="flex items-center gap-2 text-sm text-beige-700">
                     <input
                       type="checkbox"
                       checked={!!pref}
@@ -232,7 +232,7 @@ export function AddAsset() {
                     {t(`categories.${slug}`)}
                   </label>
                   {pref && (
-                    <label className="flex items-center gap-1 text-xs text-slate-500">
+                    <label className="flex items-center gap-1 text-xs text-beige-500">
                       <input
                         type="checkbox"
                         checked={pref.cash_accepted}
@@ -250,7 +250,7 @@ export function AddAsset() {
         <button
           type="submit"
           disabled={createAsset.isPending}
-          className="w-full py-3 bg-emerald-600 hover:bg-emerald-700 disabled:opacity-60 text-white font-semibold rounded-lg"
+          className="w-full py-3 bg-gold-gradient hover:bg-gold-gradient-hover disabled:opacity-60 text-dark font-semibold rounded-lg shadow-sm"
         >
           {createAsset.isPending ? t('common.publishing') : t('addAsset.publish')}
         </button>

@@ -17,23 +17,23 @@ const PLACEHOLDER =
 function MiniAsset({ asset, mine, t }: { asset: AIMatch['asset_a']; mine: boolean; t: (key: string) => string }) {
   return (
     <Link to={`/assets/${asset.id}`} className="flex-1 min-w-0 group">
-      <div className="relative h-24 rounded-lg overflow-hidden bg-slate-100">
+      <div className="relative h-24 rounded-lg overflow-hidden bg-beige-100">
         <img
           src={asset.images[0]?.url ?? PLACEHOLDER}
           alt={asset.title}
           className="w-full h-full object-cover group-hover:scale-105 transition-transform"
         />
         {mine && (
-          <span className="absolute top-1.5 left-1.5 px-2 py-0.5 bg-emerald-600 text-white text-[10px] font-semibold rounded-full">
+          <span className="absolute top-1.5 left-1.5 px-2 py-0.5 bg-gold-600 text-white text-[10px] font-semibold rounded-full">
             {t('matches.yours')}
           </span>
         )}
       </div>
-      <p className="mt-1.5 text-sm font-medium text-slate-900 line-clamp-1">
+      <p className="mt-1.5 text-sm font-medium text-beige-900 line-clamp-1">
         {asset.title}
       </p>
-      <p className="text-xs text-slate-500">{asset.category.name}</p>
-      <p className="text-sm font-semibold text-emerald-600">
+      <p className="text-xs text-beige-500">{asset.category.name}</p>
+      <p className="text-sm font-semibold text-gold-600">
         {formatKzt(asset.estimated_value)}
       </p>
     </Link>
@@ -43,13 +43,13 @@ function MiniAsset({ asset, mine, t }: { asset: AIMatch['asset_a']; mine: boolea
 function ScoreBar({ label, value }: { label: string; value: number }) {
   return (
     <div>
-      <div className="flex justify-between text-xs text-slate-500">
+      <div className="flex justify-between text-xs text-beige-500">
         <span>{label}</span>
         <span>{Math.round(value)}</span>
       </div>
-      <div className="mt-0.5 h-1.5 bg-slate-100 rounded-full overflow-hidden">
+      <div className="mt-0.5 h-1.5 bg-beige-100 rounded-full overflow-hidden">
         <div
-          className="h-full bg-emerald-500 rounded-full"
+          className="h-full bg-gold-500 rounded-full"
           style={{ width: `${Math.min(100, Math.max(0, value))}%` }}
         />
       </div>
@@ -60,18 +60,18 @@ function ScoreBar({ label, value }: { label: string; value: number }) {
 export function MatchCard({ match, myAssetIds = [] }: MatchCardProps) {
   const { t } = useTranslation();
   return (
-    <div className="bg-white rounded-xl border border-slate-200 p-4">
+    <div className="bg-white rounded-xl border border-beige-200 p-4">
       <div className="flex items-center justify-between mb-3">
         <MatchScoreBadge score={match.match_score} />
-        <span className="text-xs text-slate-500">
+        <span className="text-xs text-beige-500">
           {t('matches.valueDiff', { amount: formatKzt(match.value_difference) })}
         </span>
       </div>
 
       <div className="flex items-center gap-3">
         <MiniAsset asset={match.asset_a} mine={myAssetIds.includes(match.asset_a.id)} t={t} />
-        <div className="shrink-0 w-9 h-9 rounded-full bg-emerald-50 flex items-center justify-center">
-          <ArrowRightLeft className="w-4 h-4 text-emerald-600" />
+        <div className="shrink-0 w-9 h-9 rounded-full bg-gold-50 flex items-center justify-center">
+          <ArrowRightLeft className="w-4 h-4 text-gold-600" />
         </div>
         <MiniAsset asset={match.asset_b} mine={myAssetIds.includes(match.asset_b.id)} t={t} />
       </div>
@@ -84,7 +84,7 @@ export function MatchCard({ match, myAssetIds = [] }: MatchCardProps) {
       </div>
 
       {match.explanation && (
-        <p className="mt-3 text-xs text-slate-500">{match.explanation}</p>
+        <p className="mt-3 text-xs text-beige-500">{match.explanation}</p>
       )}
     </div>
   );

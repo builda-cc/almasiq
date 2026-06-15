@@ -36,8 +36,8 @@ export function DashboardLayout() {
                 className={({ isActive }) =>
                   `flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors ${
                     isActive
-                      ? 'bg-emerald-50 text-emerald-700'
-                      : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900'
+                      ? 'bg-gold-50 text-gold-700'
+                      : 'text-beige-600 hover:bg-beige-50 hover:text-beige-900'
                   }`
                 }
               >

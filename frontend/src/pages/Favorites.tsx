@@ -9,13 +9,13 @@ export function Favorites() {
 
   return (
     <div>
-      <h1 className="text-2xl font-bold text-slate-900">{t('favorites.title')}</h1>
-      <p className="mt-1 text-slate-500">{t('favorites.subtitle')}</p>
+      <h1 className="text-2xl font-bold text-beige-900">{t('favorites.title')}</h1>
+      <p className="mt-1 text-beige-500">{t('favorites.subtitle')}</p>
 
       {isLoading ? (
-        <div className="py-16 text-center text-slate-500">{t('common.loading')}</div>
+        <div className="py-16 text-center text-beige-500">{t('common.loading')}</div>
       ) : (favorites ?? []).length === 0 ? (
-        <div className="mt-6 bg-white border border-dashed border-slate-300 rounded-xl p-8 text-center text-slate-500">
+        <div className="mt-6 bg-white border border-dashed border-beige-300 rounded-xl p-8 text-center text-beige-500">
           {t('favorites.noFavorites')}
         </div>
       ) : (

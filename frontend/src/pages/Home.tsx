@@ -72,14 +72,14 @@ function Hero() {
   ];
 
   return (
-    <section className="relative overflow-hidden bg-slate-900">
-      {/* Layered emerald background, no AI-purple */}
-      <div className="absolute inset-0 bg-gradient-to-br from-emerald-700 via-emerald-800 to-slate-900" />
+    <section className="relative overflow-hidden bg-beige-900">
+      {/* Layered gold/bronze background over near-black dark accent */}
+      <div className="absolute inset-0 bg-gradient-to-br from-gold-700 via-gold-800 to-beige-900" />
       <div
         className="absolute inset-0 opacity-[0.18]"
         style={{
           backgroundImage:
-            'radial-gradient(circle at 20% 20%, rgba(16,185,129,0.5), transparent 45%), radial-gradient(circle at 85% 0%, rgba(5,150,105,0.4), transparent 40%)',
+            'radial-gradient(circle at 20% 20%, rgba(212,184,128,0.5), transparent 45%), radial-gradient(circle at 85% 0%, rgba(176,145,92,0.4), transparent 40%)',
         }}
       />
 
@@ -87,20 +87,20 @@ function Hero() {
         <div className="grid lg:grid-cols-12 gap-10 lg:gap-8 items-center">
           {/* Left: message */}
           <div className="lg:col-span-7">
-            <span className="inline-flex items-center gap-2 rounded-full bg-white/10 px-3 py-1 text-xs font-medium uppercase tracking-wide text-emerald-100 ring-1 ring-inset ring-white/20">
+            <span className="inline-flex items-center gap-2 rounded-full bg-white/10 px-3 py-1 text-xs font-medium uppercase tracking-wide text-gold-100 ring-1 ring-inset ring-white/20">
               <Sparkles className="w-3.5 h-3.5" />
               {t('home.heroEyebrow')}
             </span>
             <h1 className="mt-5 text-4xl md:text-5xl lg:text-6xl font-bold leading-[1.05] tracking-tight text-white">
               {t('home.heroTitle')}
             </h1>
-            <p className="mt-5 max-w-xl text-lg leading-relaxed text-emerald-50/90">
+            <p className="mt-5 max-w-xl text-lg leading-relaxed text-gold-50/90">
               {t('home.heroDescription')}
             </p>
             <div className="mt-8 flex flex-wrap items-center gap-3">
               <Link
                 to="/assets"
-                className="inline-flex items-center gap-2 rounded-lg bg-white px-6 py-3 font-semibold text-emerald-700 shadow-sm transition-all hover:bg-emerald-50 active:scale-[0.98]"
+                className="inline-flex items-center gap-2 rounded-lg bg-white px-6 py-3 font-semibold text-gold-700 shadow-sm transition-all hover:bg-gold-50 active:scale-[0.98]"
               >
                 {t('nav.browseAssets')}
                 <ArrowRight className="w-4 h-4" />
@@ -126,7 +126,7 @@ function Hero() {
               {stats.map((s) => (
                 <div key={s.label}>
                   <dt className="text-2xl font-bold text-white">{s.value}</dt>
-                  <dd className="mt-1 text-sm text-emerald-100/70">{s.label}</dd>
+                  <dd className="mt-1 text-sm text-gold-100/70">{s.label}</dd>
                 </div>
               ))}
             </dl>
@@ -144,12 +144,12 @@ function Hero() {
                 />
               </div>
               {/* Floating match chip overlaid on the visual */}
-              <div className="absolute -bottom-5 -left-3 sm:left-6 rounded-xl bg-white p-4 shadow-xl ring-1 ring-slate-900/5">
+              <div className="absolute -bottom-5 -left-3 sm:left-6 rounded-xl bg-white p-4 shadow-xl ring-1 ring-beige-900/5">
                 <MatchScoreBadge score={91} size="md" />
-                <div className="mt-3 flex items-center gap-2 text-sm font-medium text-slate-700">
-                  <Building2 className="w-4 h-4 text-emerald-600 shrink-0" />
-                  <ArrowRightLeft className="w-4 h-4 text-emerald-600 shrink-0" />
-                  <Map className="w-4 h-4 text-emerald-600 shrink-0" />
+                <div className="mt-3 flex items-center gap-2 text-sm font-medium text-beige-700">
+                  <Building2 className="w-4 h-4 text-gold-600 shrink-0" />
+                  <ArrowRightLeft className="w-4 h-4 text-gold-600 shrink-0" />
+                  <Map className="w-4 h-4 text-gold-600 shrink-0" />
                 </div>
               </div>
             </div>
@@ -168,10 +168,10 @@ function Categories() {
   return (
     <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
       <div className="max-w-2xl">
-        <h2 className="text-3xl font-bold tracking-tight text-slate-900">
+        <h2 className="text-3xl font-bold tracking-tight text-beige-900">
           {t('home.browseByCategory')}
         </h2>
-        <p className="mt-2 text-slate-500">{t('home.categorySubtitle')}</p>
+        <p className="mt-2 text-beige-500">{t('home.categorySubtitle')}</p>
       </div>
       <div ref={reveal.ref} className={`${reveal.className} mt-10 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4`}>
         {(categories ?? []).map((cat) => {
@@ -180,13 +180,13 @@ function Categories() {
             <Link
               key={cat.id}
               to={`/assets?category=${cat.slug}`}
-              className="group rounded-xl border border-slate-200 bg-white p-5 transition-all hover:-translate-y-0.5 hover:border-emerald-300 hover:shadow-md"
+              className="group rounded-xl border border-beige-200 bg-white p-5 transition-all hover:-tranbeige-y-0.5 hover:border-gold-300 hover:shadow-md"
             >
-              <div className="flex h-11 w-11 items-center justify-center rounded-lg bg-emerald-50 transition-colors group-hover:bg-emerald-100">
-                <Icon className="h-6 w-6 text-emerald-600" />
+              <div className="flex h-11 w-11 items-center justify-center rounded-lg bg-gold-50 transition-colors group-hover:bg-gold-100">
+                <Icon className="h-6 w-6 text-gold-600" />
               </div>
-              <h3 className="mt-3 font-semibold text-slate-900">{cat.name}</h3>
-              <p className="text-sm text-slate-500">
+              <h3 className="mt-3 font-semibold text-beige-900">{cat.name}</h3>
+              <p className="text-sm text-beige-500">
                 {t('home.listings', { count: cat.asset_count })}
               </p>
             </Link>
@@ -210,13 +210,13 @@ function HowItWorks() {
   ];
 
   return (
-    <section className="bg-slate-50 border-y border-slate-200">
+    <section className="bg-beige-50 border-y border-beige-200">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
         <div className="max-w-2xl">
-          <h2 className="text-3xl font-bold tracking-tight text-slate-900">
+          <h2 className="text-3xl font-bold tracking-tight text-beige-900">
             {t('home.howTitle')}
           </h2>
-          <p className="mt-2 text-slate-500">{t('home.howSubtitle')}</p>
+          <p className="mt-2 text-beige-500">{t('home.howSubtitle')}</p>
         </div>
 
         <div ref={reveal.ref} className={`${reveal.className} mt-12 grid gap-8 md:grid-cols-3`}>
@@ -225,15 +225,15 @@ function HowItWorks() {
             return (
               <div key={step.title} className="relative">
                 <div className="flex items-center gap-3">
-                  <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-emerald-600 text-white shadow-sm">
+                  <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-gold-600 text-white shadow-sm">
                     <Icon className="h-6 w-6" />
                   </div>
-                  <span className="font-mono text-sm font-semibold text-emerald-600">
+                  <span className="font-mono text-sm font-semibold text-gold-600">
                     0{i + 1}
                   </span>
                 </div>
-                <h3 className="mt-5 text-lg font-semibold text-slate-900">{step.title}</h3>
-                <p className="mt-2 text-sm leading-relaxed text-slate-600">{step.body}</p>
+                <h3 className="mt-5 text-lg font-semibold text-beige-900">{step.title}</h3>
+                <p className="mt-2 text-sm leading-relaxed text-beige-600">{step.body}</p>
               </div>
             );
           })}
@@ -253,14 +253,14 @@ function Featured() {
     <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
       <div className="flex items-end justify-between gap-4">
         <div>
-          <h2 className="text-3xl font-bold tracking-tight text-slate-900">
+          <h2 className="text-3xl font-bold tracking-tight text-beige-900">
             {t('home.featuredTitle')}
           </h2>
-          <p className="mt-2 text-slate-500">{t('home.featuredSubtitle')}</p>
+          <p className="mt-2 text-beige-500">{t('home.featuredSubtitle')}</p>
         </div>
         <Link
           to="/assets"
-          className="hidden sm:inline-flex items-center gap-1 font-medium text-emerald-600 transition-colors hover:text-emerald-700"
+          className="hidden sm:inline-flex items-center gap-1 font-medium text-gold-600 transition-colors hover:text-gold-700"
         >
           {t('home.viewAll')}
         </Link>
@@ -271,20 +271,20 @@ function Featured() {
           {Array.from({ length: 3 }).map((_, i) => (
             <div
               key={i}
-              className="overflow-hidden rounded-xl border border-slate-200 bg-white"
+              className="overflow-hidden rounded-xl border border-beige-200 bg-white"
             >
-              <div className="h-48 animate-pulse bg-slate-100" />
+              <div className="h-48 animate-pulse bg-beige-100" />
               <div className="space-y-3 p-4">
-                <div className="h-4 w-3/4 animate-pulse rounded bg-slate-100" />
-                <div className="h-4 w-1/3 animate-pulse rounded bg-slate-100" />
-                <div className="h-5 w-1/2 animate-pulse rounded bg-slate-100" />
+                <div className="h-4 w-3/4 animate-pulse rounded bg-beige-100" />
+                <div className="h-4 w-1/3 animate-pulse rounded bg-beige-100" />
+                <div className="h-5 w-1/2 animate-pulse rounded bg-beige-100" />
               </div>
             </div>
           ))}
         </div>
       ) : assets.length === 0 ? (
-        <div className="mt-10 rounded-xl border border-dashed border-slate-300 bg-slate-50 p-12 text-center">
-          <p className="text-slate-500">{t('home.featuredSubtitle')}</p>
+        <div className="mt-10 rounded-xl border border-dashed border-beige-300 bg-beige-50 p-12 text-center">
+          <p className="text-beige-500">{t('home.featuredSubtitle')}</p>
         </div>
       ) : (
         <div ref={reveal.ref} className={`${reveal.className} mt-10 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3`}>
@@ -307,16 +307,16 @@ function MatchShowcase() {
   const rest = top.slice(1);
 
   return (
-    <section className="bg-slate-900">
+    <section className="bg-beige-900">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
         <div className="max-w-2xl">
-          <div className="flex items-center gap-2 text-emerald-400">
+          <div className="flex items-center gap-2 text-gold-400">
             <Sparkles className="h-6 w-6" />
             <h2 className="text-3xl font-bold tracking-tight text-white">
               {t('home.aiMatchingTitle')}
             </h2>
           </div>
-          <p className="mt-2 text-slate-400">{t('home.aiMatchingDescription')}</p>
+          <p className="mt-2 text-beige-400">{t('home.aiMatchingDescription')}</p>
         </div>
 
         {/* Asymmetric panel: one large featured match + supporting list */}
@@ -343,7 +343,7 @@ function MatchShowcase() {
         <div className="mt-10">
           <Link
             to="/matches"
-            className="inline-flex items-center gap-2 rounded-lg bg-emerald-500 px-6 py-3 font-semibold text-white transition-all hover:bg-emerald-400 active:scale-[0.98]"
+            className="inline-flex items-center gap-2 rounded-lg bg-gold-500 px-6 py-3 font-semibold text-white transition-all hover:bg-gold-400 active:scale-[0.98]"
           >
             {t('home.exploreAIMatches')}
             <ArrowRight className="h-4 w-4" />
@@ -363,7 +363,7 @@ function MatchPanelLarge({ match }: { match: import('../types').AIMatch }) {
         <AssetMini asset={match.asset_b} />
       </div>
       {match.explanation && (
-        <p className="mt-5 text-sm leading-relaxed text-slate-400 line-clamp-3">
+        <p className="mt-5 text-sm leading-relaxed text-beige-400 line-clamp-3">
           {match.explanation}
         </p>
       )}
@@ -374,11 +374,11 @@ function MatchPanelLarge({ match }: { match: import('../types').AIMatch }) {
 function AssetMini({ asset }: { asset: import('../types').Asset }) {
   return (
     <div className="rounded-xl bg-white/5 p-4 ring-1 ring-inset ring-white/10">
-      <p className="text-xs font-medium uppercase tracking-wide text-emerald-400">
+      <p className="text-xs font-medium uppercase tracking-wide text-gold-400">
         {asset.category.name}
       </p>
       <p className="mt-1 line-clamp-1 font-semibold text-white">{asset.title}</p>
-      <p className="mt-2 text-sm font-bold text-emerald-300">
+      <p className="mt-2 text-sm font-bold text-gold-300">
         {formatKzt(asset.estimated_value)}
       </p>
     </div>
@@ -390,9 +390,9 @@ function MatchPanelSmall({ match }: { match: import('../types').AIMatch }) {
     <div className="rounded-xl border border-white/10 bg-white/[0.04] p-5">
       <div className="flex items-center justify-between gap-3">
         <MatchScoreBadge score={match.match_score} size="sm" />
-        <ArrowRightLeft className="h-4 w-4 shrink-0 text-emerald-400" />
+        <ArrowRightLeft className="h-4 w-4 shrink-0 text-gold-400" />
       </div>
-      <div className="mt-3 flex items-center justify-between gap-2 text-sm font-medium text-slate-300">
+      <div className="mt-3 flex items-center justify-between gap-2 text-sm font-medium text-beige-300">
         <span className="line-clamp-1">{match.asset_a.category.name}</span>
         <span className="line-clamp-1 text-right">{match.asset_b.category.name}</span>
       </div>
@@ -407,13 +407,13 @@ function PlaceholderMatchLarge() {
       <MatchScoreBadge score={87} size="lg" />
       <div className="mt-6 grid gap-3 sm:grid-cols-2">
         <div className="rounded-xl bg-white/5 p-4 ring-1 ring-inset ring-white/10">
-          <p className="text-xs font-medium uppercase tracking-wide text-emerald-400">
+          <p className="text-xs font-medium uppercase tracking-wide text-gold-400">
             {t('categories.apartments')}
           </p>
           <p className="mt-1 font-semibold text-white">Almaty, Esentai</p>
         </div>
         <div className="rounded-xl bg-white/5 p-4 ring-1 ring-inset ring-white/10">
-          <p className="text-xs font-medium uppercase tracking-wide text-emerald-400">
+          <p className="text-xs font-medium uppercase tracking-wide text-gold-400">
             {t('categories.land')}
           </p>
           <p className="mt-1 font-semibold text-white">Talgar + Vehicle</p>
@@ -436,9 +436,9 @@ function PlaceholderMatchSmall({
     <div className="rounded-xl border border-white/10 bg-white/[0.04] p-5">
       <div className="flex items-center justify-between gap-3">
         <MatchScoreBadge score={score} size="sm" />
-        <ArrowRightLeft className="h-4 w-4 shrink-0 text-emerald-400" />
+        <ArrowRightLeft className="h-4 w-4 shrink-0 text-gold-400" />
       </div>
-      <div className="mt-3 flex items-center justify-between gap-2 text-sm font-medium text-slate-300">
+      <div className="mt-3 flex items-center justify-between gap-2 text-sm font-medium text-beige-300">
         <span>{label}</span>
         <span className="text-right">{toLabel}</span>
       </div>
@@ -453,18 +453,18 @@ function CallToAction() {
 
   return (
     <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
-      <div className="overflow-hidden rounded-2xl bg-gradient-to-br from-emerald-600 to-emerald-700 px-6 py-12 sm:px-12 sm:py-16">
+      <div className="overflow-hidden rounded-2xl bg-gradient-to-br from-gold-600 to-gold-700 px-6 py-12 sm:px-12 sm:py-16">
         <div className="flex flex-col items-start justify-between gap-6 md:flex-row md:items-center">
           <div className="max-w-xl">
             <h2 className="text-2xl font-bold tracking-tight text-white sm:text-3xl">
               {t('home.ctaTitle')}
             </h2>
-            <p className="mt-2 text-emerald-50/90">{t('home.ctaBody')}</p>
+            <p className="mt-2 text-gold-50/90">{t('home.ctaBody')}</p>
           </div>
           {isAuthenticated ? (
             <Link
               to="/assets/new"
-              className="inline-flex shrink-0 items-center gap-2 rounded-lg bg-white px-6 py-3 font-semibold text-emerald-700 transition-all hover:bg-emerald-50 active:scale-[0.98]"
+              className="inline-flex shrink-0 items-center gap-2 rounded-lg bg-white px-6 py-3 font-semibold text-gold-700 transition-all hover:bg-gold-50 active:scale-[0.98]"
             >
               {t('nav.publishAsset')}
               <ArrowRight className="h-4 w-4" />
@@ -472,7 +472,7 @@ function CallToAction() {
           ) : (
             <button
               onClick={() => openAuth('register')}
-              className="inline-flex shrink-0 items-center gap-2 rounded-lg bg-white px-6 py-3 font-semibold text-emerald-700 transition-all hover:bg-emerald-50 active:scale-[0.98]"
+              className="inline-flex shrink-0 items-center gap-2 rounded-lg bg-white px-6 py-3 font-semibold text-gold-700 transition-all hover:bg-gold-50 active:scale-[0.98]"
             >
               {t('nav.publishAsset')}
               <ArrowRight className="h-4 w-4" />

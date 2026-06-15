@@ -2,6 +2,14 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+  /* Luxury metallic base: warm off-white background, near-black body text. */
+  body {
+    background-color: #faf9f6; /* beige-50 (Background) */
+    color: #10100f; /* beige-900 (Body Text) */
+  }
+}
+
 @layer utilities {
   /* Scroll-reveal: elements start hidden, become visible when observed. */
   .reveal {

@@ -35,35 +35,35 @@ export function HowItWorks() {
 
   return (
     <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-      <h1 className="text-3xl font-bold text-slate-900">{t('howItWorks.title')}</h1>
-      <p className="mt-2 text-slate-500">
+      <h1 className="text-3xl font-bold text-beige-900">{t('howItWorks.title')}</h1>
+      <p className="mt-2 text-beige-500">
         {t('howItWorks.subtitle')}
       </p>
 
       <div className="mt-10 space-y-6">
         {steps.map((step, idx) => (
           <div key={step.title} className="flex gap-4">
-            <div className="shrink-0 w-12 h-12 rounded-full bg-emerald-50 flex items-center justify-center relative">
-              <step.icon className="w-6 h-6 text-emerald-600" />
-              <span className="absolute -top-1 -left-1 w-5 h-5 bg-emerald-600 text-white text-xs rounded-full flex items-center justify-center">
+            <div className="shrink-0 w-12 h-12 rounded-full bg-gold-50 flex items-center justify-center relative">
+              <step.icon className="w-6 h-6 text-gold-600" />
+              <span className="absolute -top-1 -left-1 w-5 h-5 bg-gold-600 text-white text-xs rounded-full flex items-center justify-center">
                 {idx + 1}
               </span>
             </div>
             <div>
-              <h2 className="font-semibold text-slate-900">{step.title}</h2>
-              <p className="mt-1 text-slate-600">{step.body}</p>
+              <h2 className="font-semibold text-beige-900">{step.title}</h2>
+              <p className="mt-1 text-beige-600">{step.body}</p>
             </div>
           </div>
         ))}
       </div>
 
-      <div className="mt-10 bg-emerald-50 rounded-xl p-6 text-center">
-        <p className="font-medium text-slate-900">
+      <div className="mt-10 bg-gold-50 rounded-xl p-6 text-center">
+        <p className="font-medium text-beige-900">
           {t('howItWorks.ctaTitle')}
         </p>
         <Link
           to="/assets"
-          className="mt-3 inline-block px-6 py-3 bg-emerald-600 text-white font-semibold rounded-lg hover:bg-emerald-700"
+          className="mt-3 inline-block px-6 py-3 bg-gold-gradient text-dark font-semibold rounded-lg shadow-sm hover:bg-gold-gradient-hover"
         >
           {t('howItWorks.ctaButton')}
         </Link>

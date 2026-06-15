@@ -20,7 +20,7 @@ function RequestRow({
   const canComplete = request.status === 'accepted';
 
   return (
-    <div className="bg-white border border-slate-200 rounded-xl p-4">
+    <div className="bg-white border border-beige-200 rounded-xl p-4">
       <div className="flex items-center justify-between">
         <span
           className={`px-2.5 py-1 text-xs font-medium rounded-full ${getStatusColor(
@@ -29,37 +29,37 @@ function RequestRow({
         >
           {request.status}
         </span>
-        <span className="text-xs text-slate-400">{formatDate(request.created_at)}</span>
+        <span className="text-xs text-beige-400">{formatDate(request.created_at)}</span>
       </div>
 
       <div className="mt-3 flex items-center gap-3 text-sm">
         <Link
           to={`/assets/${request.offered_asset.id}`}
-          className="flex-1 min-w-0 hover:text-emerald-600"
+          className="flex-1 min-w-0 hover:text-gold-600"
         >
-          <p className="font-medium text-slate-900 line-clamp-1">
+          <p className="font-medium text-beige-900 line-clamp-1">
             {request.offered_asset.title}
           </p>
-          <p className="text-emerald-600 font-semibold">
+          <p className="text-gold-600 font-semibold">
             {formatKzt(request.offered_asset.estimated_value)}
           </p>
         </Link>
-        <ArrowRightLeft className="w-4 h-4 text-emerald-600 shrink-0" />
+        <ArrowRightLeft className="w-4 h-4 text-gold-600 shrink-0" />
         <Link
           to={`/assets/${request.requested_asset.id}`}
-          className="flex-1 min-w-0 text-right hover:text-emerald-600"
+          className="flex-1 min-w-0 text-right hover:text-gold-600"
         >
-          <p className="font-medium text-slate-900 line-clamp-1">
+          <p className="font-medium text-beige-900 line-clamp-1">
             {request.requested_asset.title}
           </p>
-          <p className="text-emerald-600 font-semibold">
+          <p className="text-gold-600 font-semibold">
             {formatKzt(request.requested_asset.estimated_value)}
           </p>
         </Link>
       </div>
 
       {request.message && (
-        <p className="mt-3 text-sm text-slate-600 bg-slate-50 rounded-lg px-3 py-2">
+        <p className="mt-3 text-sm text-beige-600 bg-beige-50 rounded-lg px-3 py-2">
           {direction === 'incoming'
             ? request.from_user.full_name
             : t('exchanges.you')}
@@ -73,13 +73,13 @@ function RequestRow({
             <>
               <button
                 onClick={() => update.mutate({ id: request.id, status: 'accepted' })}
-                className="flex-1 py-2 bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-medium rounded-lg flex items-center justify-center gap-1"
+                className="flex-1 py-2 bg-gold-600 hover:bg-gold-700 text-white text-sm font-medium rounded-lg flex items-center justify-center gap-1"
               >
                 <Check className="w-4 h-4" /> {t('exchanges.accept')}
               </button>
               <button
                 onClick={() => update.mutate({ id: request.id, status: 'rejected' })}
-                className="flex-1 py-2 border border-slate-300 text-slate-700 text-sm font-medium rounded-lg flex items-center justify-center gap-1 hover:bg-slate-50"
+                className="flex-1 py-2 border border-beige-300 text-beige-700 text-sm font-medium rounded-lg flex items-center justify-center gap-1 hover:bg-beige-50"
               >
                 <X className="w-4 h-4" /> {t('exchanges.reject')}
               </button>
@@ -88,7 +88,7 @@ function RequestRow({
           {canComplete && (
             <button
               onClick={() => update.mutate({ id: request.id, status: 'completed' })}
-              className="flex-1 py-2 bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-medium rounded-lg"
+              className="flex-1 py-2 bg-gold-600 hover:bg-gold-700 text-white text-sm font-medium rounded-lg"
             >
               {t('exchanges.markCompleted')}
             </button>
@@ -106,15 +106,15 @@ export function ExchangeRequests() {
 
   return (
     <div>
-      <h1 className="text-2xl font-bold text-slate-900">{t('exchanges.title')}</h1>
+      <h1 className="text-2xl font-bold text-beige-900">{t('exchanges.title')}</h1>
 
-      <div className="mt-4 inline-flex rounded-lg border border-slate-200 p-1 bg-white">
+      <div className="mt-4 inline-flex rounded-lg border border-beige-200 p-1 bg-white">
         {(['incoming', 'outgoing'] as const).map((t) => (
           <button
             key={t}
             onClick={() => setTab(t)}
             className={`px-4 py-1.5 text-sm font-medium rounded-md capitalize transition-colors ${
-              tab === t ? 'bg-emerald-600 text-white' : 'text-slate-600'
+              tab === t ? 'bg-gold-600 text-white' : 'text-beige-600'
             }`}
           >
             {t}
@@ -123,9 +123,9 @@ export function ExchangeRequests() {
       </div>
 
       {isLoading ? (
-        <div className="py-16 text-center text-slate-500">{t('common.loading')}</div>
+        <div className="py-16 text-center text-beige-500">{t('common.loading')}</div>
       ) : (requests ?? []).length === 0 ? (
-        <div className="mt-6 bg-white border border-dashed border-slate-300 rounded-xl p-8 text-center text-slate-500">
+        <div className="mt-6 bg-white border border-dashed border-beige-300 rounded-xl p-8 text-center text-beige-500">
           {t('exchanges.noRequests', { tab })}
         </div>
       ) : (

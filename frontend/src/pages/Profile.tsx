@@ -21,7 +21,7 @@ interface PasswordFormValues {
 }
 
 const inputClass =
-  'w-full px-3 py-2.5 border border-slate-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none';
+  'w-full px-3 py-2.5 border border-beige-300 rounded-lg focus:ring-2 focus:ring-gold-500 focus:border-gold-500 outline-none';
 
 export function Profile() {
   const { t } = useTranslation();
@@ -48,7 +48,7 @@ export function Profile() {
   } = useForm<PasswordFormValues>();
 
   if (!user) {
-    return <div className="py-16 text-center text-slate-500">{t('common.loading')}</div>;
+    return <div className="py-16 text-center text-beige-500">{t('common.loading')}</div>;
   }
 
   const startEditing = () => {
@@ -128,27 +128,27 @@ export function Profile() {
   return (
     <div>
       <div className="flex items-center justify-between">
-        <h1 className="text-2xl font-bold text-slate-900">{t('profile.title')}</h1>
+        <h1 className="text-2xl font-bold text-beige-900">{t('profile.title')}</h1>
         {!editing && (
           <button
             onClick={startEditing}
-            className="px-4 py-2 border border-slate-300 rounded-lg text-sm font-medium text-slate-700 hover:bg-slate-50 flex items-center gap-1.5"
+            className="px-4 py-2 border border-beige-300 rounded-lg text-sm font-medium text-beige-700 hover:bg-beige-50 flex items-center gap-1.5"
           >
             <Pencil className="w-4 h-4" /> {t('profile.editProfile')}
           </button>
         )}
       </div>
 
-      <div className="mt-6 bg-white border border-slate-200 rounded-xl p-6">
+      <div className="mt-6 bg-white border border-beige-200 rounded-xl p-6">
         <div className="flex items-center gap-4">
-          <div className="w-16 h-16 rounded-full bg-emerald-100 flex items-center justify-center">
-            <span className="text-2xl font-bold text-emerald-700">
+          <div className="w-16 h-16 rounded-full bg-gold-100 flex items-center justify-center">
+            <span className="text-2xl font-bold text-gold-700">
               {user.full_name.charAt(0)}
             </span>
           </div>
           <div>
-            <h2 className="text-lg font-semibold text-slate-900">{user.full_name}</h2>
-            <p className="text-sm text-slate-500">
+            <h2 className="text-lg font-semibold text-beige-900">{user.full_name}</h2>
+            <p className="text-sm text-beige-500">
               {t('profile.memberSince', { date: formatDate(user.created_at) })}
             </p>
           </div>
@@ -163,7 +163,7 @@ export function Profile() {
             )}
 
             <div>
-              <label className="block text-sm font-medium text-slate-700 mb-1">
+              <label className="block text-sm font-medium text-beige-700 mb-1">
                 {t('profile.fullName')}
               </label>
               <input
@@ -176,7 +176,7 @@ export function Profile() {
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-slate-700 mb-1">
+              <label className="block text-sm font-medium text-beige-700 mb-1">
                 {t('profile.email')}
               </label>
               <input
@@ -196,7 +196,7 @@ export function Profile() {
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
-                <label className="block text-sm font-medium text-slate-700 mb-1">
+                <label className="block text-sm font-medium text-beige-700 mb-1">
                   {t('profile.phone')}
                 </label>
                 <input
@@ -206,7 +206,7 @@ export function Profile() {
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-slate-700 mb-1">
+                <label className="block text-sm font-medium text-beige-700 mb-1">
                   {t('profile.city')}
                 </label>
                 <input
@@ -218,7 +218,7 @@ export function Profile() {
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-slate-700 mb-1">
+              <label className="block text-sm font-medium text-beige-700 mb-1">
                 {t('profile.bio')}
               </label>
               <textarea
@@ -233,14 +233,14 @@ export function Profile() {
               <button
                 type="submit"
                 disabled={updateProfile.isPending}
-                className="px-5 py-2.5 bg-emerald-600 hover:bg-emerald-700 disabled:opacity-60 text-white font-semibold rounded-lg"
+                className="px-5 py-2.5 bg-gold-600 hover:bg-gold-700 disabled:opacity-60 text-white font-semibold rounded-lg"
               >
                 {updateProfile.isPending ? t('common.saving') : t('profile.saveChanges')}
               </button>
               <button
                 type="button"
                 onClick={cancelEditing}
-                className="px-5 py-2.5 border border-slate-300 text-slate-700 font-medium rounded-lg hover:bg-slate-50"
+                className="px-5 py-2.5 border border-beige-300 text-beige-700 font-medium rounded-lg hover:bg-beige-50"
               >
                 {t('profile.cancel')}
               </button>
@@ -252,20 +252,20 @@ export function Profile() {
               {fields.map((field) => (
                 <div
                   key={field.label}
-                  className="flex items-center gap-3 px-4 py-3 bg-slate-50 rounded-lg"
+                  className="flex items-center gap-3 px-4 py-3 bg-beige-50 rounded-lg"
                 >
-                  <field.icon className="w-5 h-5 text-slate-400" />
+                  <field.icon className="w-5 h-5 text-beige-400" />
                   <div>
-                    <p className="text-xs text-slate-500">{field.label}</p>
-                    <p className="text-sm font-medium text-slate-900">{field.value}</p>
+                    <p className="text-xs text-beige-500">{field.label}</p>
+                    <p className="text-sm font-medium text-beige-900">{field.value}</p>
                   </div>
                 </div>
               ))}
             </div>
 
             <div className="mt-4">
-              <p className="text-sm text-slate-500">{t('profile.bio')}</p>
-              <p className="mt-1 text-slate-700">
+              <p className="text-sm text-beige-500">{t('profile.bio')}</p>
+              <p className="mt-1 text-beige-700">
                 {user.bio ? user.bio : t('profile.noBio')}
               </p>
             </div>
@@ -273,13 +273,13 @@ export function Profile() {
         )}
       </div>
 
-      <div className="mt-6 bg-white border border-slate-200 rounded-xl p-6">
+      <div className="mt-6 bg-white border border-beige-200 rounded-xl p-6">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <Lock className="w-5 h-5 text-slate-400" />
+            <Lock className="w-5 h-5 text-beige-400" />
             <div>
-              <h2 className="text-lg font-semibold text-slate-900">{t('profile.passwordSection')}</h2>
-              <p className="text-sm text-slate-500">
+              <h2 className="text-lg font-semibold text-beige-900">{t('profile.passwordSection')}</h2>
+              <p className="text-sm text-beige-500">
                 {t('profile.passwordDescription')}
               </p>
             </div>
@@ -287,7 +287,7 @@ export function Profile() {
           {!changingPassword && (
             <button
               onClick={startChangingPassword}
-              className="px-4 py-2 border border-slate-300 rounded-lg text-sm font-medium text-slate-700 hover:bg-slate-50"
+              className="px-4 py-2 border border-beige-300 rounded-lg text-sm font-medium text-beige-700 hover:bg-beige-50"
             >
               {t('auth.changePassword')}
             </button>
@@ -295,7 +295,7 @@ export function Profile() {
         </div>
 
         {passwordSuccess && !changingPassword && (
-          <div className="mt-4 px-4 py-2.5 bg-emerald-50 text-emerald-700 text-sm rounded-lg">
+          <div className="mt-4 px-4 py-2.5 bg-gold-50 text-gold-700 text-sm rounded-lg">
             {t('auth.passwordUpdated')}
           </div>
         )}
@@ -309,7 +309,7 @@ export function Profile() {
             )}
 
             <div>
-              <label className="block text-sm font-medium text-slate-700 mb-1">
+              <label className="block text-sm font-medium text-beige-700 mb-1">
                 {t('auth.currentPassword')}
               </label>
               <input
@@ -326,7 +326,7 @@ export function Profile() {
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
-                <label className="block text-sm font-medium text-slate-700 mb-1">
+                <label className="block text-sm font-medium text-beige-700 mb-1">
                   {t('auth.newPassword')}
                 </label>
                 <input
@@ -344,7 +344,7 @@ export function Profile() {
                 )}
               </div>
               <div>
-                <label className="block text-sm font-medium text-slate-700 mb-1">
+                <label className="block text-sm font-medium text-beige-700 mb-1">
                   {t('auth.confirmPassword')}
                 </label>
                 <input
@@ -370,14 +370,14 @@ export function Profile() {
               <button
                 type="submit"
                 disabled={changePassword.isPending}
-                className="px-5 py-2.5 bg-emerald-600 hover:bg-emerald-700 disabled:opacity-60 text-white font-semibold rounded-lg"
+                className="px-5 py-2.5 bg-gold-600 hover:bg-gold-700 disabled:opacity-60 text-white font-semibold rounded-lg"
               >
                 {changePassword.isPending ? t('common.updating') : t('auth.updatePassword')}
               </button>
               <button
                 type="button"
                 onClick={cancelChangingPassword}
-                className="px-5 py-2.5 border border-slate-300 text-slate-700 font-medium rounded-lg hover:bg-slate-50"
+                className="px-5 py-2.5 border border-beige-300 text-beige-700 font-medium rounded-lg hover:bg-beige-50"
               >
                 {t('auth.cancel')}
               </button>

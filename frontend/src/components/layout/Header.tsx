@@ -39,19 +39,19 @@ export function Header() {
   const linkClass = ({ isActive }: { isActive: boolean }) =>
     `px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
       isActive
-        ? 'bg-emerald-50 text-emerald-700'
-        : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900'
+        ? 'bg-gold-50 text-gold-700'
+        : 'text-beige-600 hover:bg-beige-50 hover:text-beige-900'
     }`;
 
   return (
-    <header className="bg-white border-b border-slate-200 sticky top-0 z-40">
+    <header className="bg-white border-b border-beige-200 sticky top-0 z-40">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           <Link to="/" className="flex items-center">
-            <div className="w-8 h-8 bg-emerald-600 rounded-lg flex items-center justify-center">
-              <ArrowRightLeft className="w-5 h-5 text-white" />
+            <div className="w-8 h-8 bg-gold-gradient rounded-lg flex items-center justify-center shadow-sm">
+              <ArrowRightLeft className="w-5 h-5 text-dark" />
             </div>
-            <span className="ml-2 text-xl font-bold text-slate-900">{t('common.appName')}</span>
+            <span className="ml-2 text-xl font-bold text-beige-900">{t('common.appName')}</span>
           </Link>
 
           <nav className="hidden md:flex items-center space-x-1">
@@ -68,19 +68,19 @@ export function Header() {
               <>
                 <Link
                   to="/assets/new"
-                  className="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-medium rounded-lg transition-colors"
+                  className="px-4 py-2 bg-gold-gradient hover:bg-gold-gradient-hover text-dark text-sm font-semibold rounded-lg shadow-sm transition-colors"
                 >
                   {t('nav.publishAsset')}
                 </Link>
                 <Link
                   to="/dashboard/profile"
-                  className="px-4 py-2 text-slate-600 hover:text-slate-900 text-sm font-medium"
+                  className="px-4 py-2 text-beige-600 hover:text-beige-900 text-sm font-medium"
                 >
                   {t('nav.profile')}
                 </Link>
                 <button
                   onClick={handleLogout}
-                  className="px-4 py-2 text-slate-600 hover:text-slate-900 text-sm font-medium"
+                  className="px-4 py-2 text-beige-600 hover:text-beige-900 text-sm font-medium"
                 >
                   {t('nav.logout')}
                 </button>
@@ -89,13 +89,13 @@ export function Header() {
               <>
                 <button
                   onClick={() => openAuth('login')}
-                  className="px-4 py-2 text-slate-600 hover:text-slate-900 text-sm font-medium"
+                  className="px-4 py-2 text-beige-600 hover:text-beige-900 text-sm font-medium"
                 >
                   {t('nav.login')}
                 </button>
                 <button
                   onClick={() => openAuth('register')}
-                  className="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-medium rounded-lg transition-colors"
+                  className="px-4 py-2 bg-gold-gradient hover:bg-gold-gradient-hover text-dark text-sm font-semibold rounded-lg shadow-sm transition-colors"
                 >
                   {t('nav.register')}
                 </button>
@@ -105,7 +105,7 @@ export function Header() {
 
           <button
             onClick={() => setMobileOpen(!mobileOpen)}
-            className="md:hidden p-2 text-slate-600"
+            className="md:hidden p-2 text-beige-600"
           >
             {mobileOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
           </button>
@@ -113,14 +113,14 @@ export function Header() {
       </div>
 
       {mobileOpen && (
-        <div className="md:hidden bg-white border-t border-slate-200">
+        <div className="md:hidden bg-white border-t border-beige-200">
           <div className="px-4 py-3 space-y-2">
             {navItems.map((item) => (
               <NavLink
                 key={item.to}
                 to={item.to}
                 onClick={() => setMobileOpen(false)}
-                className="block px-3 py-2 rounded-lg text-sm font-medium text-slate-600 hover:bg-slate-50"
+                className="block px-3 py-2 rounded-lg text-sm font-medium text-beige-600 hover:bg-beige-50"
               >
                 {item.label}
               </NavLink>
@@ -130,13 +130,13 @@ export function Header() {
                 <Link
                   to="/assets/new"
                   onClick={() => setMobileOpen(false)}
-                  className="block px-3 py-2 bg-emerald-600 text-white text-sm font-medium rounded-lg"
+                  className="block px-3 py-2 bg-gold-gradient text-dark text-sm font-semibold rounded-lg"
                 >
                   {t('nav.publishAsset')}
                 </Link>
                 <button
                   onClick={handleLogout}
-                  className="w-full text-left px-3 py-2 text-slate-600 text-sm font-medium"
+                  className="w-full text-left px-3 py-2 text-beige-600 text-sm font-medium"
                 >
                   {t('nav.logout')}
                 </button>
@@ -148,7 +148,7 @@ export function Header() {
                     openAuth('login');
                     setMobileOpen(false);
                   }}
-                  className="w-full text-left px-3 py-2 text-slate-600 text-sm font-medium"
+                  className="w-full text-left px-3 py-2 text-beige-600 text-sm font-medium"
                 >
                   {t('nav.login')}
                 </button>
@@ -157,13 +157,13 @@ export function Header() {
                     openAuth('register');
                     setMobileOpen(false);
                   }}
-                  className="w-full text-left px-3 py-2 bg-emerald-600 text-white text-sm font-medium rounded-lg"
+                  className="w-full text-left px-3 py-2 bg-gold-gradient text-dark text-sm font-semibold rounded-lg"
                 >
                   {t('nav.register')}
                 </button>
               </>
             )}
-            <div className="pt-2 border-t border-slate-100">
+            <div className="pt-2 border-t border-beige-100">
               <LanguageSwitcher />
             </div>
           </div>
