@@ -19,7 +19,7 @@ import { useAuthStore } from '../store/authStore';
 import { useCategories, useMatches, useAssets } from '../hooks/queries';
 import { AssetCard } from '../components/assets/AssetCard';
 import { MatchScoreBadge } from '../components/ui/MatchScoreBadge';
-import { formatKzt } from '../utils/helpers';
+import { formatKzt, categoryName } from '../utils/helpers';
 import type { CategorySlug } from '../types';
 
 const CATEGORY_ICONS: Record<CategorySlug, typeof Building2> = {
@@ -187,7 +187,7 @@ function Categories() {
               <div className="flex h-11 w-11 items-center justify-center rounded-lg bg-gold-50 transition-colors group-hover:bg-gold-100">
                 <Icon className="h-6 w-6 text-gold-600" />
               </div>
-              <h3 className="mt-3 font-semibold text-beige-900">{cat.name}</h3>
+              <h3 className="mt-3 font-semibold text-beige-900">{categoryName(cat.slug)}</h3>
               <p className="text-sm text-beige-500">
                 {t('home.listings', { count: cat.asset_count })}
               </p>
@@ -377,7 +377,7 @@ function AssetMini({ asset }: { asset: import('../types').Asset }) {
   return (
     <div className="rounded-xl bg-white/5 p-4 ring-1 ring-inset ring-white/10">
       <p className="text-xs font-medium uppercase tracking-wide text-gold-400">
-        {asset.category.name}
+        {categoryName(asset.category.slug)}
       </p>
       <p className="mt-1 line-clamp-1 font-semibold text-white">{asset.title}</p>
       <p className="mt-2 text-sm font-bold text-gold-300">
@@ -395,8 +395,8 @@ function MatchPanelSmall({ match }: { match: import('../types').AIMatch }) {
         <ArrowRightLeft className="h-4 w-4 shrink-0 text-gold-400" />
       </div>
       <div className="mt-3 flex items-center justify-between gap-2 text-sm font-medium text-beige-300">
-        <span className="line-clamp-1">{match.asset_a.category.name}</span>
-        <span className="line-clamp-1 text-right">{match.asset_b.category.name}</span>
+        <span className="line-clamp-1">{categoryName(match.asset_a.category.slug)}</span>
+        <span className="line-clamp-1 text-right">{categoryName(match.asset_b.category.slug)}</span>
       </div>
     </div>
   );

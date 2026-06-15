@@ -21,7 +21,7 @@ import {
 } from '../hooks/queries';
 import { useAuthStore } from '../store/authStore';
 import { useUIStore } from '../store/uiStore';
-import { formatKzt, formatDate } from '../utils/helpers';
+import { formatKzt, formatDate, categoryName } from '../utils/helpers';
 
 const PLACEHOLDER =
   'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=1200';
@@ -124,7 +124,7 @@ export function AssetDetails() {
 
           <div className="mt-6">
             <span className="inline-block px-2.5 py-1 bg-gold-50 text-gold-700 text-xs font-medium rounded-full">
-              {asset.category.name}
+              {categoryName(asset.category.slug)}
             </span>
             <h1 className="mt-3 text-2xl font-bold text-beige-900">{asset.title}</h1>
             {location && (

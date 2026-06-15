@@ -2,7 +2,7 @@ import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import { MapPin, Heart } from 'lucide-react';
 import type { Asset } from '../../types';
-import { formatKzt } from '../../utils/helpers';
+import { formatKzt, categoryName } from '../../utils/helpers';
 
 interface AssetCardProps {
   asset: Asset;
@@ -30,7 +30,7 @@ export function AssetCard({ asset, isFavorite, onToggleFavorite }: AssetCardProp
           className="w-full h-full object-cover group-hover:scale-105 transition-transform"
         />
         <span className="absolute top-3 left-3 px-2.5 py-1 bg-white/90 backdrop-blur text-xs font-medium text-beige-700 rounded-full">
-          {asset.category.name}
+          {categoryName(asset.category.slug)}
         </span>
         {onToggleFavorite && (
           <button

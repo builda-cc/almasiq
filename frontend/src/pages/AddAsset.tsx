@@ -113,7 +113,7 @@ export function AddAsset() {
             <select className={inputClass} {...register('category_slug', { required: true })}>
               {(categories ?? []).map((cat) => (
                 <option key={cat.id} value={cat.slug}>
-                  {cat.name}
+                  {t(`categories.${cat.slug}`)}
                 </option>
               ))}
             </select>

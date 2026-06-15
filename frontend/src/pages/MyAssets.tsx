@@ -2,7 +2,7 @@ import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import { Trash2, Plus } from 'lucide-react';
 import { useMyAssets, useDeleteAsset } from '../hooks/queries';
-import { formatKzt } from '../utils/helpers';
+import { formatKzt, categoryName } from '../utils/helpers';
 
 export function MyAssets() {
   const { t } = useTranslation();
@@ -49,7 +49,7 @@ export function MyAssets() {
                 >
                   {asset.title}
                 </Link>
-                <p className="text-sm text-beige-500">{asset.category.name}</p>
+                <p className="text-sm text-beige-500">{categoryName(asset.category.slug)}</p>
                 <p className="text-sm font-semibold text-gold-600">
                   {formatKzt(asset.estimated_value)}
                 </p>

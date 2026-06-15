@@ -2,7 +2,7 @@ import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import { ArrowRightLeft } from 'lucide-react';
 import type { AIMatch } from '../../types';
-import { formatKzt } from '../../utils/helpers';
+import { formatKzt, categoryName } from '../../utils/helpers';
 import { MatchScoreBadge } from '../ui/MatchScoreBadge';
 
 interface MatchCardProps {
@@ -32,7 +32,7 @@ function MiniAsset({ asset, mine, t }: { asset: AIMatch['asset_a']; mine: boolea
       <p className="mt-1.5 text-sm font-medium text-beige-900 line-clamp-1">
         {asset.title}
       </p>
-      <p className="text-xs text-beige-500">{asset.category.name}</p>
+      <p className="text-xs text-beige-500">{categoryName(asset.category.slug)}</p>
       <p className="text-sm font-semibold text-gold-600">
         {formatKzt(asset.estimated_value)}
       </p>

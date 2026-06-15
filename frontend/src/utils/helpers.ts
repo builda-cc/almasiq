@@ -73,6 +73,10 @@ export function getMatchScoreColor(score: number): string {
   return 'bg-beige-100 text-beige-700';
 }
 
+export function categoryName(slug: CategorySlug | string): string {
+  return i18n.t(`categories.${slug}`);
+}
+
 export const CATEGORY_SLUGS: CategorySlug[] = [
   'real-estate',
   'land-agro',
