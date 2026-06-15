@@ -82,7 +82,8 @@ class ExchangePreference(Base):
     asset_id: Mapped[int] = mapped_column(
         ForeignKey("assets.id", ondelete="CASCADE"), index=True, nullable=False
     )
-    # Desired category slug (apartments|houses|land|vehicles|commercial).
+    # Desired category slug (e.g. real-estate|land-agro|livestock|
+    # auto-equipment|mining-metals|business-industry).
     category_slug: Mapped[str] = mapped_column(String(50), nullable=False)
     cash_accepted: Mapped[bool] = mapped_column(default=False, nullable=False)
     notes: Mapped[str | None] = mapped_column(String(500), nullable=True)

@@ -37,7 +37,7 @@ export function AddAsset() {
     formState: { errors },
   } = useForm<FormValues>({
     defaultValues: {
-      category_slug: 'apartments',
+      category_slug: 'real-estate',
       liquidity_score: 60,
     },
   });

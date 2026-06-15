@@ -5,10 +5,11 @@ import {
   ArrowRightLeft,
   ArrowRight,
   Building2,
-  Home as HomeIcon,
-  Map,
+  Sprout,
+  Beef,
   Car,
-  Store,
+  Pickaxe,
+  Factory,
   Sparkles,
   ListPlus,
   Handshake,
@@ -22,11 +23,12 @@ import { formatKzt } from '../utils/helpers';
 import type { CategorySlug } from '../types';
 
 const CATEGORY_ICONS: Record<CategorySlug, typeof Building2> = {
-  apartments: Building2,
-  houses: HomeIcon,
-  land: Map,
-  vehicles: Car,
-  commercial: Store,
+  'real-estate': Building2,
+  'land-agro': Sprout,
+  livestock: Beef,
+  'auto-equipment': Car,
+  'mining-metals': Pickaxe,
+  'business-industry': Factory,
 };
 
 const HERO_IMAGE =
@@ -149,7 +151,7 @@ function Hero() {
                 <div className="mt-3 flex items-center gap-2 text-sm font-medium text-beige-700">
                   <Building2 className="w-4 h-4 text-gold-600 shrink-0" />
                   <ArrowRightLeft className="w-4 h-4 text-gold-600 shrink-0" />
-                  <Map className="w-4 h-4 text-gold-600 shrink-0" />
+                  <Sprout className="w-4 h-4 text-gold-600 shrink-0" />
                 </div>
               </div>
             </div>
@@ -408,13 +410,13 @@ function PlaceholderMatchLarge() {
       <div className="mt-6 grid gap-3 sm:grid-cols-2">
         <div className="rounded-xl bg-white/5 p-4 ring-1 ring-inset ring-white/10">
           <p className="text-xs font-medium uppercase tracking-wide text-gold-400">
-            {t('categories.apartments')}
+            {t('categories.real-estate')}
           </p>
           <p className="mt-1 font-semibold text-white">Almaty, Esentai</p>
         </div>
         <div className="rounded-xl bg-white/5 p-4 ring-1 ring-inset ring-white/10">
           <p className="text-xs font-medium uppercase tracking-wide text-gold-400">
-            {t('categories.land')}
+            {t('categories.land-agro')}
           </p>
           <p className="mt-1 font-semibold text-white">Talgar + Vehicle</p>
         </div>

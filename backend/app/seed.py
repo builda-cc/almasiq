@@ -1,4 +1,4 @@
-"""Seed the database with the five MVP categories and sample data.
+"""Seed the database with the six MVP categories and sample data.
 
 Run from the backend/ directory with the virtualenv active:
 
@@ -20,11 +20,12 @@ from .models import Asset, AssetImage, Category, ExchangePreference, User
 from .services.matching import recompute_matches
 
 CATEGORIES = [
-    {"slug": "apartments", "name": "Apartments", "icon": "Building2"},
-    {"slug": "houses", "name": "Houses", "icon": "Home"},
-    {"slug": "land", "name": "Land Plots", "icon": "Map"},
-    {"slug": "vehicles", "name": "Vehicles", "icon": "Car"},
-    {"slug": "commercial", "name": "Commercial Properties", "icon": "Store"},
+    {"slug": "real-estate", "name": "Real Estate", "icon": "Building2"},
+    {"slug": "land-agro", "name": "Land & Agro", "icon": "Sprout"},
+    {"slug": "livestock", "name": "Livestock", "icon": "Beef"},
+    {"slug": "auto-equipment", "name": "Auto & Equipment", "icon": "Car"},
+    {"slug": "mining-metals", "name": "Mining & Metals", "icon": "Pickaxe"},
+    {"slug": "business-industry", "name": "Business & Industry", "icon": "Factory"},
 ]
 
 
@@ -74,11 +75,14 @@ def _seed_assets(db: Session, cats: dict[str, Category], users: list[User]) -> N
     img = "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=800"
     land_img = "https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=800"
     car_img = "https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=800"
+    livestock_img = "https://images.unsplash.com/photo-1500595046743-cd271d694d30?w=800"
+    mining_img = "https://images.unsplash.com/photo-1605557202138-097f4d9c33f7?w=800"
+    industry_img = "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=800"
 
     assets = [
         Asset(
             owner=u1,
-            category=cats["apartments"],
+            category=cats["real-estate"],
             title="3-room apartment in Almaty center",
             description="Bright apartment near Abay metro, 90 sqm, renovated.",
             estimated_value=50_000_000,
@@ -88,26 +92,26 @@ def _seed_assets(db: Session, cats: dict[str, Category], users: list[User]) -> N
             liquidity_score=85,
             images=[AssetImage(url=img, position=0)],
             preferences=[
-                ExchangePreference(category_slug="land"),
-                ExchangePreference(category_slug="vehicles", cash_accepted=True),
+                ExchangePreference(category_slug="land-agro"),
+                ExchangePreference(category_slug="auto-equipment", cash_accepted=True),
             ],
         ),
         Asset(
             owner=u2,
-            category=cats["land"],
-            title="Land plot 12 sotok near Almaty",
-            description="Flat plot with utilities at the boundary, good for a house.",
+            category=cats["land-agro"],
+            title="Farmland 50 ha near Almaty",
+            description="Irrigated agricultural land with road access, ready to cultivate.",
             estimated_value=30_000_000,
             country="Kazakhstan",
             region="Almaty",
             city="Almaty",
             liquidity_score=70,
             images=[AssetImage(url=land_img, position=0)],
-            preferences=[ExchangePreference(category_slug="apartments")],
+            preferences=[ExchangePreference(category_slug="real-estate")],
         ),
         Asset(
             owner=u3,
-            category=cats["vehicles"],
+            category=cats["auto-equipment"],
             title="2019 Toyota Camry",
             description="One owner, 60k km, full service history.",
             estimated_value=20_000_000,
@@ -117,37 +121,50 @@ def _seed_assets(db: Session, cats: dict[str, Category], users: list[User]) -> N
             liquidity_score=88,
             images=[AssetImage(url=car_img, position=0)],
             preferences=[
-                ExchangePreference(category_slug="apartments", cash_accepted=True)
+                ExchangePreference(category_slug="real-estate", cash_accepted=True)
             ],
         ),
         Asset(
             owner=u2,
-            category=cats["houses"],
-            title="Cottage in Talgar",
-            description="2-storey house, 200 sqm, 8 sotok garden.",
-            estimated_value=70_000_000,
+            category=cats["livestock"],
+            title="Herd of 40 Hereford cattle",
+            description="Healthy breeding herd, vaccinated, documented pedigree.",
+            estimated_value=18_000_000,
             country="Kazakhstan",
             region="Almaty",
             city="Talgar",
             liquidity_score=60,
-            images=[AssetImage(url=img, position=0)],
+            images=[AssetImage(url=livestock_img, position=0)],
             preferences=[
-                ExchangePreference(category_slug="commercial"),
-                ExchangePreference(category_slug="apartments"),
+                ExchangePreference(category_slug="land-agro"),
+                ExchangePreference(category_slug="auto-equipment"),
             ],
         ),
         Asset(
             owner=u1,
-            category=cats["commercial"],
-            title="Retail space on Dostyk Ave",
-            description="120 sqm street-level retail, high foot traffic.",
+            category=cats["mining-metals"],
+            title="Stake in a sand & gravel quarry",
+            description="Operating quarry license with extraction equipment included.",
+            estimated_value=120_000_000,
+            country="Kazakhstan",
+            region="Almaty",
+            city="Almaty",
+            liquidity_score=55,
+            images=[AssetImage(url=mining_img, position=0)],
+            preferences=[ExchangePreference(category_slug="business-industry")],
+        ),
+        Asset(
+            owner=u3,
+            category=cats["business-industry"],
+            title="Small food-processing plant",
+            description="Turnkey workshop with equipment and existing client base.",
             estimated_value=72_000_000,
             country="Kazakhstan",
             region="Almaty",
             city="Almaty",
             liquidity_score=65,
-            images=[AssetImage(url=img, position=0)],
-            preferences=[ExchangePreference(category_slug="houses")],
+            images=[AssetImage(url=industry_img, position=0)],
+            preferences=[ExchangePreference(category_slug="real-estate")],
         ),
     ]
     db.add_all(assets)

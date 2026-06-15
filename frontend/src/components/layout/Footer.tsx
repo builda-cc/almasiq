@@ -35,28 +35,33 @@ export function Footer() {
             <h4 className="font-medium mb-4">{t('footer.categories')}</h4>
             <ul className="space-y-2 text-sm text-beige-400">
               <li>
-                <Link to="/assets?category=apartments" className="hover:text-white transition-colors">
-                  {t('footer.apartments')}
+                <Link to="/assets?category=real-estate" className="hover:text-white transition-colors">
+                  {t('footer.real-estate')}
                 </Link>
               </li>
               <li>
-                <Link to="/assets?category=houses" className="hover:text-white transition-colors">
-                  {t('footer.houses')}
+                <Link to="/assets?category=land-agro" className="hover:text-white transition-colors">
+                  {t('footer.land-agro')}
                 </Link>
               </li>
               <li>
-                <Link to="/assets?category=land" className="hover:text-white transition-colors">
-                  {t('footer.land')}
+                <Link to="/assets?category=livestock" className="hover:text-white transition-colors">
+                  {t('footer.livestock')}
                 </Link>
               </li>
               <li>
-                <Link to="/assets?category=vehicles" className="hover:text-white transition-colors">
-                  {t('footer.vehicles')}
+                <Link to="/assets?category=auto-equipment" className="hover:text-white transition-colors">
+                  {t('footer.auto-equipment')}
                 </Link>
               </li>
               <li>
-                <Link to="/assets?category=commercial" className="hover:text-white transition-colors">
-                  {t('footer.commercial')}
+                <Link to="/assets?category=mining-metals" className="hover:text-white transition-colors">
+                  {t('footer.mining-metals')}
+                </Link>
+              </li>
+              <li>
+                <Link to="/assets?category=business-industry" className="hover:text-white transition-colors">
+                  {t('footer.business-industry')}
                 </Link>
               </li>
             </ul>

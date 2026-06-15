@@ -74,9 +74,10 @@ export function getMatchScoreColor(score: number): string {
 }
 
 export const CATEGORY_SLUGS: CategorySlug[] = [
-  'apartments',
-  'houses',
-  'land',
-  'vehicles',
-  'commercial',
+  'real-estate',
+  'land-agro',
+  'livestock',
+  'auto-equipment',
+  'mining-metals',
+  'business-industry',
 ];

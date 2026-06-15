@@ -2,11 +2,12 @@
 // (snake_case fields are preserved to match the API exactly).
 
 export type CategorySlug =
-  | 'apartments'
-  | 'houses'
-  | 'land'
-  | 'vehicles'
-  | 'commercial';
+  | 'real-estate'
+  | 'land-agro'
+  | 'livestock'
+  | 'auto-equipment'
+  | 'mining-metals'
+  | 'business-industry';
 
 export interface User {
   id: number;

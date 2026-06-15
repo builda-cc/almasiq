@@ -7,10 +7,11 @@ from ..db.base import Base
 
 
 class Category(Base):
-    """One of the five MVP asset categories.
+    """One of the six MVP asset categories.
 
     ``slug`` is the canonical key used by the matching engine and frontend:
-    apartments | houses | land | vehicles | commercial
+    real-estate | land-agro | livestock | auto-equipment | mining-metals |
+    business-industry
     """
 
     __tablename__ = "categories"
