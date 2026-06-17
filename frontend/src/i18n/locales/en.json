@@ -267,7 +267,10 @@
     "step3Body": "Send an exchange request to the other owner and negotiate the deal without a sale or middleman.",
     "ctaTitle": "Ready to find your exchange?",
     "ctaBody": "List an asset and let the matching engine do the searching.",
-    "viewAllMatches": "View all matches"
+    "viewAllMatches": "View all matches",
+    "heroBadgeMatchLabel": "AI Match Probability",
+    "heroBadgeMatchValue": "91% Match",
+    "heroSuggestedExchange": "Suggested Exchange: Commercial Hub for Farmland"
   },
   "categories": {
     "real-estate": "Real Estate",

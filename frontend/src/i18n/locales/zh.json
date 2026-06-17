@@ -267,7 +267,10 @@
     "step3Body": "向对方所有者发送交换请求，无需出售或中介即可达成交易。",
     "ctaTitle": "准备好找到您的交换了吗？",
     "ctaBody": "发布资产，让匹配引擎为您搜索。",
-    "viewAllMatches": "查看所有匹配"
+    "viewAllMatches": "查看所有匹配",
+    "heroBadgeMatchLabel": "AI 匹配概率",
+    "heroBadgeMatchValue": "91% 匹配",
+    "heroSuggestedExchange": "建议交换：商业中心换农田"
   },
   "categories": {
     "real-estate": "房地产",

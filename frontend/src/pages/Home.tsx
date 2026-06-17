@@ -13,6 +13,7 @@ import {
   Sparkles,
   ListPlus,
   Handshake,
+  Brain,
 } from 'lucide-react';
 import { useUIStore } from '../store/uiStore';
 import { useAuthStore } from '../store/authStore';
@@ -82,86 +83,94 @@ function Hero() {
   ];
 
   return (
-    <section className="relative overflow-hidden bg-beige-900">
-      {/* Layered gold/bronze background over near-black dark accent */}
-      <div className="absolute inset-0 bg-gradient-to-br from-gold-700 via-gold-800 to-beige-900" />
-      <div
-        className="absolute inset-0 opacity-[0.18]"
-        style={{
-          backgroundImage:
-            'radial-gradient(circle at 20% 20%, rgba(212,184,128,0.5), transparent 45%), radial-gradient(circle at 85% 0%, rgba(176,145,92,0.4), transparent 40%)',
-        }}
-      />
-
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-20 pb-16 lg:pt-24 lg:pb-20">
-        <div className="grid lg:grid-cols-12 gap-10 lg:gap-8 items-center">
+    <section className="relative overflow-hidden bg-gradient-to-br from-surface to-beige-100">
+      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-20 pb-24 lg:pt-28 lg:pb-32">
+        <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
           {/* Left: message */}
-          <div className="lg:col-span-7">
-            <span className="inline-flex items-center gap-2 rounded-full bg-white/10 px-3 py-1 text-xs font-medium uppercase tracking-wide text-gold-100 ring-1 ring-inset ring-white/20">
-              <Sparkles className="w-3.5 h-3.5" />
+          <div className="space-y-8">
+            <span className="inline-flex items-center gap-2 rounded-full bg-gold-600/10 px-3 py-1 text-xs font-semibold uppercase tracking-wider text-gold-600 ring-1 ring-inset ring-gold-600/20">
+              <Sparkles className="w-4 h-4" />
               {t('home.heroEyebrow')}
             </span>
-            <h1 className="mt-5 text-4xl md:text-5xl lg:text-6xl font-bold leading-[1.05] tracking-tight text-white">
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-[1.05] tracking-tight text-beige-900 max-w-lg">
               {t('home.heroTitle')}
             </h1>
-            <p className="mt-5 max-w-xl text-lg leading-relaxed text-gold-50/90">
+            <p className="max-w-xl text-lg leading-relaxed text-beige-600">
               {t('home.heroDescription')}
             </p>
-            <div className="mt-8 flex flex-wrap items-center gap-3">
+            <div className="flex flex-wrap items-center gap-4 pt-2">
               <Link
                 to="/assets"
-                className="inline-flex items-center gap-2 rounded-lg bg-white px-6 py-3 font-semibold text-gold-700 shadow-sm transition-all hover:bg-gold-50 active:scale-[0.98]"
+                className="group inline-flex items-center gap-2 rounded-xl bg-gold-500 px-8 py-4 font-medium text-white shadow-sm transition-all hover:shadow-lg active:scale-[0.98]"
               >
                 {t('nav.browseAssets')}
-                <ArrowRight className="w-4 h-4" />
+                <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-1" />
               </Link>
               {isAuthenticated ? (
                 <Link
                   to="/assets/new"
-                  className="inline-flex items-center rounded-lg border border-white/40 bg-white/10 px-6 py-3 font-semibold text-white transition-all hover:bg-white/20 active:scale-[0.98]"
+                  className="inline-flex items-center rounded-xl border-2 border-beige-400 px-8 py-4 font-medium text-beige-900 transition-all hover:bg-surface-container active:scale-[0.98]"
                 >
                   {t('nav.publishAsset')}
                 </Link>
               ) : (
                 <Link
                   to="/how-it-works"
-                  className="inline-flex items-center rounded-lg border border-white/40 bg-white/10 px-6 py-3 font-semibold text-white transition-all hover:bg-white/20 active:scale-[0.98]"
+                  className="inline-flex items-center rounded-xl border-2 border-beige-400 px-8 py-4 font-medium text-beige-900 transition-all hover:bg-surface-container active:scale-[0.98]"
                 >
                   {t('home.heroSecondaryCta')}
                 </Link>
               )}
             </div>
 
-            <dl className="mt-12 grid max-w-lg grid-cols-3 gap-6 border-t border-white/15 pt-6">
+            <dl className="grid max-w-lg grid-cols-3 gap-8 border-t border-beige-400 pt-12">
               {stats.map((s) => (
                 <div key={s.label}>
-                  <dt className="text-2xl font-bold text-white">{s.value}</dt>
-                  <dd className="mt-1 text-sm text-gold-100/70">{s.label}</dd>
+                  <dt className="text-3xl font-semibold text-gold-600">{s.value}</dt>
+                  <dd className="mt-1 text-sm text-beige-600">{s.label}</dd>
                 </div>
               ))}
             </dl>
           </div>
 
           {/* Right: visual asset */}
-          <div className="lg:col-span-5">
-            <div className="relative">
-              <div className="overflow-hidden rounded-2xl ring-1 ring-white/15 shadow-2xl">
-                <img
-                  src={HERO_IMAGE}
-                  alt=""
-                  className="h-72 w-full object-cover sm:h-96 lg:h-[28rem]"
-                  loading="eager"
-                />
+          <div className="relative">
+            <div className="group relative overflow-hidden rounded-2xl shadow-2xl">
+              <img
+                src={HERO_IMAGE}
+                alt=""
+                className="aspect-[1.5] w-full object-cover transition-transform duration-700 group-hover:scale-105"
+                loading="eager"
+              />
+              {/* AI overlay sheen */}
+              <div className="pointer-events-none absolute inset-0 bg-gradient-to-tr from-gold-600/20 to-transparent" />
+            </div>
+
+            {/* Floating badge: AI match probability */}
+            <div className="absolute -top-6 -right-4 sm:-right-6 flex items-center gap-3 rounded-2xl border border-gold-600/10 bg-white/85 p-4 shadow-xl backdrop-blur-sm">
+              <div className="flex h-10 w-10 items-center justify-center rounded-full bg-gold-200 text-gold-800">
+                <Brain className="h-5 w-5" />
               </div>
-              {/* Floating match chip overlaid on the visual */}
-              <div className="absolute -bottom-5 -left-3 sm:left-6 rounded-xl bg-white p-4 shadow-xl ring-1 ring-beige-900/5">
-                <MatchScoreBadge score={91} size="md" />
-                <div className="mt-3 flex items-center gap-2 text-sm font-medium text-beige-700">
-                  <Building2 className="w-4 h-4 text-gold-600 shrink-0" />
-                  <ArrowRightLeft className="w-4 h-4 text-gold-600 shrink-0" />
-                  <Sprout className="w-4 h-4 text-gold-600 shrink-0" />
+              <div>
+                <div className="text-xs font-semibold text-beige-600">
+                  {t('home.heroBadgeMatchLabel')}
+                </div>
+                <div className="text-lg font-semibold text-gold-600">
+                  {t('home.heroBadgeMatchValue')}
                 </div>
               </div>
+            </div>
+
+            {/* Floating badge: suggested exchange */}
+            <div className="absolute -bottom-8 -left-4 sm:-left-8 max-w-[220px] space-y-3 rounded-2xl border border-gold-600/10 bg-white/85 p-5 shadow-xl backdrop-blur-sm">
+              <div className="flex gap-2">
+                <Building2 className="h-5 w-5 text-gold-600" />
+                <ArrowRightLeft className="h-5 w-5 text-beige-400" />
+                <Sprout className="h-5 w-5 text-gold-600" />
+              </div>
+              <p className="text-xs font-semibold leading-tight text-beige-600">
+                {t('home.heroSuggestedExchange')}
+              </p>
             </div>
           </div>
         </div>
