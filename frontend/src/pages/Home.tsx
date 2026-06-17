@@ -36,12 +36,18 @@ const HERO_IMAGE =
 
 // Reveals an element on first scroll into view. Honors reduced motion via CSS.
 function useReveal<T extends HTMLElement>() {
-  const ref = useRef<T>(null);
+  const observerRef = useRef<IntersectionObserver | null>(null);
   const [visible, setVisible] = useState(false);
 
-  useEffect(() => {
-    const el = ref.current;
-    if (!el || visible) return;
+  // Callback ref so observation is (re)attached whenever the underlying
+  // element mounts. Elements gated behind async data (e.g. the Featured grid)
+  // mount AFTER the initial render, so a plain ref + mount-only effect would
+  // never observe them — leaving the content stuck at opacity:0 until a
+  // remount. A callback ref fires on every attach, fixing that race.
+  const ref = (node: T | null) => {
+    observerRef.current?.disconnect();
+    if (!node || visible) return;
+
     const observer = new IntersectionObserver(
       (entries) => {
         if (entries[0]?.isIntersecting) {
@@ -51,9 +57,11 @@ function useReveal<T extends HTMLElement>() {
       },
       { threshold: 0.15 },
     );
-    observer.observe(el);
-    return () => observer.disconnect();
-  }, [visible]);
+    observer.observe(node);
+    observerRef.current = observer;
+  };
+
+  useEffect(() => () => observerRef.current?.disconnect(), []);
 
   return { ref, className: `reveal ${visible ? 'reveal-visible' : ''}` };
 }
