@@ -3,44 +3,50 @@
 @tailwind utilities;
 
 /*
- * "Gold and Silver" theme tokens (DESIGN.md), exposed as CSS variables so they
- * can be referenced outside Tailwind utilities when needed. The Tailwind config
- * mirrors the most-used values onto the gold/silver/beige scales.
+ * "Vibrant Modern" theme tokens (from the Stitch landing-page export), exposed
+ * as CSS variables. The Tailwind config mirrors the most-used values onto the
+ * gold/silver/beige scales the components already consume.
  */
 :root {
   /* Core surfaces & text */
-  --surface: #faf9f6;
-  --surface-container: #e7d8bc;
-  --surface-dim: #e0d9d2;
-  --surface-bright: #fff8f3;
-  --surface-container-lowest: #ffffff;
-  --surface-container-low: #faf2eb;
-  --surface-container-high: #eee7e0;
-  --surface-container-highest: #e9e1da;
-  --background: #fff8f3;
-  --on-surface: #10100f;
-  --on-surface-variant: #66533b;
+  --surface: #fcf9f6;
+  --surface-soft: #f5f5f4;
+  --surface-container: #f0edeb;
+  --surface-container-low: #f6f3f1;
+  --surface-container-high: #ebe7e5;
+  --surface-container-highest: #e5e2e0;
+  --surface-dim: #dcd9d7;
+  --surface-base: #ffffff;
+  --background: #fcf9f6;
+  --on-surface: #1c1c1a;
+  --on-surface-variant: #4d463a;
+  --on-background: #1c1c1a;
 
   /* Brand */
-  --primary: #b0915c;
-  --primary-container: #d4b880;
-  --on-primary: #faf9f6;
+  --primary: #745a2b;
+  --primary-container: #b0915c;
+  --primary-fixed: #ffdea9;
+  --primary-fixed-dim: #e4c288;
+  --on-primary: #ffffff;
   --on-primary-container: #3f2a00;
   --inverse-primary: #e4c288;
 
-  /* Secondary (silver) */
-  --secondary: #b4b4b4;
-  --secondary-container: #dadada;
-  --on-secondary: #10100f;
+  /* Secondary (neutral) */
+  --secondary: #5d5e5f;
+  --secondary-container: #e0dfdf;
+  --on-secondary: #ffffff;
 
-  /* Tertiary (cool blue) */
+  /* Tertiary (cool blue) + accents */
   --tertiary: #4f5e7f;
-  --tertiary-container: #8696ba;
+  --tertiary-container: #8695b9;
   --on-tertiary: #ffffff;
+  --vibrant-blue: #3b82f6;
+  --accent-gold: #b08d57;
+  --success-teal: #14b8a6;
 
   /* Lines */
-  --outline: #7e623a;
-  --outline-variant: #787878;
+  --outline: #7f7669;
+  --outline-variant: #d1c5b6;
 
   /* Status */
   --error: #ba1a1a;
@@ -48,8 +54,8 @@
   --error-container: #ffdad6;
 
   /* Inverse */
-  --inverse-surface: #33302b;
-  --inverse-on-surface: #f7efe8;
+  --inverse-surface: #31302f;
+  --inverse-on-surface: #f3f0ee;
 }
 
 @layer base {
@@ -61,8 +67,8 @@
   }
 
   body {
-    background-color: var(--surface); /* #FAF9F6 */
-    color: var(--on-surface); /* #10100F */
+    background-color: var(--surface); /* #FCF9F6 */
+    color: var(--on-surface); /* #1C1C1A */
     font-size: 16px;
     line-height: 24px;
     font-weight: 400;
@@ -71,11 +77,43 @@
     text-rendering: optimizeLegibility;
   }
 
-  /* Headings inherit the display tightening from the DESIGN.md headline scale. */
+  /* Headings inherit the display tightening from the Stitch headline scale. */
   h1,
   h2,
   h3 {
     letter-spacing: -0.01em;
+  }
+}
+
+@layer components {
+  /* Frosted glass surface (from the Stitch .glass-card). */
+  .glass-card {
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 10px 30px -10px rgba(37, 99, 235, 0.04);
+  }
+
+  /* Gold accent glow used on highlighted cards (from the Stitch .ai-glow). */
+  .ai-glow {
+    box-shadow: 0 0 20px rgba(176, 141, 87, 0.2);
+    border: 1px solid rgba(176, 141, 87, 0.3);
+  }
+
+  /* Subtle radial hero wash (from the Stitch .hero-gradient). */
+  .hero-gradient {
+    background: radial-gradient(
+      circle at 70% 30%,
+      rgba(59, 130, 246, 0.08) 0%,
+      transparent 50%
+    );
+  }
+}
+
+@media (prefers-reduced-transparency: reduce) {
+  .glass-card {
+    background: var(--surface-base);
+    backdrop-filter: none;
   }
 }
 

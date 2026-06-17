@@ -250,7 +250,7 @@ export function AddAsset() {
         <button
           type="submit"
           disabled={createAsset.isPending}
-          className="w-full py-3 bg-gold-gradient hover:bg-gold-gradient-hover disabled:opacity-60 text-dark font-semibold rounded-lg shadow-sm"
+          className="w-full py-3 bg-gold-gradient hover:bg-gold-gradient-hover disabled:opacity-60 text-white font-semibold rounded-lg shadow-sm"
         >
           {createAsset.isPending ? t('common.publishing') : t('addAsset.publish')}
         </button>

@@ -63,7 +63,7 @@ export function HowItWorks() {
         </p>
         <Link
           to="/assets"
-          className="mt-3 inline-block px-6 py-3 bg-gold-gradient text-dark font-semibold rounded-lg shadow-sm hover:bg-gold-gradient-hover"
+          className="mt-3 inline-block px-6 py-3 bg-gold-gradient text-white font-semibold rounded-lg shadow-sm hover:bg-gold-gradient-hover"
         >
           {t('howItWorks.ctaButton')}
         </Link>

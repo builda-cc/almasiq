@@ -186,7 +186,7 @@ export function AssetDetails() {
                   onClick={() =>
                     isAuthenticated ? setExchangeOpen(true) : openAuth('login')
                   }
-                  className="w-full py-3 bg-gold-gradient hover:bg-gold-gradient-hover text-dark font-semibold rounded-lg shadow-sm flex items-center justify-center gap-2"
+                  className="w-full py-3 bg-gold-gradient hover:bg-gold-gradient-hover text-white font-semibold rounded-lg shadow-sm flex items-center justify-center gap-2"
                 >
                   <ArrowRightLeft className="w-5 h-5" />
                   {t('assets.proposeExchange')}
@@ -284,7 +284,7 @@ export function AssetDetails() {
                 <button
                   onClick={submitExchange}
                   disabled={!offeredId || createExchange.isPending}
-                  className="w-full py-3 bg-gold-gradient hover:bg-gold-gradient-hover disabled:opacity-60 text-dark font-semibold rounded-lg shadow-sm"
+                  className="w-full py-3 bg-gold-gradient hover:bg-gold-gradient-hover disabled:opacity-60 text-white font-semibold rounded-lg shadow-sm"
                 >
                   {createExchange.isPending ? t('common.sending') : t('assets.sendProposal')}
                 </button>

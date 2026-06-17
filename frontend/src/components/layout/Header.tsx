@@ -49,7 +49,7 @@ export function Header() {
         <div className="flex justify-between items-center h-16">
           <Link to="/" className="flex items-center">
             <div className="w-8 h-8 bg-gold-gradient rounded-lg flex items-center justify-center shadow-sm">
-              <ArrowRightLeft className="w-5 h-5 text-dark" />
+              <ArrowRightLeft className="w-5 h-5 text-white" />
             </div>
             <span className="ml-2 text-xl font-bold text-beige-900">{t('common.appName')}</span>
           </Link>
@@ -68,7 +68,7 @@ export function Header() {
               <>
                 <Link
                   to="/assets/new"
-                  className="px-4 py-2 bg-gold-gradient hover:bg-gold-gradient-hover text-dark text-sm font-semibold rounded-lg shadow-sm transition-colors"
+                  className="px-4 py-2 bg-gold-gradient hover:bg-gold-gradient-hover text-white text-sm font-semibold rounded-lg shadow-sm transition-colors"
                 >
                   {t('nav.publishAsset')}
                 </Link>
@@ -95,7 +95,7 @@ export function Header() {
                 </button>
                 <button
                   onClick={() => openAuth('register')}
-                  className="px-4 py-2 bg-gold-gradient hover:bg-gold-gradient-hover text-dark text-sm font-semibold rounded-lg shadow-sm transition-colors"
+                  className="px-4 py-2 bg-gold-gradient hover:bg-gold-gradient-hover text-white text-sm font-semibold rounded-lg shadow-sm transition-colors"
                 >
                   {t('nav.register')}
                 </button>
@@ -130,7 +130,7 @@ export function Header() {
                 <Link
                   to="/assets/new"
                   onClick={() => setMobileOpen(false)}
-                  className="block px-3 py-2 bg-gold-gradient text-dark text-sm font-semibold rounded-lg"
+                  className="block px-3 py-2 bg-gold-gradient text-white text-sm font-semibold rounded-lg"
                 >
                   {t('nav.publishAsset')}
                 </Link>
@@ -157,7 +157,7 @@ export function Header() {
                     openAuth('register');
                     setMobileOpen(false);
                   }}
-                  className="w-full text-left px-3 py-2 bg-gold-gradient text-dark text-sm font-semibold rounded-lg"
+                  className="w-full text-left px-3 py-2 bg-gold-gradient text-white text-sm font-semibold rounded-lg"
                 >
                   {t('nav.register')}
                 </button>

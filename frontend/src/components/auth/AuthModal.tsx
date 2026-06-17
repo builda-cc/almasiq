@@ -167,7 +167,7 @@ export function AuthModal() {
             <button
               type="submit"
               disabled={pending}
-              className="w-full py-3 bg-gold-gradient hover:bg-gold-gradient-hover disabled:opacity-60 text-dark font-semibold rounded-lg shadow-sm transition-colors"
+              className="w-full py-3 bg-gold-gradient hover:bg-gold-gradient-hover disabled:opacity-60 text-white font-semibold rounded-lg shadow-sm transition-colors"
             >
               {pending ? t('auth.pleaseWait') : isLogin ? t('auth.signIn') : t('auth.createAccount')}
             </button>
