@@ -2,11 +2,80 @@
 @tailwind components;
 @tailwind utilities;
 
+/*
+ * "Gold and Silver" theme tokens (DESIGN.md), exposed as CSS variables so they
+ * can be referenced outside Tailwind utilities when needed. The Tailwind config
+ * mirrors the most-used values onto the gold/silver/beige scales.
+ */
+:root {
+  /* Core surfaces & text */
+  --surface: #faf9f6;
+  --surface-container: #e7d8bc;
+  --surface-dim: #e0d9d2;
+  --surface-bright: #fff8f3;
+  --surface-container-lowest: #ffffff;
+  --surface-container-low: #faf2eb;
+  --surface-container-high: #eee7e0;
+  --surface-container-highest: #e9e1da;
+  --background: #fff8f3;
+  --on-surface: #10100f;
+  --on-surface-variant: #66533b;
+
+  /* Brand */
+  --primary: #b0915c;
+  --primary-container: #d4b880;
+  --on-primary: #faf9f6;
+  --on-primary-container: #3f2a00;
+  --inverse-primary: #e4c288;
+
+  /* Secondary (silver) */
+  --secondary: #b4b4b4;
+  --secondary-container: #dadada;
+  --on-secondary: #10100f;
+
+  /* Tertiary (cool blue) */
+  --tertiary: #4f5e7f;
+  --tertiary-container: #8696ba;
+  --on-tertiary: #ffffff;
+
+  /* Lines */
+  --outline: #7e623a;
+  --outline-variant: #787878;
+
+  /* Status */
+  --error: #ba1a1a;
+  --on-error: #ffffff;
+  --error-container: #ffdad6;
+
+  /* Inverse */
+  --inverse-surface: #33302b;
+  --inverse-on-surface: #f7efe8;
+}
+
 @layer base {
-  /* Luxury metallic base: warm off-white background, near-black body text. */
+  /* Manrope brand typeface; warm off-white surface, near-black body text. */
+  html {
+    font-family:
+      'Manrope Variable', 'Manrope', ui-sans-serif, system-ui, -apple-system,
+      'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  }
+
   body {
-    background-color: #faf9f6; /* beige-50 (Background) */
-    color: #10100f; /* beige-900 (Body Text) */
+    background-color: var(--surface); /* #FAF9F6 */
+    color: var(--on-surface); /* #10100F */
+    font-size: 16px;
+    line-height: 24px;
+    font-weight: 400;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
+  /* Headings inherit the display tightening from the DESIGN.md headline scale. */
+  h1,
+  h2,
+  h3 {
+    letter-spacing: -0.01em;
   }
 }
 

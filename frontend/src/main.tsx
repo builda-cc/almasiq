@@ -2,6 +2,8 @@ import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+// Self-hosted Manrope (variable) — the DESIGN.md brand typeface.
+import '@fontsource-variable/manrope';
 import App from './App';
 import './i18n/config';
 import './index.css';
