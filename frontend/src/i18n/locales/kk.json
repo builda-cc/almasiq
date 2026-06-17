@@ -49,7 +49,13 @@
     "terms": "Шарттар",
     "privacy": "Құпиялық",
     "contact": "Байланыс",
-    "copyright": "© 2026 QG Exchange. Барлық құқықтар қорғалған."
+    "copyright": "© 2026 QG Exchange. Барлық құқықтар қорғалған.",
+    "aiBannerTitle": "AI сәйкестіктерімен алда болыңыз",
+    "aiBannerSubtitle": "Портфолиоңызға сәйкес келетін құнды активтер пайда болғанда хабарлама алыңыз.",
+    "emailPlaceholder": "Email енгізіңіз",
+    "subscribe": "Жазылу",
+    "systemStatus": "Жүйе күйі: Онлайн",
+    "region": "Қазақстан (Қазақша)"
   },
   "dashboard": {
     "myAssets": "Менің активтерім",

@@ -49,7 +49,13 @@
     "terms": "Terms",
     "privacy": "Privacy",
     "contact": "Contact",
-    "copyright": "© 2026 QG Exchange. All rights reserved."
+    "copyright": "© 2026 QG Exchange. All rights reserved.",
+    "aiBannerTitle": "Stay Ahead with AI Matches",
+    "aiBannerSubtitle": "Get notified when high-value assets matching your portfolio become available.",
+    "emailPlaceholder": "Enter your email",
+    "subscribe": "Subscribe",
+    "systemStatus": "System Status: Online",
+    "region": "Kazakhstan (English)"
   },
   "dashboard": {
     "myAssets": "My Assets",

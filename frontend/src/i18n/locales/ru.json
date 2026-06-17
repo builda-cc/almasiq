@@ -49,7 +49,13 @@
     "terms": "Условия",
     "privacy": "Конфиденциальность",
     "contact": "Контакты",
-    "copyright": "© 2026 QG Exchange. Все права защищены."
+    "copyright": "© 2026 QG Exchange. Все права защищены.",
+    "aiBannerTitle": "Будьте впереди с AI-подборками",
+    "aiBannerSubtitle": "Получайте уведомления о появлении ценных активов, соответствующих вашему портфелю.",
+    "emailPlaceholder": "Введите ваш email",
+    "subscribe": "Подписаться",
+    "systemStatus": "Статус системы: Онлайн",
+    "region": "Казахстан (Русский)"
   },
   "dashboard": {
     "myAssets": "Мои активы",
