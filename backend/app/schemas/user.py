@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from datetime import datetime
 
-from pydantic import BaseModel, ConfigDict, EmailStr, Field
+from pydantic import BaseModel, ConfigDict, EmailStr, Field, field_validator
 
 from ..models import User
 
@@ -38,6 +38,11 @@ class UserPublic(BaseModel):
     telegram: str | None = None
     address: str | None = None
     contact_unlocked: bool = False
+
+    @field_validator("verification_status", mode="before")
+    @classmethod
+    def _default_verification(cls, v: str | None) -> str:
+        return v or "unverified"
 
 
 def serialize_user(user: User, *, contact_visible: bool) -> UserPublic:
