@@ -28,6 +28,15 @@ async def lifespan(app: FastAPI):
     # Create tables on startup (for local/SQLite dev; use Alembic in prod).
     Base.metadata.create_all(bind=engine)
 
+    # Add any columns that exist on the models but are missing from a
+    # pre-existing database (create_all does not alter existing tables).
+    try:
+        from .db.autosync import sync_missing_columns
+
+        sync_missing_columns(engine)
+    except Exception as exc:  # noqa: BLE001 - never block startup on sync
+        logging.getLogger("uvicorn.error").warning("Schema auto-sync skipped: %s", exc)
+
     # Optionally seed categories + sample data so a freshly-provisioned
     # production database is immediately usable. Idempotent: categories are
     # never duplicated and sample assets are only added when the table is empty.
@@ -49,6 +58,7 @@ app = FastAPI(title=settings.app_name, debug=settings.debug, lifespan=lifespan)
 app.add_middleware(
     CORSMiddleware,
     allow_origins=settings.cors_origins_list,
+    allow_origin_regex=settings.cors_origin_regex or None,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],

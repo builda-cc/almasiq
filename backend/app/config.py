@@ -7,8 +7,15 @@ class Settings(BaseSettings):
     app_name: str = "QG Exchange API"
     debug: bool = True
 
-    # Comma-separated list of allowed CORS origins (the frontend dev server).
-    cors_origins: str = "http://localhost:5173,http://127.0.0.1:5173"
+    # Comma-separated list of allowed CORS origins (dev servers + deployed
+    # frontends). Override in production via the CORS_ORIGINS env var.
+    cors_origins: str = (
+        "http://localhost:5173,http://127.0.0.1:5173,https://qadirx.vercel.app"
+    )
+
+    # Optional regex to allow additional origins (e.g. Vercel preview URLs).
+    # Defaults to matching any *.vercel.app deployment.
+    cors_origin_regex: str = r"https://.*\.vercel\.app"
 
     host: str = "0.0.0.0"
     port: int = 8000
