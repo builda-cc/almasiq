@@ -1,10 +1,16 @@
 from __future__ import annotations
 
 from datetime import datetime
+from typing import TYPE_CHECKING
 
 from pydantic import BaseModel, ConfigDict, Field
 
-from .user import UserPublic
+from .user import UserPublic, serialize_user
+
+if TYPE_CHECKING:
+    from sqlalchemy.orm import Session
+
+    from ..models import Asset
 
 
 class CategoryOut(BaseModel):
@@ -102,3 +108,17 @@ class AssetListResponse(BaseModel):
     total: int
     page: int
     page_size: int
+
+
+def serialize_asset(asset: "Asset", db: "Session", viewer_id: int | None) -> AssetOut:
+    """Serialise an asset, gating the owner's contact info by viewer.
+
+    Owner contact channels are only revealed to the owner themselves or to the
+    counterparty of an admin-approved exchange (see ``services/privacy.py``).
+    """
+    from ..services.privacy import can_view_contact_info
+
+    contact_visible = can_view_contact_info(db, viewer_id, asset.owner_id)
+    out = AssetOut.model_validate(asset)
+    out.owner = serialize_user(asset.owner, contact_visible=contact_visible)
+    return out

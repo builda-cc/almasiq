@@ -11,8 +11,9 @@ from ..schemas.asset import (
     AssetListResponse,
     AssetOut,
     AssetUpdate,
+    serialize_asset,
 )
-from .deps import get_current_user
+from .deps import get_current_user, get_optional_user
 
 router = APIRouter(prefix="/api/assets", tags=["assets"])
 
@@ -50,6 +51,7 @@ def _resolve_category(db: Session, slug: str) -> Category:
 @router.get("", response_model=AssetListResponse)
 def list_assets(
     db: Session = Depends(get_db),
+    current_user: User | None = Depends(get_optional_user),
     q: str | None = Query(default=None, description="Free-text search on title"),
     category: str | None = Query(default=None, description="Category slug"),
     region: str | None = None,
@@ -95,8 +97,9 @@ def list_assets(
         .scalars()
         .all()
     )
+    viewer_id = current_user.id if current_user else None
     return AssetListResponse(
-        items=[AssetOut.model_validate(a) for a in items],
+        items=[serialize_asset(a, db, viewer_id) for a in items],
         total=total,
         page=page,
         page_size=page_size,
@@ -107,8 +110,8 @@ def list_assets(
 def my_assets(
     db: Session = Depends(get_db),
     current_user: User = Depends(get_current_user),
-) -> list[Asset]:
-    return (
+) -> list[AssetOut]:
+    assets = (
         db.execute(
             select(Asset)
             .where(Asset.owner_id == current_user.id)
@@ -118,11 +121,18 @@ def my_assets(
         .scalars()
         .all()
     )
+    return [serialize_asset(a, db, current_user.id) for a in assets]
 
 
 @router.get("/{asset_id}", response_model=AssetOut)
-def get_asset(asset_id: int, db: Session = Depends(get_db)) -> Asset:
-    return _get_asset_or_404(db, asset_id)
+def get_asset(
+    asset_id: int,
+    db: Session = Depends(get_db),
+    current_user: User | None = Depends(get_optional_user),
+) -> AssetOut:
+    asset = _get_asset_or_404(db, asset_id)
+    viewer_id = current_user.id if current_user else None
+    return serialize_asset(asset, db, viewer_id)
 
 
 @router.post("", response_model=AssetOut, status_code=status.HTTP_201_CREATED)
@@ -130,7 +140,7 @@ def create_asset(
     payload: AssetCreate,
     db: Session = Depends(get_db),
     current_user: User = Depends(get_current_user),
-) -> Asset:
+) -> AssetOut:
     category = _resolve_category(db, payload.category_slug)
 
     asset = Asset(
@@ -159,7 +169,7 @@ def create_asset(
     ]
     db.add(asset)
     db.commit()
-    return _get_asset_or_404(db, asset.id)
+    return serialize_asset(_get_asset_or_404(db, asset.id), db, current_user.id)
 
 
 @router.patch("/{asset_id}", response_model=AssetOut)
@@ -168,7 +178,7 @@ def update_asset(
     payload: AssetUpdate,
     db: Session = Depends(get_db),
     current_user: User = Depends(get_current_user),
-) -> Asset:
+) -> AssetOut:
     asset = _get_asset_or_404(db, asset_id)
     if asset.owner_id != current_user.id:
         raise HTTPException(
@@ -196,7 +206,7 @@ def update_asset(
         ]
 
     db.commit()
-    return _get_asset_or_404(db, asset.id)
+    return serialize_asset(_get_asset_or_404(db, asset.id), db, current_user.id)
 
 
 @router.delete("/{asset_id}", status_code=status.HTTP_204_NO_CONTENT)

@@ -6,12 +6,18 @@ import {
 import { api } from '../utils/api';
 import { useAuthStore } from '../store/authStore';
 import type {
+  AdminAction,
+  AdminExchangeDetail,
+  AdminExchangeRow,
+  AdminKpis,
   AIMatch,
+  AppNotification,
   Asset,
   AssetListResponse,
   AuthTokens,
   Category,
   DashboardStats,
+  ExchangeMessage,
   ExchangeRequest,
   Favorite,
   User,
@@ -50,6 +56,9 @@ export interface ProfileUpdatePayload {
   full_name?: string;
   email?: string;
   phone?: string | null;
+  whatsapp?: string | null;
+  telegram?: string | null;
+  address?: string | null;
   city?: string | null;
   bio?: string | null;
   avatar_url?: string | null;
@@ -250,6 +259,17 @@ export function useCreateExchange() {
   });
 }
 
+export function useExchange(id: number | null) {
+  return useQuery({
+    queryKey: ['exchange', id],
+    enabled: id != null,
+    queryFn: async () => {
+      const { data } = await api.get<ExchangeRequest>(`/exchanges/${id}`);
+      return data;
+    },
+  });
+}
+
 export function useUpdateExchangeStatus() {
   const qc = useQueryClient();
   return useMutation({
@@ -258,7 +278,7 @@ export function useUpdateExchangeStatus() {
       status,
     }: {
       id: number;
-      status: 'accepted' | 'rejected' | 'negotiation' | 'completed';
+      status: 'accepted' | 'rejected' | 'cancelled' | 'completed';
     }) => {
       const { data } = await api.patch<ExchangeRequest>(`/exchanges/${id}`, {
         status,
@@ -267,7 +287,137 @@ export function useUpdateExchangeStatus() {
     },
     onSuccess: () => {
       qc.invalidateQueries({ queryKey: ['exchanges'] });
+      qc.invalidateQueries({ queryKey: ['exchange'] });
       qc.invalidateQueries({ queryKey: ['my-assets'] });
+    },
+  });
+}
+
+// ----- Exchange messaging -----
+
+export function useExchangeMessages(exchangeId: number | null) {
+  return useQuery({
+    queryKey: ['exchange-messages', exchangeId],
+    enabled: exchangeId != null,
+    queryFn: async () => {
+      const { data } = await api.get<ExchangeMessage[]>(
+        `/exchanges/${exchangeId}/messages`,
+      );
+      return data;
+    },
+  });
+}
+
+export function useSendMessage() {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: async ({ id, body }: { id: number; body: string }) => {
+      const { data } = await api.post<ExchangeMessage>(
+        `/exchanges/${id}/messages`,
+        { body },
+      );
+      return data;
+    },
+    onSuccess: (_data, variables) => {
+      qc.invalidateQueries({ queryKey: ['exchange-messages', variables.id] });
+    },
+  });
+}
+
+// ----- Notifications -----
+
+export function useNotifications() {
+  const isAuthenticated = useAuthStore((s) => s.isAuthenticated);
+  return useQuery({
+    queryKey: ['notifications'],
+    enabled: isAuthenticated,
+    queryFn: async () => {
+      const { data } = await api.get<AppNotification[]>('/notifications');
+      return data;
+    },
+  });
+}
+
+export function useMarkNotificationRead() {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: async (id: number) => {
+      await api.post(`/notifications/${id}/read`);
+    },
+    onSuccess: () => qc.invalidateQueries({ queryKey: ['notifications'] }),
+  });
+}
+
+export function useMarkAllNotificationsRead() {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: async () => {
+      await api.post('/notifications/read-all');
+    },
+    onSuccess: () => qc.invalidateQueries({ queryKey: ['notifications'] }),
+  });
+}
+
+// ----- Admin: Exchange Approval Center -----
+
+export function useAdminKpis() {
+  return useQuery({
+    queryKey: ['admin-kpis'],
+    queryFn: async () => {
+      const { data } = await api.get<AdminKpis>('/admin/kpis');
+      return data;
+    },
+  });
+}
+
+export function useAdminExchanges(statusFilter?: string) {
+  return useQuery({
+    queryKey: ['admin-exchanges', statusFilter ?? 'all'],
+    queryFn: async () => {
+      const { data } = await api.get<AdminExchangeRow[]>('/admin/exchanges', {
+        params: statusFilter ? { status: statusFilter } : undefined,
+      });
+      return data;
+    },
+  });
+}
+
+export function useAdminExchange(id: number | null) {
+  return useQuery({
+    queryKey: ['admin-exchange', id],
+    enabled: id != null,
+    queryFn: async () => {
+      const { data } = await api.get<AdminExchangeDetail>(
+        `/admin/exchanges/${id}`,
+      );
+      return data;
+    },
+  });
+}
+
+export function useAdminDecision() {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: async ({
+      id,
+      action,
+      note,
+    }: {
+      id: number;
+      action: AdminAction;
+      note?: string;
+    }) => {
+      const { data } = await api.post<AdminExchangeDetail>(
+        `/admin/exchanges/${id}/decision`,
+        { action, note },
+      );
+      return data;
+    },
+    onSuccess: (_data, variables) => {
+      qc.invalidateQueries({ queryKey: ['admin-exchanges'] });
+      qc.invalidateQueries({ queryKey: ['admin-exchange', variables.id] });
+      qc.invalidateQueries({ queryKey: ['admin-kpis'] });
+      qc.invalidateQueries({ queryKey: ['exchanges'] });
     },
   });
 }

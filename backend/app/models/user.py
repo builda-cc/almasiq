@@ -30,6 +30,17 @@ class User(Base, TimestampMixin):
     bio: Mapped[str | None] = mapped_column(String(2000), nullable=True)
     city: Mapped[str | None] = mapped_column(String(120), nullable=True)
 
+    # Private contact channels — only revealed to the counterparty of an
+    # admin-approved exchange (see services/privacy.py::can_view_contact_info).
+    whatsapp: Mapped[str | None] = mapped_column(String(50), nullable=True)
+    telegram: Mapped[str | None] = mapped_column(String(80), nullable=True)
+    address: Mapped[str | None] = mapped_column(String(500), nullable=True)
+
+    # KYC verification: unverified | verified | premium
+    verification_status: Mapped[str] = mapped_column(
+        String(20), default="unverified", nullable=False
+    )
+
     assets: Mapped[list["Asset"]] = relationship(
         back_populates="owner", cascade="all, delete-orphan"
     )

@@ -5,14 +5,17 @@ import { useTranslation } from 'react-i18next';
 import { useAuthStore } from '../../store/authStore';
 import { useUIStore } from '../../store/uiStore';
 import { LanguageSwitcher } from '../ui/LanguageSwitcher';
+import { NotificationBell } from '../ui/NotificationBell';
 
 export function Header() {
   const { t } = useTranslation();
   const [mobileOpen, setMobileOpen] = useState(false);
   const navigate = useNavigate();
   const isAuthenticated = useAuthStore((s) => s.isAuthenticated);
+  const user = useAuthStore((s) => s.user);
   const logout = useAuthStore((s) => s.logout);
   const openAuth = useUIStore((s) => s.openAuth);
+  const isAdmin = user?.role === 'admin';
 
   const publicNav = [
     { label: t('nav.browseAssets'), to: '/assets' },
@@ -28,7 +31,11 @@ export function Header() {
     { label: t('nav.favorites'), to: '/dashboard/favorites' },
   ];
 
-  const navItems = isAuthenticated ? authedNav : publicNav;
+  const navItems = isAuthenticated
+    ? isAdmin
+      ? [...authedNav, { label: t('nav.admin'), to: '/admin' }]
+      : authedNav
+    : publicNav;
 
   const handleLogout = () => {
     logout();
@@ -66,6 +73,7 @@ export function Header() {
             <LanguageSwitcher />
             {isAuthenticated ? (
               <>
+                <NotificationBell />
                 <Link
                   to="/assets/new"
                   className="px-4 py-2 bg-gold-gradient hover:bg-gold-gradient-hover text-white text-sm font-semibold rounded-lg shadow-sm transition-colors"

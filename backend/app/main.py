@@ -5,6 +5,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from .api import (
+    admin,
     assets,
     auth,
     categories,
@@ -12,6 +13,7 @@ from .api import (
     exchanges,
     favorites,
     matches,
+    notifications,
 )
 from .config import settings
 from .db.base import Base
@@ -66,3 +68,5 @@ app.include_router(matches.router)
 app.include_router(exchanges.router)
 app.include_router(favorites.router)
 app.include_router(dashboard.router)
+app.include_router(notifications.router)
+app.include_router(admin.router)

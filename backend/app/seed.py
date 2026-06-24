@@ -112,6 +112,32 @@ def _prune_legacy_categories(db: Session, cats: dict[str, Category]) -> None:
         print(f"Pruned legacy categories: {', '.join(removed)}")
 
 
+def _ensure_admin(db: Session) -> None:
+    """Ensure a dedicated administrator account exists for the Approval Center.
+
+    Login: admin@example.kz / password123
+    """
+    admin = db.execute(
+        select(User).where(User.email == "admin@example.kz")
+    ).scalar_one_or_none()
+    if admin is None:
+        db.add(
+            User(
+                full_name="Platform Admin",
+                email="admin@example.kz",
+                phone="+7 700 000 0000",
+                hashed_password=hash_password("password123"),
+                city="Astana",
+                role="admin",
+                verification_status="premium",
+            )
+        )
+        db.commit()
+    elif admin.role != "admin":
+        admin.role = "admin"
+        db.commit()
+
+
 def _ensure_users(db: Session) -> list[User]:
     sample = [
         ("Aliya Nurlanovna", "aliya@example.kz", "+7 701 111 2233"),
@@ -128,6 +154,7 @@ def _ensure_users(db: Session) -> list[User]:
                 phone=phone,
                 hashed_password=hash_password("password123"),
                 city="Almaty",
+                verification_status="verified",
             )
             db.add(user)
         users.append(user)
@@ -244,6 +271,7 @@ def main() -> None:
     Base.metadata.create_all(bind=engine)
     with SessionLocal() as db:
         cats = _ensure_categories(db)
+        _ensure_admin(db)
         users = _ensure_users(db)
         _seed_assets(db, cats, users)
         count = recompute_matches(db)

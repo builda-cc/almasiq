@@ -10,6 +10,8 @@ interface ProfileFormValues {
   full_name: string;
   email: string;
   phone: string;
+  whatsapp: string;
+  telegram: string;
   city: string;
   bio: string;
 }
@@ -54,8 +56,10 @@ export function Profile() {
   const startEditing = () => {
     reset({
       full_name: user.full_name,
-      email: user.email,
+      email: user.email ?? '',
       phone: user.phone ?? '',
+      whatsapp: user.whatsapp ?? '',
+      telegram: user.telegram ?? '',
       city: user.city ?? '',
       bio: user.bio ?? '',
     });
@@ -73,6 +77,8 @@ export function Profile() {
       full_name: values.full_name.trim(),
       email: values.email.trim(),
       phone: values.phone.trim() || null,
+      whatsapp: values.whatsapp.trim() || null,
+      telegram: values.telegram.trim() || null,
       city: values.city.trim() || null,
       bio: values.bio.trim() || null,
     });
@@ -120,7 +126,7 @@ export function Profile() {
 
   const fields = [
     { icon: UserIcon, label: t('profile.fullName'), value: user.full_name },
-    { icon: Mail, label: t('profile.email'), value: user.email },
+    { icon: Mail, label: t('profile.email'), value: user.email ?? '—' },
     { icon: Phone, label: t('profile.phone'), value: user.phone ?? '—' },
     { icon: MapPin, label: t('profile.city'), value: user.city ?? '—' },
   ];
@@ -216,6 +222,31 @@ export function Profile() {
                 />
               </div>
             </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div>
+                <label className="block text-sm font-medium text-beige-700 mb-1">
+                  {t('profile.whatsapp')}
+                </label>
+                <input
+                  className={inputClass}
+                  placeholder={t('profile.whatsappPlaceholder')}
+                  {...register('whatsapp')}
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-beige-700 mb-1">
+                  {t('profile.telegram')}
+                </label>
+                <input
+                  className={inputClass}
+                  placeholder={t('profile.telegramPlaceholder')}
+                  {...register('telegram')}
+                />
+              </div>
+            </div>
+
+            <p className="text-xs text-beige-500">{t('profile.privacyNote')}</p>
 
             <div>
               <label className="block text-sm font-medium text-beige-700 mb-1">

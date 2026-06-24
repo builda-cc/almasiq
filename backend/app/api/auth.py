@@ -8,7 +8,7 @@ from ..core.security import create_access_token, hash_password, verify_password
 from ..db.session import get_db
 from ..models import User
 from ..schemas.auth import LoginRequest, RegisterRequest, TokenResponse
-from ..schemas.user import PasswordChange, UserPublic, UserUpdate
+from ..schemas.user import PasswordChange, UserPublic, UserUpdate, serialize_user
 from .deps import get_current_user
 
 router = APIRouter(prefix="/api/auth", tags=["auth"])
@@ -54,8 +54,8 @@ def login(payload: LoginRequest, db: Session = Depends(get_db)) -> TokenResponse
 
 
 @router.get("/me", response_model=UserPublic)
-def me(current_user: User = Depends(get_current_user)) -> User:
-    return current_user
+def me(current_user: User = Depends(get_current_user)) -> UserPublic:
+    return serialize_user(current_user, contact_visible=True)
 
 
 @router.patch("/me", response_model=UserPublic)
@@ -63,7 +63,7 @@ def update_me(
     payload: UserUpdate,
     db: Session = Depends(get_db),
     current_user: User = Depends(get_current_user),
-) -> User:
+) -> UserPublic:
     data = payload.model_dump(exclude_unset=True)
     if "full_name" in data and not (data["full_name"] or "").strip():
         raise HTTPException(
@@ -83,7 +83,7 @@ def update_me(
         setattr(current_user, key, value)
     db.commit()
     db.refresh(current_user)
-    return current_user
+    return serialize_user(current_user, contact_visible=True)
 
 
 @router.post("/me/password", status_code=status.HTTP_204_NO_CONTENT)

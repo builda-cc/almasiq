@@ -53,14 +53,16 @@ export function getStatusColor(status: ExchangeStatus): string {
   switch (status) {
     case 'pending':
       return 'bg-amber-100 text-amber-700';
-    case 'negotiation':
+    case 'under_review':
       return 'bg-blue-100 text-blue-700';
-    case 'accepted':
+    case 'approved':
       return 'bg-gold-100 text-gold-700';
     case 'completed':
       return 'bg-gold-100 text-gold-700';
     case 'rejected':
       return 'bg-red-100 text-red-700';
+    case 'cancelled':
+      return 'bg-beige-100 text-beige-600';
     default:
       return 'bg-beige-100 text-beige-700';
   }

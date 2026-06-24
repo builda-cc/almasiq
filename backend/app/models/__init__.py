@@ -8,7 +8,12 @@ from .ai_match import AIMatch
 from .ai_valuation import AIValuation
 from .asset import Asset, AssetImage, ExchangePreference
 from .category import Category
-from .exchange import ExchangeRequest
+from .exchange import (
+    ContactUnlock,
+    ExchangeMessage,
+    ExchangeRequest,
+    ViolationLog,
+)
 from .favorite import Favorite
 from .notification import Notification
 from .user import User
@@ -20,7 +25,10 @@ __all__ = [
     "AssetImage",
     "ExchangePreference",
     "Category",
+    "ContactUnlock",
+    "ExchangeMessage",
     "ExchangeRequest",
+    "ViolationLog",
     "Favorite",
     "Notification",
     "User",

@@ -10,6 +10,7 @@ import {
   X,
   Phone,
   Mail,
+  Lock,
 } from 'lucide-react';
 import {
   useAsset,
@@ -168,16 +169,36 @@ export function AssetDetails() {
             <div className="mt-6 border-t border-beige-100 pt-4">
               <p className="text-sm text-beige-500">{t('assets.owner')}</p>
               <p className="font-medium text-beige-900">{asset.owner.full_name}</p>
-              {asset.owner.phone && (
-                <p className="mt-1 flex items-center text-sm text-beige-600">
-                  <Phone className="w-4 h-4 mr-1.5" />
-                  {asset.owner.phone}
-                </p>
+              {asset.owner.city && (
+                <p className="mt-0.5 text-sm text-beige-500">{asset.owner.city}</p>
               )}
-              <p className="mt-1 flex items-center text-sm text-beige-600">
-                <Mail className="w-4 h-4 mr-1.5" />
-                {asset.owner.email}
-              </p>
+
+              {isOwner || asset.owner.contact_unlocked ? (
+                <div className="mt-2 space-y-1">
+                  {asset.owner.phone && (
+                    <p className="flex items-center text-sm text-beige-600">
+                      <Phone className="w-4 h-4 mr-1.5" />
+                      {asset.owner.phone}
+                    </p>
+                  )}
+                  {asset.owner.email && (
+                    <p className="flex items-center text-sm text-beige-600">
+                      <Mail className="w-4 h-4 mr-1.5" />
+                      {asset.owner.email}
+                    </p>
+                  )}
+                </div>
+              ) : (
+                <div className="mt-3 rounded-lg bg-beige-50 border border-beige-200 p-3">
+                  <p className="flex items-center text-sm font-medium text-beige-700">
+                    <Lock className="w-4 h-4 mr-1.5 text-gold-600" />
+                    {t('contact.hiddenBadge')}
+                  </p>
+                  <p className="mt-1 text-xs text-beige-500">
+                    {t('contact.hiddenHelp')}
+                  </p>
+                </div>
+              )}
             </div>
 
             {!isOwner && (

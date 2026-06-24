@@ -36,7 +36,7 @@ def dashboard_stats(
                 ExchangeRequest.from_user_id == current_user.id,
                 ExchangeRequest.to_user_id == current_user.id,
             ),
-            ExchangeRequest.status.in_(["pending", "negotiation", "accepted"]),
+            ExchangeRequest.status.in_(["pending", "under_review", "approved"]),
         )
     ).scalar_one()
 

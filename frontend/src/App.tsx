@@ -2,7 +2,9 @@ import { useEffect } from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import { Layout } from './components/layout/Layout';
 import { DashboardLayout } from './components/layout/DashboardLayout';
+import { AdminLayout } from './components/layout/AdminLayout';
 import { ProtectedRoute } from './components/auth/ProtectedRoute';
+import { RequireAdmin } from './components/auth/RequireAdmin';
 import { Home } from './pages/Home';
 import { AssetListing } from './pages/AssetListing';
 import { AssetDetails } from './pages/AssetDetails';
@@ -14,6 +16,8 @@ import { MyAssets } from './pages/MyAssets';
 import { ExchangeRequests } from './pages/ExchangeRequests';
 import { Favorites } from './pages/Favorites';
 import { Profile } from './pages/Profile';
+import { AdminExchanges } from './pages/AdminExchanges';
+import { AdminExchangeDetail } from './pages/AdminExchangeDetail';
 import { useAuthStore } from './store/authStore';
 
 export default function App() {
@@ -42,6 +46,14 @@ export default function App() {
             <Route path="exchanges" element={<ExchangeRequests />} />
             <Route path="favorites" element={<Favorites />} />
             <Route path="profile" element={<Profile />} />
+          </Route>
+
+          {/* Admin: Exchange Approval Center */}
+          <Route element={<RequireAdmin />}>
+            <Route path="admin" element={<AdminLayout />}>
+              <Route index element={<AdminExchanges />} />
+              <Route path="exchanges/:requestId" element={<AdminExchangeDetail />} />
+            </Route>
           </Route>
         </Route>
 
