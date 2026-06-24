@@ -37,6 +37,15 @@ async def lifespan(app: FastAPI):
     except Exception as exc:  # noqa: BLE001 - never block startup on sync
         logging.getLogger("uvicorn.error").warning("Schema auto-sync skipped: %s", exc)
 
+    # Always ensure the admin account exists and its credentials work, even
+    # when sample-data seeding is disabled in production.
+    try:
+        from .seed import ensure_admin
+
+        ensure_admin()
+    except Exception as exc:  # noqa: BLE001 - never block startup
+        logging.getLogger("uvicorn.error").warning("Admin bootstrap skipped: %s", exc)
+
     # Optionally seed categories + sample data so a freshly-provisioned
     # production database is immediately usable. Idempotent: categories are
     # never duplicated and sample assets are only added when the table is empty.

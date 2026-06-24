@@ -13,7 +13,7 @@ from __future__ import annotations
 from sqlalchemy import delete, select, update
 from sqlalchemy.orm import Session
 
-from .core.security import hash_password
+from .core.security import hash_password, verify_password
 from .db.base import Base
 from .db.session import SessionLocal, engine
 from .models import Asset, AssetImage, Category, ExchangePreference, User
@@ -112,29 +112,50 @@ def _prune_legacy_categories(db: Session, cats: dict[str, Category]) -> None:
         print(f"Pruned legacy categories: {', '.join(removed)}")
 
 
+ADMIN_EMAIL = "admin@example.kz"
+ADMIN_PASSWORD = "password123"
+
+
 def _ensure_admin(db: Session) -> None:
-    """Ensure a dedicated administrator account exists for the Approval Center.
+    """Ensure a dedicated administrator account exists and is usable.
+
+    Self-healing: if the account is missing it is created; if it exists but
+    has the wrong role or its password no longer verifies, both are reset so
+    the documented credentials always work.
 
     Login: admin@example.kz / password123
     """
     admin = db.execute(
-        select(User).where(User.email == "admin@example.kz")
+        select(User).where(User.email == ADMIN_EMAIL)
     ).scalar_one_or_none()
+
     if admin is None:
         db.add(
             User(
                 full_name="Platform Admin",
-                email="admin@example.kz",
+                email=ADMIN_EMAIL,
                 phone="+7 700 000 0000",
-                hashed_password=hash_password("password123"),
+                hashed_password=hash_password(ADMIN_PASSWORD),
                 city="Astana",
                 role="admin",
                 verification_status="premium",
+                is_active=True,
             )
         )
         db.commit()
-    elif admin.role != "admin":
+        return
+
+    changed = False
+    if admin.role != "admin":
         admin.role = "admin"
+        changed = True
+    if not admin.is_active:
+        admin.is_active = True
+        changed = True
+    if not verify_password(ADMIN_PASSWORD, admin.hashed_password):
+        admin.hashed_password = hash_password(ADMIN_PASSWORD)
+        changed = True
+    if changed:
         db.commit()
 
 
@@ -265,6 +286,15 @@ def _seed_assets(db: Session, cats: dict[str, Category], users: list[User]) -> N
     ]
     db.add_all(assets)
     db.commit()
+
+
+def ensure_admin() -> None:
+    """Guarantee the admin account exists/usable, regardless of seeding.
+
+    Safe to call on every startup even when ``seed_on_startup`` is disabled.
+    """
+    with SessionLocal() as db:
+        _ensure_admin(db)
 
 
 def main() -> None:
