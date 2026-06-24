@@ -3,7 +3,7 @@ from __future__ import annotations
 from datetime import datetime
 from typing import TYPE_CHECKING
 
-from pydantic import BaseModel, ConfigDict, Field
+from pydantic import BaseModel, ConfigDict, Field, field_validator
 
 from .asset import AssetOut, serialize_asset
 from .user import UserPublic, serialize_user
@@ -70,8 +70,13 @@ class AdminUserDetail(BaseModel):
     email: str
     phone: str | None = None
     city: str | None = None
-    verification_status: str
+    verification_status: str = "unverified"
     created_at: datetime
+
+    @field_validator("verification_status", mode="before")
+    @classmethod
+    def _default_verification(cls, v: str | None) -> str:
+        return v or "unverified"
 
 
 class MatchAnalysis(BaseModel):

@@ -22,6 +22,25 @@ from sqlalchemy.schema import CreateColumn
 logger = logging.getLogger("uvicorn.error")
 
 
+def _python_default(column) -> object | None:
+    """Best-effort scalar default for a column, for backfilling old rows."""
+    default = column.default
+    if default is not None and getattr(default, "is_scalar", False):
+        return default.arg
+    # Fall back to sensible zero-values by Python type so NOT NULL holds.
+    try:
+        py_type = column.type.python_type
+    except Exception:  # noqa: BLE001
+        return None
+    if py_type is bool:
+        return False
+    if py_type in (int, float):
+        return 0
+    if py_type is str:
+        return ""
+    return None
+
+
 def sync_missing_columns(engine: Engine) -> list[str]:
     """Add columns defined on the models but absent from the database.
 
@@ -51,8 +70,7 @@ def sync_missing_columns(engine: Engine) -> list[str]:
 
                 # Render the column definition for the active dialect, then
                 # strip any NOT NULL: existing rows have no value yet, so the
-                # column must be added nullable (models keep their own default
-                # for new rows going forward).
+                # column must be added nullable first.
                 col_sql = compiler.process(CreateColumn(column))
                 col_sql = col_sql.replace(" NOT NULL", "")
 
@@ -67,6 +85,30 @@ def sync_missing_columns(engine: Engine) -> list[str]:
                         column.name,
                         exc,
                     )
+                    continue
+
+                # Backfill existing rows for columns that the model expects to
+                # be non-nullable, so serialization (which assumes a value) and
+                # any future NOT NULL constraint both hold.
+                if not column.nullable:
+                    default_value = _python_default(column)
+                    if default_value is not None:
+                        try:
+                            conn.execute(
+                                text(
+                                    f'UPDATE "{table.name}" '
+                                    f'SET "{column.name}" = :val '
+                                    f'WHERE "{column.name}" IS NULL'
+                                ),
+                                {"val": default_value},
+                            )
+                        except Exception as exc:  # noqa: BLE001
+                            logger.warning(
+                                "Could not backfill %s.%s: %s",
+                                table.name,
+                                column.name,
+                                exc,
+                            )
 
     if added:
         logger.info("Schema sync added columns: %s", ", ".join(added))

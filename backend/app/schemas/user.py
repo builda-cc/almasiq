@@ -49,7 +49,7 @@ def serialize_user(user: User, *, contact_visible: bool) -> UserPublic:
         city=user.city,
         bio=user.bio,
         role=user.role,
-        verification_status=user.verification_status,
+        verification_status=user.verification_status or "unverified",
         created_at=user.created_at,
         email=user.email if contact_visible else None,
         phone=user.phone if contact_visible else None,
