@@ -69,6 +69,7 @@ class AssetCreate(BaseModel):
 
 class AssetUpdate(BaseModel):
     title: str | None = None
+    category_slug: str | None = None
     description: str | None = None
     estimated_value: float | None = Field(default=None, ge=0)
     region: str | None = None

@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
-import { Trash2, Plus } from 'lucide-react';
+import { Trash2, Plus, Pencil } from 'lucide-react';
 import { useMyAssets, useDeleteAsset } from '../hooks/queries';
 import { formatKzt, categoryName } from '../utils/helpers';
 
@@ -63,6 +63,13 @@ export function MyAssets() {
               >
                 {asset.status}
               </span>
+              <Link
+                to={`/assets/${asset.id}/edit`}
+                className="p-2 text-beige-400 hover:text-gold-600 hover:bg-gold-50 rounded-lg"
+                aria-label={t('dashboard.editAsset')}
+              >
+                <Pencil className="w-5 h-5" />
+              </Link>
               <button
                 onClick={() => {
                   if (confirm(t('dashboard.deleteConfirm'))) deleteAsset.mutate(asset.id);

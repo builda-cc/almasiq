@@ -176,6 +176,32 @@ export function useCreateAsset() {
   });
 }
 
+export type AssetUpdatePayload = Partial<AssetCreatePayload> & {
+  status?: string;
+};
+
+export function useUpdateAsset() {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: async ({
+      id,
+      payload,
+    }: {
+      id: number;
+      payload: AssetUpdatePayload;
+    }) => {
+      const { data } = await api.patch<Asset>(`/assets/${id}`, payload);
+      return data;
+    },
+    onSuccess: (_data, variables) => {
+      qc.invalidateQueries({ queryKey: ['assets'] });
+      qc.invalidateQueries({ queryKey: ['my-assets'] });
+      qc.invalidateQueries({ queryKey: ['asset', variables.id] });
+      qc.invalidateQueries({ queryKey: ['categories'] });
+    },
+  });
+}
+
 export function useDeleteAsset() {
   const qc = useQueryClient();
   return useMutation({

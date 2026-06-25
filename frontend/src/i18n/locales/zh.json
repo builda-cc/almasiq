@@ -76,7 +76,8 @@
     "addAsset": "添加资产",
     "noAssetsYet": "您还没有发布任何资产。",
     "deleteConfirm": "删除此资产？",
-    "deleteAsset": "删除资产"
+    "deleteAsset": "删除资产",
+    "editAsset": "编辑资产"
   },
   "auth": {
     "welcomeBack": "欢迎回来",
@@ -175,6 +176,12 @@
     "preferredSubtitle": "选择您接受交换的分类。",
     "plusCash": "+ 现金",
     "publish": "发布资产"
+  },
+  "editAsset": {
+    "title": "编辑资产",
+    "subtitle": "更新您的资产详情和交换偏好。",
+    "saveChanges": "保存更改",
+    "notFound": "未找到资产。"
   },
   "matches": {
     "yourMatches": "您的AI匹配",

@@ -188,6 +188,9 @@ def update_asset(
     data = payload.model_dump(exclude_unset=True)
     images = data.pop("images", None)
     preferences = data.pop("preferences", None)
+    category_slug = data.pop("category_slug", None)
+    if category_slug is not None:
+        asset.category_id = _resolve_category(db, category_slug).id
     for key, value in data.items():
         setattr(asset, key, value)
 

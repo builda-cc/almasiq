@@ -9,6 +9,7 @@ import { Home } from './pages/Home';
 import { AssetListing } from './pages/AssetListing';
 import { AssetDetails } from './pages/AssetDetails';
 import { AddAsset } from './pages/AddAsset';
+import { EditAsset } from './pages/EditAsset';
 import { AIMatches } from './pages/AIMatches';
 import { HowItWorks } from './pages/HowItWorks';
 import { Dashboard } from './pages/Dashboard';
@@ -40,6 +41,7 @@ export default function App() {
         {/* Authenticated routes */}
         <Route element={<ProtectedRoute />}>
           <Route path="assets/new" element={<AddAsset />} />
+          <Route path="assets/:assetId/edit" element={<EditAsset />} />
           <Route path="dashboard" element={<DashboardLayout />}>
             <Route index element={<Dashboard />} />
             <Route path="assets" element={<MyAssets />} />

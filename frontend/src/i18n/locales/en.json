@@ -76,7 +76,8 @@
     "addAsset": "Add Asset",
     "noAssetsYet": "You haven't published any assets yet.",
     "deleteConfirm": "Delete this asset?",
-    "deleteAsset": "Delete asset"
+    "deleteAsset": "Delete asset",
+    "editAsset": "Edit asset"
   },
   "auth": {
     "welcomeBack": "Welcome Back",
@@ -175,6 +176,12 @@
     "preferredSubtitle": "Select categories you'd accept in exchange.",
     "plusCash": "+ cash",
     "publish": "Publish Asset"
+  },
+  "editAsset": {
+    "title": "Edit Asset",
+    "subtitle": "Update your asset details and exchange preferences.",
+    "saveChanges": "Save Changes",
+    "notFound": "Asset not found."
   },
   "matches": {
     "yourMatches": "Your AI Matches",
