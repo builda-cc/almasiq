@@ -18,6 +18,7 @@ import { Favorites } from './pages/Favorites';
 import { Profile } from './pages/Profile';
 import { AdminExchanges } from './pages/AdminExchanges';
 import { AdminExchangeDetail } from './pages/AdminExchangeDetail';
+import { AdminUsers } from './pages/AdminUsers';
 import { useAuthStore } from './store/authStore';
 
 export default function App() {
@@ -52,6 +53,7 @@ export default function App() {
           <Route element={<RequireAdmin />}>
             <Route path="admin" element={<AdminLayout />}>
               <Route index element={<AdminExchanges />} />
+              <Route path="users" element={<AdminUsers />} />
               <Route path="exchanges/:requestId" element={<AdminExchangeDetail />} />
             </Route>
           </Route>

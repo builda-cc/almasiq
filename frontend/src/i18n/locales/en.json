@@ -272,7 +272,21 @@
     "adminNote": "Admin note",
     "notFound": "Exchange request not found.",
     "backToCenter": "← Back to Approval Center",
+    "usersSubtitle": "Registered users and their activity at a glance.",
+    "kpiTotalUsers": "Total Users",
+    "kpiVerifiedUsers": "Verified Users",
+    "kpiTotalAssets": "Total Assets Listed",
+    "noUsers": "No registered users found.",
+    "colUser": "User",
+    "colEmail": "Email",
+    "colPhone": "Phone",
+    "colCity": "City",
+    "colVerification": "Verification",
+    "colAssetCount": "Assets",
+    "colExchangeCount": "Exchange Requests",
+    "colRegistered": "Registered",
     "verify": {
+      "unverified": "Unverified",
       "verified": "Verified",
       "premium": "Premium"
     }

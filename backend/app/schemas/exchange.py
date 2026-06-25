@@ -79,6 +79,15 @@ class AdminUserDetail(BaseModel):
         return v or "unverified"
 
 
+class AdminUserSummary(AdminUserDetail):
+    """One row of the admin User Info table, with activity counts."""
+
+    role: str = "user"
+    is_active: bool = True
+    asset_count: int = 0
+    exchange_request_count: int = 0
+
+
 class MatchAnalysis(BaseModel):
     value_score: float
     preference_score: float

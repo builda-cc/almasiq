@@ -272,7 +272,21 @@
     "adminNote": "Әкімші ескертпесі",
     "notFound": "Айырбас сұрауы табылмады.",
     "backToCenter": "← Мақұлдау орталығына оралу",
+    "usersSubtitle": "Тіркелген пайдаланушылар және олардың белсенділігі.",
+    "kpiTotalUsers": "Барлық пайдаланушылар",
+    "kpiVerifiedUsers": "Расталған пайдаланушылар",
+    "kpiTotalAssets": "Жарияланған активтер",
+    "noUsers": "Тіркелген пайдаланушылар табылмады.",
+    "colUser": "Пайдаланушы",
+    "colEmail": "Электрондық пошта",
+    "colPhone": "Телефон",
+    "colCity": "Қала",
+    "colVerification": "Растау",
+    "colAssetCount": "Активтер",
+    "colExchangeCount": "Айырбас сұраулары",
+    "colRegistered": "Тіркелген",
     "verify": {
+      "unverified": "Расталмаған",
       "verified": "Расталған",
       "premium": "Премиум"
     }

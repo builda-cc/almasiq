@@ -10,6 +10,7 @@ import type {
   AdminExchangeDetail,
   AdminExchangeRow,
   AdminKpis,
+  AdminUserSummary,
   AIMatch,
   AppNotification,
   Asset,
@@ -365,6 +366,16 @@ export function useAdminKpis() {
     queryKey: ['admin-kpis'],
     queryFn: async () => {
       const { data } = await api.get<AdminKpis>('/admin/kpis');
+      return data;
+    },
+  });
+}
+
+export function useAdminUsers() {
+  return useQuery({
+    queryKey: ['admin-users'],
+    queryFn: async () => {
+      const { data } = await api.get<AdminUserSummary[]>('/admin/users');
       return data;
     },
   });

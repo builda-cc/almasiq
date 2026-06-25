@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next';
 import { NavLink, Outlet } from 'react-router-dom';
-import { ShieldCheck, ArrowRightLeft } from 'lucide-react';
+import { ShieldCheck, ArrowRightLeft, Users } from 'lucide-react';
 
 export function AdminLayout() {
   const { t } = useTranslation();
@@ -11,6 +11,12 @@ export function AdminLayout() {
       label: t('admin.approvalCenter'),
       icon: ArrowRightLeft,
       end: true,
+    },
+    {
+      to: '/admin/users',
+      label: t('admin.userInfo'),
+      icon: Users,
+      end: false,
     },
   ];
 

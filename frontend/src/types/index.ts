@@ -142,6 +142,13 @@ export interface AdminUserDetail {
   created_at: string;
 }
 
+export interface AdminUserSummary extends AdminUserDetail {
+  role: string;
+  is_active: boolean;
+  asset_count: number;
+  exchange_request_count: number;
+}
+
 export interface MatchAnalysis {
   value_score: number;
   preference_score: number;

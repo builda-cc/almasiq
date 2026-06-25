@@ -272,7 +272,21 @@
     "adminNote": "Заметка администратора",
     "notFound": "Запрос обмена не найден.",
     "backToCenter": "← Назад в Центр одобрения",
+    "usersSubtitle": "Зарегистрированные пользователи и их активность.",
+    "kpiTotalUsers": "Всего пользователей",
+    "kpiVerifiedUsers": "Проверенные пользователи",
+    "kpiTotalAssets": "Всего размещено активов",
+    "noUsers": "Зарегистрированные пользователи не найдены.",
+    "colUser": "Пользователь",
+    "colEmail": "Эл. почта",
+    "colPhone": "Телефон",
+    "colCity": "Город",
+    "colVerification": "Проверка",
+    "colAssetCount": "Активы",
+    "colExchangeCount": "Запросы обмена",
+    "colRegistered": "Регистрация",
     "verify": {
+      "unverified": "Не проверен",
       "verified": "Проверен",
       "premium": "Премиум"
     }

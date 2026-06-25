@@ -28,6 +28,7 @@ from ..schemas.exchange import (
     AdminExchangeRow,
     AdminKpis,
     AdminUserDetail,
+    AdminUserSummary,
     MatchAnalysis,
     serialize_message,
 )
@@ -287,12 +288,51 @@ def _unlock_contacts(db: Session, req: ExchangeRequest, admin_id: int) -> None:
 # ----- KYC verification -----
 
 
-@router.get("/users", response_model=list[AdminUserDetail])
+@router.get("/users", response_model=list[AdminUserSummary])
 def admin_list_users(
     db: Session = Depends(get_db),
     _: User = Depends(require_admin),
-) -> list[User]:
-    return db.execute(select(User).order_by(User.created_at.desc())).scalars().all()
+) -> list[AdminUserSummary]:
+    users = db.execute(select(User).order_by(User.created_at.desc())).scalars().all()
+
+    # Per-user asset counts (single grouped query, avoids N+1).
+    asset_counts = dict(
+        db.execute(
+            select(Asset.owner_id, func.count(Asset.id)).group_by(Asset.owner_id)
+        ).all()
+    )
+
+    # Per-user exchange-request counts, counting the user as either party.
+    exchange_counts: dict[int, int] = {}
+    for user_id, count in db.execute(
+        select(ExchangeRequest.from_user_id, func.count(ExchangeRequest.id)).group_by(
+            ExchangeRequest.from_user_id
+        )
+    ).all():
+        exchange_counts[user_id] = exchange_counts.get(user_id, 0) + count
+    for user_id, count in db.execute(
+        select(ExchangeRequest.to_user_id, func.count(ExchangeRequest.id)).group_by(
+            ExchangeRequest.to_user_id
+        )
+    ).all():
+        exchange_counts[user_id] = exchange_counts.get(user_id, 0) + count
+
+    return [
+        AdminUserSummary(
+            id=user.id,
+            full_name=user.full_name,
+            email=user.email,
+            phone=user.phone,
+            city=user.city,
+            verification_status=user.verification_status,
+            created_at=user.created_at,
+            role=user.role,
+            is_active=user.is_active,
+            asset_count=asset_counts.get(user.id, 0),
+            exchange_request_count=exchange_counts.get(user.id, 0),
+        )
+        for user in users
+    ]
 
 
 @router.post("/users/{user_id}/verification", response_model=AdminUserDetail)
