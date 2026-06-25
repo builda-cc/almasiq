@@ -1,17 +1,41 @@
+import { useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Users, BadgeCheck, Package } from 'lucide-react';
+import {
+  Users,
+  BadgeCheck,
+  Package,
+  ChevronLeft,
+  ChevronRight,
+} from 'lucide-react';
 import { useAdminUsers } from '../hooks/queries';
 import { formatDate } from '../utils/helpers';
+
+const PAGE_SIZE = 60;
 
 export function AdminUsers() {
   const { t } = useTranslation();
   const { data: users, isLoading } = useAdminUsers();
+  const [page, setPage] = useState(1);
 
-  const rows = users ?? [];
+  const rows = useMemo(() => users ?? [], [users]);
   const verifiedCount = rows.filter(
     (user) => user.verification_status !== 'unverified',
   ).length;
   const totalAssets = rows.reduce((sum, user) => sum + user.asset_count, 0);
+
+  const pageCount = Math.max(1, Math.ceil(rows.length / PAGE_SIZE));
+
+  // Keep the current page within bounds when the dataset changes.
+  useEffect(() => {
+    if (page > pageCount) setPage(pageCount);
+  }, [page, pageCount]);
+
+  const pageRows = useMemo(
+    () => rows.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE),
+    [rows, page],
+  );
+  const rangeStart = rows.length === 0 ? 0 : (page - 1) * PAGE_SIZE + 1;
+  const rangeEnd = Math.min(page * PAGE_SIZE, rows.length);
 
   const cards = [
     {
@@ -88,7 +112,7 @@ export function AdminUsers() {
                 </tr>
               </thead>
               <tbody>
-                {rows.map((user) => (
+                {pageRows.map((user) => (
                   <tr
                     key={user.id}
                     className="border-b border-beige-50 hover:bg-beige-50/40"
@@ -131,6 +155,40 @@ export function AdminUsers() {
           </div>
         )}
       </div>
+
+      {/* Pagination */}
+      {!isLoading && rows.length > 0 && (
+        <div className="mt-4 flex items-center justify-between gap-4">
+          <p className="text-sm text-beige-500">
+            {t('admin.pageRange', {
+              start: rangeStart,
+              end: rangeEnd,
+              total: rows.length,
+            })}
+          </p>
+          <div className="flex items-center gap-2">
+            <button
+              onClick={() => setPage((p) => Math.max(1, p - 1))}
+              disabled={page <= 1}
+              className="inline-flex items-center gap-1 px-3 py-1.5 text-sm font-medium rounded-lg border border-beige-200 bg-white text-beige-600 hover:bg-beige-50 disabled:opacity-40 disabled:cursor-not-allowed"
+            >
+              <ChevronLeft className="w-4 h-4" />
+              {t('common.prev')}
+            </button>
+            <span className="text-sm text-beige-500">
+              {t('admin.pageOf', { page, pageCount })}
+            </span>
+            <button
+              onClick={() => setPage((p) => Math.min(pageCount, p + 1))}
+              disabled={page >= pageCount}
+              className="inline-flex items-center gap-1 px-3 py-1.5 text-sm font-medium rounded-lg border border-beige-200 bg-white text-beige-600 hover:bg-beige-50 disabled:opacity-40 disabled:cursor-not-allowed"
+            >
+              {t('common.next')}
+              <ChevronRight className="w-4 h-4" />
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

@@ -13,6 +13,8 @@
     "updating": "Обновление…",
     "submit": "Отправить",
     "noResults": "Результатов не найдено.",
+    "prev": "Назад",
+    "next": "Вперёд",
     "justNow": "только что",
     "minutesAgo": "{{count}} минут назад",
     "hoursAgo": "{{count}} часов назад",
@@ -285,6 +287,8 @@
     "colAssetCount": "Активы",
     "colExchangeCount": "Запросы обмена",
     "colRegistered": "Регистрация",
+    "pageRange": "Показано {{start}}–{{end}} из {{total}}",
+    "pageOf": "Страница {{page}} из {{pageCount}}",
     "verify": {
       "unverified": "Не проверен",
       "verified": "Проверен",

@@ -13,6 +13,8 @@
     "updating": "Updating…",
     "submit": "Submit",
     "noResults": "No results found.",
+    "prev": "Previous",
+    "next": "Next",
     "justNow": "just now",
     "minutesAgo": "{{count}} minutes ago",
     "hoursAgo": "{{count}} hours ago",
@@ -285,6 +287,8 @@
     "colAssetCount": "Assets",
     "colExchangeCount": "Exchange Requests",
     "colRegistered": "Registered",
+    "pageRange": "Showing {{start}}–{{end}} of {{total}}",
+    "pageOf": "Page {{page}} of {{pageCount}}",
     "verify": {
       "unverified": "Unverified",
       "verified": "Verified",

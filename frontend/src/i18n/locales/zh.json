@@ -13,6 +13,8 @@
     "updating": "更新中…",
     "submit": "提交",
     "noResults": "未找到结果。",
+    "prev": "上一页",
+    "next": "下一页",
     "justNow": "刚刚",
     "minutesAgo": "{{count}}分钟前",
     "hoursAgo": "{{count}}小时前",
@@ -285,6 +287,8 @@
     "colAssetCount": "资产",
     "colExchangeCount": "交换请求",
     "colRegistered": "注册时间",
+    "pageRange": "显示第 {{start}}–{{end}} 条，共 {{total}} 条",
+    "pageOf": "第 {{page}} 页，共 {{pageCount}} 页",
     "verify": {
       "unverified": "未验证",
       "verified": "已验证",

@@ -13,6 +13,8 @@
     "updating": "Жаңартылуда…",
     "submit": "Жіберу",
     "noResults": "Нәтижелер табылмады.",
+    "prev": "Алдыңғы",
+    "next": "Келесі",
     "justNow": "дәл қазір",
     "minutesAgo": "{{count}} минут бұрын",
     "hoursAgo": "{{count}} сағат бұрын",
@@ -285,6 +287,8 @@
     "colAssetCount": "Активтер",
     "colExchangeCount": "Айырбас сұраулары",
     "colRegistered": "Тіркелген",
+    "pageRange": "{{total}} ішінен {{start}}–{{end}} көрсетілуде",
+    "pageOf": "{{pageCount}} беттің {{page}}-беті",
     "verify": {
       "unverified": "Расталмаған",
       "verified": "Расталған",
