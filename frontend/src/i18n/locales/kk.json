@@ -380,6 +380,13 @@
     "heroBadgeMatchValue": "91% сәйкестік",
     "heroSuggestedExchange": "Ұсынылатын айырбас: коммерциялық нысан ауылшаруашылық жеріне"
   },
+  "imageUploader": {
+    "dropOrClick": "Фотосуреттерді осында сүйреп апарыңыз немесе шолу үшін басыңыз",
+    "fileTypes": "JPG, PNG, WebP, GIF",
+    "maxSize": "Әр файл үшін макс. 10 MB",
+    "cover": "Мұқаба",
+    "images": "сурет"
+  },
   "categories": {
     "real-estate": "Жылжымайтын мүлік",
     "land-agro": "Жер және агро",

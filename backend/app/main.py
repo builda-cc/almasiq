@@ -1,8 +1,10 @@
 import logging
+import os
 from contextlib import asynccontextmanager
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
 
 from .api import (
     admin,
@@ -14,6 +16,7 @@ from .api import (
     favorites,
     matches,
     notifications,
+    uploads,
 )
 from .config import settings
 from .db.base import Base
@@ -83,9 +86,13 @@ def health() -> dict[str, str]:
 app.include_router(auth.router)
 app.include_router(categories.router)
 app.include_router(assets.router)
+app.include_router(uploads.router)
 app.include_router(matches.router)
 app.include_router(exchanges.router)
 app.include_router(favorites.router)
 app.include_router(dashboard.router)
 app.include_router(notifications.router)
 app.include_router(admin.router)
+
+os.makedirs(settings.upload_dir, exist_ok=True)
+app.mount("/uploads", StaticFiles(directory=settings.upload_dir), name="uploads")

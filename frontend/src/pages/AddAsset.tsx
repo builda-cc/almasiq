@@ -2,9 +2,9 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
-import { X, Plus } from 'lucide-react';
 import { useCategories, useCreateAsset } from '../hooks/queries';
 import { CATEGORY_SLUGS } from '../utils/helpers';
+import { ImageUploader } from '../components/assets/ImageUploader';
 import type { CategorySlug } from '../types';
 
 interface FormValues {
@@ -26,7 +26,7 @@ export function AddAsset() {
   const { data: categories } = useCategories();
   const createAsset = useCreateAsset();
 
-  const [imageUrls, setImageUrls] = useState<string[]>(['']);
+  const [imageUrls, setImageUrls] = useState<string[]>([]);
   const [preferences, setPreferences] = useState<
     { category_slug: CategorySlug; cash_accepted: boolean }[]
   >([]);
@@ -41,12 +41,6 @@ export function AddAsset() {
       liquidity_score: 60,
     },
   });
-
-  const addImageField = () => setImageUrls((u) => [...u, '']);
-  const updateImage = (idx: number, value: string) =>
-    setImageUrls((u) => u.map((v, i) => (i === idx ? value : v)));
-  const removeImage = (idx: number) =>
-    setImageUrls((u) => u.filter((_, i) => i !== idx));
 
   const togglePreference = (slug: CategorySlug) => {
     setPreferences((prefs) =>
@@ -134,34 +128,7 @@ export function AddAsset() {
         {/* Photos */}
         <section className="bg-white border border-beige-200 rounded-xl p-6 space-y-4">
           <h2 className="font-semibold text-beige-900">{t('addAsset.photos')}</h2>
-          {imageUrls.map((url, idx) => (
-            <div key={idx} className="flex gap-2">
-              <input
-                value={url}
-                onChange={(e) => updateImage(idx, e.target.value)}
-                className={inputClass}
-                placeholder={t('addAsset.photoPlaceholder')}
-              />
-              {imageUrls.length > 1 && (
-                <button
-                  type="button"
-                  onClick={() => removeImage(idx)}
-                  className="px-3 border border-beige-300 rounded-lg text-beige-500 hover:bg-beige-50"
-                >
-                  <X className="w-4 h-4" />
-                </button>
-              )}
-            </div>
-          ))}
-          {imageUrls.length < 20 && (
-            <button
-              type="button"
-              onClick={addImageField}
-              className="flex items-center gap-1 text-sm text-gold-600 font-medium"
-            >
-              <Plus className="w-4 h-4" /> {t('addAsset.addAnotherImage')}
-            </button>
-          )}
+          <ImageUploader value={imageUrls} onChange={setImageUrls} />
         </section>
 
         {/* Location + value */}

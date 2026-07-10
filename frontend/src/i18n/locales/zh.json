@@ -380,6 +380,13 @@
     "heroBadgeMatchValue": "91% 匹配",
     "heroSuggestedExchange": "建议交换：商业中心换农田"
   },
+  "imageUploader": {
+    "dropOrClick": "拖放照片到这里，或点击浏览",
+    "fileTypes": "JPG, PNG, WebP, GIF",
+    "maxSize": "每个文件最大 10 MB",
+    "cover": "封面",
+    "images": "张图片"
+  },
   "categories": {
     "real-estate": "房地产",
     "land-agro": "土地与农业",

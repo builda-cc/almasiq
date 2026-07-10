@@ -380,6 +380,13 @@
     "heroBadgeMatchValue": "91% Match",
     "heroSuggestedExchange": "Suggested Exchange: Commercial Hub for Farmland"
   },
+  "imageUploader": {
+    "dropOrClick": "Drag & drop photos here, or click to browse",
+    "fileTypes": "JPG, PNG, WebP, GIF",
+    "maxSize": "Max 10 MB per file",
+    "cover": "Cover",
+    "images": "images"
+  },
   "categories": {
     "real-estate": "Real Estate",
     "land-agro": "Land & Agro",

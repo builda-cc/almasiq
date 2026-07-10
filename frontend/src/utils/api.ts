@@ -45,3 +45,14 @@ api.interceptors.response.use(
 );
 
 export { API_BASE_URL, TOKEN_KEY };
+
+export async function uploadFile(file: File): Promise<{ url: string; filename: string }> {
+  const formData = new FormData();
+  formData.append('file', file);
+  const { data } = await api.post<{ url: string; filename: string }>(
+    '/uploads',
+    formData,
+    { headers: { 'Content-Type': 'multipart/form-data' } },
+  );
+  return data;
+}

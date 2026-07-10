@@ -37,6 +37,11 @@ class Settings(BaseSettings):
     # Enabled by default so a freshly-provisioned production DB is usable.
     seed_on_startup: bool = True
 
+    # File uploads (images)
+    upload_dir: str = "uploads"
+    max_upload_size_mb: int = 10
+    allowed_image_types: str = "image/jpeg,image/png,image/webp,image/gif"
+
     model_config = SettingsConfigDict(env_file=".env", env_file_encoding="utf-8")
 
     @property

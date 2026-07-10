@@ -380,6 +380,13 @@
     "heroBadgeMatchValue": "91% совпадение",
     "heroSuggestedExchange": "Предлагаемый обмен: коммерческий объект на сельхозугодья"
   },
+  "imageUploader": {
+    "dropOrClick": "Перетащите фотографии сюда или нажмите для выбора",
+    "fileTypes": "JPG, PNG, WebP, GIF",
+    "maxSize": "Макс. 10 МБ на файл",
+    "cover": "Обложка",
+    "images": "изображений"
+  },
   "categories": {
     "real-estate": "Недвижимость",
     "land-agro": "Земля и агро",
