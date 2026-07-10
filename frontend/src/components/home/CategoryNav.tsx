@@ -68,7 +68,7 @@ export function CategoryNav() {
 
         <div
           ref={scrollRef}
-          className="mt-3 flex gap-3 overflow-x-auto scrollbar-hide pb-1 -mx-1 px-1"
+          className="mt-3 grid grid-cols-2 gap-3 sm:flex sm:overflow-x-auto sm:scrollbar-hide pb-1 -mx-1 px-1"
           style={{ scrollbarWidth: 'none' }}
         >
           {(categories ?? []).map((cat) => {
@@ -77,7 +77,7 @@ export function CategoryNav() {
               <Link
                 key={cat.id}
                 to={`/assets?category=${cat.slug}`}
-                className="group flex items-center gap-3 whitespace-nowrap rounded-xl border border-beige-200 bg-white px-5 py-3 transition-all hover:border-gold-300 hover:bg-gold-50 hover:shadow-sm"
+                className="group flex items-center gap-3 rounded-xl border border-beige-200 bg-white px-4 py-3 transition-all hover:border-gold-300 hover:bg-gold-50 hover:shadow-sm sm:whitespace-nowrap"
               >
                 <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-beige-100 transition-colors group-hover:bg-gold-100">
                   <Icon className="h-5 w-5 text-beige-600 group-hover:text-gold-600" />
