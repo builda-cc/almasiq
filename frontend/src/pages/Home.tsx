@@ -38,9 +38,9 @@ export function Home() {
   return (
     <>
       <SearchHero />
+      <HowItWorks />
       <ListingsGrid revealRef={listings.ref} revealClass={listings.className} />
       <AIHighlights revealRef={highlights.ref} revealClass={highlights.className} />
-      <HowItWorks />
       <CallToAction />
     </>
   );
