@@ -28,9 +28,9 @@ export function SearchHero() {
   };
 
   return (
-    <section className="relative overflow-hidden bg-gradient-to-b from-gold-500 to-gold-600">
-      <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1920&q=60')] bg-cover bg-center opacity-10" />
-      <div className="absolute inset-0 bg-gradient-to-b from-gold-600/95 to-gold-700/98" />
+    <section className="relative overflow-hidden bg-gray-900">
+      <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1920&q=60')] bg-cover bg-center opacity-30" />
+      <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/50 to-black/80" />
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-16 pb-20 lg:pt-20 lg:pb-24">
         <div className="text-center max-w-3xl mx-auto">
