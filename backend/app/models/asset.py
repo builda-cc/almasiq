@@ -51,6 +51,11 @@ class Asset(Base, TimestampMixin):
         cascade="all, delete-orphan",
         order_by="AssetImage.position",
     )
+    videos: Mapped[list["AssetVideo"]] = relationship(
+        back_populates="asset",
+        cascade="all, delete-orphan",
+        order_by="AssetVideo.position",
+    )
     preferences: Mapped[list["ExchangePreference"]] = relationship(
         back_populates="asset", cascade="all, delete-orphan"
     )
@@ -67,6 +72,19 @@ class AssetImage(Base):
     position: Mapped[int] = mapped_column(Integer, default=0, nullable=False)
 
     asset: Mapped["Asset"] = relationship(back_populates="images")
+
+
+class AssetVideo(Base):
+    __tablename__ = "asset_videos"
+
+    id: Mapped[int] = mapped_column(primary_key=True)
+    asset_id: Mapped[int] = mapped_column(
+        ForeignKey("assets.id", ondelete="CASCADE"), index=True, nullable=False
+    )
+    url: Mapped[str] = mapped_column(String(1024), nullable=False)
+    position: Mapped[int] = mapped_column(Integer, default=0, nullable=False)
+
+    asset: Mapped["Asset"] = relationship(back_populates="videos")
 
 
 class ExchangePreference(Base):

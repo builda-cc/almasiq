@@ -45,6 +45,12 @@ export interface AssetImage {
   position: number;
 }
 
+export interface AssetVideo {
+  id: number;
+  url: string;
+  position: number;
+}
+
 export interface ExchangePreference {
   id: number;
   category_slug: CategorySlug;
@@ -68,6 +74,7 @@ export interface Asset {
   category: Category;
   owner: User;
   images: AssetImage[];
+  videos: AssetVideo[];
   preferences: ExchangePreference[];
 }
 

@@ -5,7 +5,7 @@ from sqlalchemy import func, select
 from sqlalchemy.orm import Session, selectinload
 
 from ..db.session import get_db
-from ..models import Asset, AssetImage, Category, ExchangePreference, User
+from ..models import Asset, AssetImage, AssetVideo, Category, ExchangePreference, User
 from ..schemas.asset import (
     AssetCreate,
     AssetListResponse,
@@ -21,6 +21,7 @@ _LOAD_OPTS = (
     selectinload(Asset.category),
     selectinload(Asset.owner),
     selectinload(Asset.images),
+    selectinload(Asset.videos),
     selectinload(Asset.preferences),
 )
 
@@ -159,6 +160,7 @@ def create_asset(
     asset.images = [
         AssetImage(url=img.url, position=img.position) for img in payload.images
     ]
+    asset.videos = [AssetVideo(url=v.url, position=v.position) for v in payload.videos]
     asset.preferences = [
         ExchangePreference(
             category_slug=p.category_slug,
@@ -187,6 +189,7 @@ def update_asset(
 
     data = payload.model_dump(exclude_unset=True)
     images = data.pop("images", None)
+    videos = data.pop("videos", None)
     preferences = data.pop("preferences", None)
     category_slug = data.pop("category_slug", None)
     if category_slug is not None:
@@ -197,6 +200,10 @@ def update_asset(
     if images is not None:
         asset.images = [
             AssetImage(url=i["url"], position=i.get("position", 0)) for i in images
+        ]
+    if videos is not None:
+        asset.videos = [
+            AssetVideo(url=v["url"], position=v.get("position", 0)) for v in videos
         ]
     if preferences is not None:
         asset.preferences = [

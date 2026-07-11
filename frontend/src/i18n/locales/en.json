@@ -160,9 +160,10 @@
     "category": "Category",
     "description": "Description",
     "descriptionPlaceholder": "Describe your asset…",
-    "photos": "Photos (image URLs)",
+    "photos": "Photos",
     "photoPlaceholder": "https://…",
     "addAnotherImage": "Add another image",
+    "videos": "Videos",
     "locationValue": "Location & Value",
     "region": "Region",
     "regionPlaceholder": "Almaty",
@@ -386,6 +387,16 @@
     "maxSize": "Max 10 MB per file",
     "cover": "Cover",
     "images": "images"
+  },
+  "videoUploader": {
+    "dropOrClick": "Drag & drop videos here, or click to browse",
+    "fileTypes": "MP4, WebM, MOV",
+    "maxSize": "Max 60 MB per file",
+    "maxDuration": "Max 6 minutes",
+    "videos": "videos",
+    "errorTooLarge": "File exceeds 60 MB limit",
+    "errorTooLong": "Video exceeds 6 minute limit",
+    "errorUnsupported": "Unsupported file type"
   },
   "categories": {
     "real-estate": "Real Estate",

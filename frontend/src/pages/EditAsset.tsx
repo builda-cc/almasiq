@@ -5,6 +5,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { useCategories, useAsset, useUpdateAsset } from '../hooks/queries';
 import { CATEGORY_SLUGS } from '../utils/helpers';
 import { ImageUploader } from '../components/assets/ImageUploader';
+import { VideoUploader } from '../components/assets/VideoUploader';
 import type { CategorySlug } from '../types';
 
 interface FormValues {
@@ -31,6 +32,7 @@ export function EditAsset() {
   const updateAsset = useUpdateAsset();
 
   const [imageUrls, setImageUrls] = useState<string[]>([]);
+  const [videoUrls, setVideoUrls] = useState<string[]>([]);
   const [preferences, setPreferences] = useState<
     { category_slug: CategorySlug; cash_accepted: boolean }[]
   >([]);
@@ -55,6 +57,7 @@ export function EditAsset() {
       liquidity_score: asset.liquidity_score,
     });
     setImageUrls(asset.images.map((img) => img.url));
+    setVideoUrls(asset.videos.map((v) => v.url));
     setPreferences(
       asset.preferences.map((p) => ({
         category_slug: p.category_slug as CategorySlug,
@@ -86,6 +89,11 @@ export function EditAsset() {
       .filter(Boolean)
       .map((url, position) => ({ url, position }));
 
+    const videos = videoUrls
+      .map((url) => url.trim())
+      .filter(Boolean)
+      .map((url, position) => ({ url, position }));
+
     const updated = await updateAsset.mutateAsync({
       id,
       payload: {
@@ -97,6 +105,7 @@ export function EditAsset() {
         city: values.city || null,
         liquidity_score: Number(values.liquidity_score),
         images,
+        videos,
         preferences: preferences.map((p) => ({
           category_slug: p.category_slug,
           cash_accepted: p.cash_accepted,
@@ -167,6 +176,12 @@ export function EditAsset() {
         <section className="bg-white border border-beige-200 rounded-xl p-6 space-y-4">
           <h2 className="font-semibold text-beige-900">{t('addAsset.photos')}</h2>
           <ImageUploader value={imageUrls} onChange={setImageUrls} />
+        </section>
+
+        {/* Videos */}
+        <section className="bg-white border border-beige-200 rounded-xl p-6 space-y-4">
+          <h2 className="font-semibold text-beige-900">{t('addAsset.videos')}</h2>
+          <VideoUploader value={videoUrls} onChange={setVideoUrls} />
         </section>
 
         {/* Location + value */}

@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { useCategories, useCreateAsset } from '../hooks/queries';
 import { CATEGORY_SLUGS } from '../utils/helpers';
 import { ImageUploader } from '../components/assets/ImageUploader';
+import { VideoUploader } from '../components/assets/VideoUploader';
 import type { CategorySlug } from '../types';
 
 interface FormValues {
@@ -27,6 +28,7 @@ export function AddAsset() {
   const createAsset = useCreateAsset();
 
   const [imageUrls, setImageUrls] = useState<string[]>([]);
+  const [videoUrls, setVideoUrls] = useState<string[]>([]);
   const [preferences, setPreferences] = useState<
     { category_slug: CategorySlug; cash_accepted: boolean }[]
   >([]);
@@ -64,6 +66,11 @@ export function AddAsset() {
       .filter(Boolean)
       .map((url, position) => ({ url, position }));
 
+    const videos = videoUrls
+      .map((url) => url.trim())
+      .filter(Boolean)
+      .map((url, position) => ({ url, position }));
+
     const asset = await createAsset.mutateAsync({
       title: values.title,
       category_slug: values.category_slug,
@@ -74,6 +81,7 @@ export function AddAsset() {
       city: values.city || null,
       liquidity_score: Number(values.liquidity_score),
       images,
+      videos,
       preferences: preferences.map((p) => ({
         category_slug: p.category_slug,
         cash_accepted: p.cash_accepted,
@@ -129,6 +137,12 @@ export function AddAsset() {
         <section className="bg-white border border-beige-200 rounded-xl p-6 space-y-4">
           <h2 className="font-semibold text-beige-900">{t('addAsset.photos')}</h2>
           <ImageUploader value={imageUrls} onChange={setImageUrls} />
+        </section>
+
+        {/* Videos */}
+        <section className="bg-white border border-beige-200 rounded-xl p-6 space-y-4">
+          <h2 className="font-semibold text-beige-900">{t('addAsset.videos')}</h2>
+          <VideoUploader value={videoUrls} onChange={setVideoUrls} />
         </section>
 
         {/* Location + value */}

@@ -134,6 +134,20 @@ export function AssetDetails() {
                 {location}
               </p>
             )}
+
+            {asset.videos.length > 0 && (
+              <div className="mt-4 space-y-3">
+                {asset.videos.map((v) => (
+                  <video
+                    key={v.id}
+                    src={v.url}
+                    controls
+                    className="w-full rounded-xl"
+                  />
+                ))}
+              </div>
+            )}
+
             <p className="mt-4 text-beige-700 whitespace-pre-line">{asset.description}</p>
 
             {asset.preferences.length > 0 && (

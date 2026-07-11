@@ -160,7 +160,8 @@
     "category": "Категория",
     "description": "Описание",
     "descriptionPlaceholder": "Опишите ваш актив…",
-    "photos": "Фотографии (URL изображений)",
+    "photos": "Фото",
+    "videos": "Видео",
     "photoPlaceholder": "https://…",
     "addAnotherImage": "Добавить еще изображение",
     "locationValue": "Расположение и стоимость",
@@ -386,6 +387,16 @@
     "maxSize": "Макс. 10 МБ на файл",
     "cover": "Обложка",
     "images": "изображений"
+  },
+  "videoUploader": {
+    "dropOrClick": "Перетащите видео сюда или нажмите для выбора",
+    "fileTypes": "MP4, WebM, MOV",
+    "maxSize": "Максимум 60 МБ на файл",
+    "maxDuration": "Максимум 6 минут",
+    "videos": "видео",
+    "errorTooLarge": "Файл превышает лимит 60 МБ",
+    "errorTooLong": "Видео превышает лимит 6 минут",
+    "errorUnsupported": "Неподдерживаемый тип файла"
   },
   "categories": {
     "real-estate": "Недвижимость",

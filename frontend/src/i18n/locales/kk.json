@@ -160,7 +160,8 @@
     "category": "Санаты",
     "description": "Сипаттама",
     "descriptionPlaceholder": "Активіңізді сипаттаңыз…",
-    "photos": "Фотосуреттер (сурет URL-дері)",
+    "photos": "Фотосуреттер",
+    "videos": "Видеолар",
     "photoPlaceholder": "https://…",
     "addAnotherImage": "Тағы бір сурет қосу",
     "locationValue": "Орналасқан жері мен құны",
@@ -386,6 +387,16 @@
     "maxSize": "Әр файл үшін макс. 10 MB",
     "cover": "Мұқаба",
     "images": "сурет"
+  },
+  "videoUploader": {
+    "dropOrClick": "Видеоларды осында сүйреп тастаңыз немесе шолу үшін басыңыз",
+    "fileTypes": "MP4, WebM, MOV",
+    "maxSize": "Файлдың максималды өлшемі 60 МБ",
+    "maxDuration": "Максималды ұзақтылығы 6 минут",
+    "videos": "видео",
+    "errorTooLarge": "Файл 60 МБ шектен асып кетті",
+    "errorTooLong": "Видео 6 минут шектен асып кетті",
+    "errorUnsupported": "Қолдау көрсетілмейтін файл түрі"
   },
   "categories": {
     "real-estate": "Жылжымайтын мүлік",

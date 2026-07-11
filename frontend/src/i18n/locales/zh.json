@@ -160,7 +160,8 @@
     "category": "分类",
     "description": "描述",
     "descriptionPlaceholder": "描述您的资产…",
-    "photos": "照片（图片URL）",
+    "photos": "照片",
+    "videos": "视频",
     "photoPlaceholder": "https://…",
     "addAnotherImage": "添加另一张图片",
     "locationValue": "位置与价值",
@@ -386,6 +387,16 @@
     "maxSize": "每个文件最大 10 MB",
     "cover": "封面",
     "images": "张图片"
+  },
+  "videoUploader": {
+    "dropOrClick": "拖放视频到此处，或点击浏览",
+    "fileTypes": "MP4, WebM, MOV",
+    "maxSize": "每个文件最大 60 MB",
+    "maxDuration": "最长 6 分钟",
+    "videos": "视频",
+    "errorTooLarge": "文件超过 60 MB 限制",
+    "errorTooLong": "视频超过 6 分钟限制",
+    "errorUnsupported": "不支持的文件类型"
   },
   "categories": {
     "real-estate": "房地产",
