@@ -27,6 +27,33 @@ import { formatKzt, formatDate, categoryName } from '../utils/helpers';
 const PLACEHOLDER =
   'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=1200';
 
+function toEmbedUrl(url: string): string | null {
+  try {
+    const u = new URL(url);
+    const host = u.hostname.replace('www.', '');
+    if (host === 'youtube.com' || host === 'youtu.be') {
+      let id = '';
+      if (host === 'youtu.be') {
+        id = u.pathname.slice(1);
+      } else {
+        id = u.searchParams.get('v') ?? u.pathname.split('/').pop() ?? '';
+      }
+      return id ? `https://www.youtube.com/embed/${id}` : null;
+    }
+    if (host === 'vimeo.com') {
+      const id = u.pathname.split('/').pop();
+      return id ? `https://player.vimeo.com/video/${id}` : null;
+    }
+    if (host === 'dailymotion.com' || host === 'dai.ly') {
+      const id = u.pathname.split('/').pop();
+      return id ? `https://www.dailymotion.com/embed/video/${id}` : null;
+    }
+    return null;
+  } catch {
+    return null;
+  }
+}
+
 export function AssetDetails() {
   const { t } = useTranslation();
   const { assetId } = useParams<{ assetId: string }>();
@@ -137,14 +164,28 @@ export function AssetDetails() {
 
             {asset.videos.length > 0 && (
               <div className="mt-4 space-y-3">
-                {asset.videos.map((v) => (
-                  <video
-                    key={v.id}
-                    src={v.url}
-                    controls
-                    className="w-full rounded-xl"
-                  />
-                ))}
+                {asset.videos.map((v) => {
+                  const embedUrl = toEmbedUrl(v.url);
+                  return embedUrl ? (
+                    <iframe
+                      key={v.id}
+                      src={embedUrl}
+                      className="w-full aspect-video rounded-xl"
+                      allowFullScreen
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    />
+                  ) : (
+                    <a
+                      key={v.id}
+                      href={v.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="block px-4 py-3 bg-beige-50 border border-beige-200 rounded-xl text-sm text-gold-600 hover:bg-beige-100 truncate"
+                    >
+                      {v.url}
+                    </a>
+                  );
+                })}
               </div>
             )}
 

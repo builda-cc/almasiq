@@ -388,15 +388,13 @@
     "cover": "Cover",
     "images": "images"
   },
-  "videoUploader": {
-    "dropOrClick": "Drag & drop videos here, or click to browse",
-    "fileTypes": "MP4, WebM, MOV",
-    "maxSize": "Max 60 MB per file",
-    "maxDuration": "Max 6 minutes",
+  "videoUrl": {
+    "placeholder": "Paste a YouTube, Vimeo, or other video URL",
+    "add": "Add",
     "videos": "videos",
-    "errorTooLarge": "File exceeds 60 MB limit",
-    "errorTooLong": "Video exceeds 6 minute limit",
-    "errorUnsupported": "Unsupported file type"
+    "invalidUrl": "Please enter a valid URL",
+    "duplicate": "This URL has already been added",
+    "maxReached": "Maximum number of videos reached"
   },
   "categories": {
     "real-estate": "Real Estate",

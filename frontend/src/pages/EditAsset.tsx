@@ -5,7 +5,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { useCategories, useAsset, useUpdateAsset } from '../hooks/queries';
 import { CATEGORY_SLUGS } from '../utils/helpers';
 import { ImageUploader } from '../components/assets/ImageUploader';
-import { VideoUploader } from '../components/assets/VideoUploader';
+import { VideoUrlInput } from '../components/assets/VideoUrlInput';
 import type { CategorySlug } from '../types';
 
 interface FormValues {
@@ -181,7 +181,7 @@ export function EditAsset() {
         {/* Videos */}
         <section className="bg-white border border-beige-200 rounded-xl p-6 space-y-4">
           <h2 className="font-semibold text-beige-900">{t('addAsset.videos')}</h2>
-          <VideoUploader value={videoUrls} onChange={setVideoUrls} />
+          <VideoUrlInput value={videoUrls} onChange={setVideoUrls} />
         </section>
 
         {/* Location + value */}

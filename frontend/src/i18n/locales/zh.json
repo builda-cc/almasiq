@@ -388,15 +388,13 @@
     "cover": "封面",
     "images": "张图片"
   },
-  "videoUploader": {
-    "dropOrClick": "拖放视频到此处，或点击浏览",
-    "fileTypes": "MP4, WebM, MOV",
-    "maxSize": "每个文件最大 60 MB",
-    "maxDuration": "最长 6 分钟",
+  "videoUrl": {
+    "placeholder": "粘贴 YouTube、Vimeo 或其他视频链接",
+    "add": "添加",
     "videos": "视频",
-    "errorTooLarge": "文件超过 60 MB 限制",
-    "errorTooLong": "视频超过 6 分钟限制",
-    "errorUnsupported": "不支持的文件类型"
+    "invalidUrl": "请输入有效的网址",
+    "duplicate": "此链接已添加",
+    "maxReached": "已达到视频数量上限"
   },
   "categories": {
     "real-estate": "房地产",

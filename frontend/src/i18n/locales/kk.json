@@ -388,15 +388,13 @@
     "cover": "Мұқаба",
     "images": "сурет"
   },
-  "videoUploader": {
-    "dropOrClick": "Видеоларды осында сүйреп тастаңыз немесе шолу үшін басыңыз",
-    "fileTypes": "MP4, WebM, MOV",
-    "maxSize": "Файлдың максималды өлшемі 60 МБ",
-    "maxDuration": "Максималды ұзақтылығы 6 минут",
+  "videoUrl": {
+    "placeholder": "YouTube, Vimeo немесе басқа видео URL-ды жабыстырыңыз",
+    "add": "Қосу",
     "videos": "видео",
-    "errorTooLarge": "Файл 60 МБ шектен асып кетті",
-    "errorTooLong": "Видео 6 минут шектен асып кетті",
-    "errorUnsupported": "Қолдау көрсетілмейтін файл түрі"
+    "invalidUrl": "Жарамды URL енгізіңіз",
+    "duplicate": "Бұл URL қосылған",
+    "maxReached": "Видеолардың максималды саны жетті"
   },
   "categories": {
     "real-estate": "Жылжымайтын мүлік",

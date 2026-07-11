@@ -12,7 +12,6 @@ from ..models import User
 router = APIRouter(prefix="/api/uploads", tags=["uploads"])
 
 ALLOWED_TYPES = {t.strip() for t in settings.allowed_image_types.split(",")}
-ALLOWED_VIDEO_TYPES = {t.strip() for t in settings.allowed_video_types.split(",")}
 
 
 @router.post("", status_code=status.HTTP_201_CREATED)
@@ -36,39 +35,6 @@ async def upload_image(
         )
 
     ext = os.path.splitext(file.filename or "")[1].lower() or ".jpg"
-    filename = f"{uuid.uuid4().hex}{ext}"
-    dest_dir = os.path.join(settings.upload_dir, str(current_user.id))
-    os.makedirs(dest_dir, exist_ok=True)
-    dest_path = os.path.join(dest_dir, filename)
-
-    with open(dest_path, "wb") as f:
-        f.write(data)
-
-    url = f"/uploads/{current_user.id}/{filename}"
-    return {"url": url, "filename": filename}
-
-
-@router.post("/video", status_code=status.HTTP_201_CREATED)
-async def upload_video(
-    file: UploadFile,
-    current_user: User = Depends(get_current_user),
-) -> dict[str, str]:
-    if file.content_type not in ALLOWED_VIDEO_TYPES:
-        raise HTTPException(
-            status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
-            detail=f"Video type {file.content_type} is not allowed. "
-            f"Accepted: {', '.join(ALLOWED_VIDEO_TYPES)}",
-        )
-
-    max_bytes = settings.max_video_upload_size_mb * 1024 * 1024
-    data = await file.read()
-    if len(data) > max_bytes:
-        raise HTTPException(
-            status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
-            detail=f"File exceeds the {settings.max_video_upload_size_mb} MB limit.",
-        )
-
-    ext = os.path.splitext(file.filename or "")[1].lower() or ".mp4"
     filename = f"{uuid.uuid4().hex}{ext}"
     dest_dir = os.path.join(settings.upload_dir, str(current_user.id))
     os.makedirs(dest_dir, exist_ok=True)

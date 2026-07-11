@@ -42,10 +42,6 @@ class Settings(BaseSettings):
     max_upload_size_mb: int = 10
     allowed_image_types: str = "image/jpeg,image/png,image/webp,image/gif"
 
-    # File uploads (videos)
-    max_video_upload_size_mb: int = 60
-    allowed_video_types: str = "video/mp4,video/webm,video/quicktime"
-
     model_config = SettingsConfigDict(env_file=".env", env_file_encoding="utf-8")
 
     @property

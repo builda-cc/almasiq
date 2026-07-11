@@ -388,15 +388,13 @@
     "cover": "Обложка",
     "images": "изображений"
   },
-  "videoUploader": {
-    "dropOrClick": "Перетащите видео сюда или нажмите для выбора",
-    "fileTypes": "MP4, WebM, MOV",
-    "maxSize": "Максимум 60 МБ на файл",
-    "maxDuration": "Максимум 6 минут",
+  "videoUrl": {
+    "placeholder": "Вставьте ссылку на YouTube, Vimeo или другое видео",
+    "add": "Добавить",
     "videos": "видео",
-    "errorTooLarge": "Файл превышает лимит 60 МБ",
-    "errorTooLong": "Видео превышает лимит 6 минут",
-    "errorUnsupported": "Неподдерживаемый тип файла"
+    "invalidUrl": "Введите действительный URL",
+    "duplicate": "Этот URL уже добавлен",
+    "maxReached": "Достигнуто максимальное количество видео"
   },
   "categories": {
     "real-estate": "Недвижимость",
