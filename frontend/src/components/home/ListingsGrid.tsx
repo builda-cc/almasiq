@@ -2,7 +2,7 @@ import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import { MapPin, ArrowRight, Sparkles } from 'lucide-react';
 import { useAssets, useMatches } from '../../hooks/queries';
-import { formatKzt, categoryName } from '../../utils/helpers';
+import { formatKzt, categoryName, resolveImageUrl } from '../../utils/helpers';
 import type { Asset, AIMatch } from '../../types';
 
 const PLACEHOLDER =
@@ -81,7 +81,7 @@ export function ListingsGrid({ revealRef, revealClass }: ListingsGridProps) {
 
 function KrishaCard({ asset, match }: { asset: Asset; match?: AIMatch }) {
   const { t } = useTranslation();
-  const image = asset.images[0]?.url ?? PLACEHOLDER;
+  const image = resolveImageUrl(asset.images[0]?.url ?? PLACEHOLDER);
   const location = [asset.city, asset.region].filter(Boolean).join(', ');
 
   return (

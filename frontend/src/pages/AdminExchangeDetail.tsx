@@ -10,7 +10,7 @@ import {
   HelpCircle,
 } from 'lucide-react';
 import { useAdminExchange, useAdminDecision } from '../hooks/queries';
-import { formatKzt, formatDate, getStatusColor } from '../utils/helpers';
+import { formatKzt, formatDate, getStatusColor, resolveImageUrl } from '../utils/helpers';
 import { MatchScoreBadge } from '../components/ui/MatchScoreBadge';
 import type {
   AdminAction,
@@ -82,7 +82,7 @@ function AssetCard({ title, asset }: { title: string; asset: Asset }) {
     <div className="bg-white border border-beige-200 rounded-xl overflow-hidden">
       {asset.images[0] && (
         <img
-          src={asset.images[0].url}
+          src={resolveImageUrl(asset.images[0].url)}
           alt={asset.title}
           className="w-full h-32 object-cover"
         />

@@ -1,5 +1,9 @@
 # Deployment Guide
 
+> **Important:** Railway and similar PaaS platforms have ephemeral filesystems.
+> Files saved to `uploads/` are lost on every redeploy. For persistent uploads,
+> use Docker deployment (Section 5) or cloud storage (S3, MinIO).
+
 This project deploys as two services:
 
 - **Backend** (FastAPI) → **Railway** + a Railway Postgres database
@@ -124,3 +128,78 @@ uvicorn app.main:app --reload
 # frontend/  (proxies /api -> :8000)
 npm run dev
 ```
+
+---
+
+## Docker deployment (persistent uploads)
+
+For self-hosted deployments (VPS, EC2, DigitalOcean, etc.) where you need
+persistent file storage, use Docker with a named volume for uploads.
+
+### 5.1 Prerequisites
+
+- Docker and Docker Compose installed
+- A PostgreSQL database (can be a separate Docker service or external)
+
+### 5.2 Environment setup
+
+1. Copy `backend/.env.example` to `backend/.env` and fill in values:
+
+```bash
+cd backend
+cp .env.example .env
+# Edit .env with your values
+```
+
+2. Set a strong `JWT_SECRET_KEY`:
+```bash
+python -c "import secrets; print(secrets.token_urlsafe(48))"
+```
+
+### 5.3 Start with Docker Compose
+
+```bash
+# From project root
+docker compose up -d --build
+```
+
+This starts:
+- **Backend** on `http://localhost:8000`
+- **Frontend** on `http://localhost:5173` (proxies `/api` to backend)
+
+### 5.4 Persistent uploads volume
+
+The `docker-compose.yml` creates a named volume `uploads_data` mounted at
+`/app/uploads` in the backend container. This volume persists across:
+
+- Container rebuilds (`docker compose up -d --build`)
+- Container restarts (`docker compose restart`)
+- Host machine reboots
+
+**To verify the volume exists:**
+```bash
+docker volume ls | grep uploads
+docker volume inspect qgastana_uploads_data
+```
+
+**To backup the volume:**
+```bash
+docker run --rm -v qgastana_uploads_data:/data -v $(pwd):/backup \
+  alpine tar czf /backup/uploads-backup.tar.gz -C /data .
+```
+
+**To restore from backup:**
+```bash
+docker run --rm -v qgastana_uploads_data:/data -v $(pwd):/backup \
+  alpine tar xzf /backup/uploads-backup.tar.gz -C /data
+```
+
+### 5.5 Production considerations
+
+- Set `SEED_ON_STARTUP=false` after initial seed
+- Set `DEBUG=false`
+- Use a strong `JWT_SECRET_KEY`
+- Set `CORS_ORIGINS` to your actual domain
+- Consider adding a reverse proxy (Caddy, Traefik) for HTTPS
+- The volume stores files on the Docker host's filesystem; for multi-host
+  deployments, use a distributed storage backend (S3, MinIO, etc.)

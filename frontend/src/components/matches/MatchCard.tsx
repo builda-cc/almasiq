@@ -2,7 +2,7 @@ import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import { ArrowRightLeft } from 'lucide-react';
 import type { AIMatch } from '../../types';
-import { formatKzt, categoryName } from '../../utils/helpers';
+import { formatKzt, categoryName, resolveImageUrl } from '../../utils/helpers';
 import { MatchScoreBadge } from '../ui/MatchScoreBadge';
 
 interface MatchCardProps {
@@ -19,7 +19,7 @@ function MiniAsset({ asset, mine, t }: { asset: AIMatch['asset_a']; mine: boolea
     <Link to={`/assets/${asset.id}`} className="flex-1 min-w-0 group">
       <div className="relative h-24 rounded-lg overflow-hidden bg-beige-100">
         <img
-          src={asset.images[0]?.url ?? PLACEHOLDER}
+          src={resolveImageUrl(asset.images[0]?.url) ?? PLACEHOLDER}
           alt={asset.title}
           className="w-full h-full object-cover group-hover:scale-105 transition-transform"
         />

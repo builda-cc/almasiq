@@ -2,7 +2,7 @@ import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import { Trash2, Plus, Pencil } from 'lucide-react';
 import { useMyAssets, useDeleteAsset } from '../hooks/queries';
-import { formatKzt, categoryName } from '../utils/helpers';
+import { formatKzt, categoryName, resolveImageUrl } from '../utils/helpers';
 
 export function MyAssets() {
   const { t } = useTranslation();
@@ -36,7 +36,7 @@ export function MyAssets() {
             >
               <img
                 src={
-                  asset.images[0]?.url ??
+                  resolveImageUrl(asset.images[0]?.url) ??
                   'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=200'
                 }
                 alt={asset.title}

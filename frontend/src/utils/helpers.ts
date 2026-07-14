@@ -1,5 +1,6 @@
 import i18n from 'i18next';
 import type { CategorySlug, ExchangeStatus } from '../types';
+import { API_BASE_URL } from './api';
 
 const LOCALE_MAP: Record<string, string> = {
   en: 'en-US',
@@ -87,3 +88,10 @@ export const CATEGORY_SLUGS: CategorySlug[] = [
   'mining-metals',
   'business-industry',
 ];
+
+export function resolveImageUrl(url: string): string {
+  if (!url) return '';
+  if (url.startsWith('http')) return url;
+  const backendOrigin = API_BASE_URL.replace(/\/api\/?$/, '');
+  return `${backendOrigin}${url}`;
+}

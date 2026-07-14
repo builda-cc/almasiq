@@ -13,6 +13,9 @@ backend/app/__pycache__/
 # Local SQLite database (production uses Postgres on Railway)
 backend/*.db
 backend/*.sqlite3
+# Uploaded files (stored in Docker volume or cloud storage)
+backend/uploads/
+uploads/
 
 # Editor / OS
 .DS_Store

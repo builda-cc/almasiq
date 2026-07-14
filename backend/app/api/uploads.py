@@ -44,4 +44,8 @@ async def upload_image(
         f.write(data)
 
     url = f"/uploads/{current_user.id}/{filename}"
+
+    if settings.backend_public_url:
+        url = f"{settings.backend_public_url.rstrip('/')}{url}"
+
     return {"url": url, "filename": filename}

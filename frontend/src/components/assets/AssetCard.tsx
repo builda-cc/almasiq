@@ -2,7 +2,7 @@ import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import { MapPin, Heart } from 'lucide-react';
 import type { Asset } from '../../types';
-import { formatKzt, categoryName } from '../../utils/helpers';
+import { formatKzt, categoryName, resolveImageUrl } from '../../utils/helpers';
 
 interface AssetCardProps {
   asset: Asset;
@@ -15,7 +15,7 @@ const PLACEHOLDER =
 
 export function AssetCard({ asset, isFavorite, onToggleFavorite }: AssetCardProps) {
   const { t } = useTranslation();
-  const image = asset.images[0]?.url ?? PLACEHOLDER;
+  const image = resolveImageUrl(asset.images[0]?.url ?? PLACEHOLDER);
   const location = [asset.city, asset.region].filter(Boolean).join(', ');
 
   return (

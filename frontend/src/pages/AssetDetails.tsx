@@ -22,7 +22,7 @@ import {
 } from '../hooks/queries';
 import { useAuthStore } from '../store/authStore';
 import { useUIStore } from '../store/uiStore';
-import { formatKzt, formatDate, categoryName } from '../utils/helpers';
+import { formatKzt, formatDate, categoryName, resolveImageUrl } from '../utils/helpers';
 
 const PLACEHOLDER =
   'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=1200';
@@ -90,7 +90,9 @@ export function AssetDetails() {
     );
   }
 
-  const images = asset.images.length > 0 ? asset.images : [{ id: 0, url: PLACEHOLDER, position: 0 }];
+  const images = asset.images.length > 0
+    ? asset.images.map((img) => ({ ...img, url: resolveImageUrl(img.url) }))
+    : [{ id: 0, url: PLACEHOLDER, position: 0 }];
   const isOwner = currentUser?.id === asset.owner.id;
   const isFavorite = (favorites ?? []).some((f) => f.asset.id === asset.id);
   const eligibleAssets = (myAssets ?? []).filter((a) => a.status === 'active');

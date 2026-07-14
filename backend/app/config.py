@@ -42,6 +42,11 @@ class Settings(BaseSettings):
     max_upload_size_mb: int = 10
     allowed_image_types: str = "image/jpeg,image/png,image/webp,image/gif"
 
+    # Public base URL of the backend (no trailing slash). Used to build
+    # absolute image URLs so the frontend can load them from a different origin.
+    # Example: https://your-app.up.railway.app
+    backend_public_url: str = ""
+
     model_config = SettingsConfigDict(env_file=".env", env_file_encoding="utf-8")
 
     @property
