@@ -5,8 +5,6 @@ import {
   MapPin,
   Heart,
   ArrowRightLeft,
-  ChevronLeft,
-  ChevronRight,
   X,
   Phone,
   Mail,
@@ -127,29 +125,34 @@ export function AssetDetails() {
       <div className="mt-4 grid grid-cols-1 lg:grid-cols-3 gap-8">
         {/* Gallery + description */}
         <div className="lg:col-span-2">
-          <div className="relative h-80 sm:h-96 rounded-xl overflow-hidden bg-beige-100">
-            <img
-              src={images[imageIndex].url}
-              alt={asset.title}
-              className="w-full h-full object-cover"
-            />
+          <div className="rounded-xl overflow-hidden bg-beige-100">
+            <div className="relative aspect-[4/3]">
+              <img
+                src={images[imageIndex].url}
+                alt={asset.title}
+                className="w-full h-full object-cover"
+              />
+            </div>
             {images.length > 1 && (
-              <>
-                <button
-                  onClick={() =>
-                    setImageIndex((i) => (i - 1 + images.length) % images.length)
-                  }
-                  className="absolute left-3 top-1/2 -tranbeige-y-1/2 p-2 bg-white/90 rounded-full"
-                >
-                  <ChevronLeft className="w-5 h-5" />
-                </button>
-                <button
-                  onClick={() => setImageIndex((i) => (i + 1) % images.length)}
-                  className="absolute right-3 top-1/2 -tranbeige-y-1/2 p-2 bg-white/90 rounded-full"
-                >
-                  <ChevronRight className="w-5 h-5" />
-                </button>
-              </>
+              <div className="mt-2 flex gap-2 overflow-x-auto pb-1">
+                {images.map((img, idx) => (
+                  <button
+                    key={img.id}
+                    onClick={() => setImageIndex(idx)}
+                    className={`relative shrink-0 w-20 h-16 rounded-lg overflow-hidden border-2 transition-colors ${
+                      idx === imageIndex
+                        ? 'border-gold-500'
+                        : 'border-transparent hover:border-beige-400'
+                    }`}
+                  >
+                    <img
+                      src={img.url}
+                      alt=""
+                      className="w-full h-full object-cover"
+                    />
+                  </button>
+                ))}
+              </div>
             )}
           </div>
 
