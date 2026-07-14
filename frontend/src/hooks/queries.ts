@@ -159,6 +159,7 @@ export interface AssetCreatePayload {
   liquidity_score: number;
   images: { url: string; position: number }[];
   videos: { url: string; position: number }[];
+  attachments: { url: string; filename: string; mime_type: string; position: number }[];
   preferences: { category_slug: string; cash_accepted: boolean; notes?: string | null }[];
 }
 

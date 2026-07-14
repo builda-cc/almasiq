@@ -8,6 +8,7 @@ from sqlalchemy.orm import Mapped, mapped_column, relationship
 from ..db.base import Base, TimestampMixin
 
 if TYPE_CHECKING:
+    from .attachment import AssetAttachment
     from .category import Category
     from .user import User
 
@@ -58,6 +59,11 @@ class Asset(Base, TimestampMixin):
     )
     preferences: Mapped[list["ExchangePreference"]] = relationship(
         back_populates="asset", cascade="all, delete-orphan"
+    )
+    attachments: Mapped[list["AssetAttachment"]] = relationship(
+        back_populates="asset",
+        cascade="all, delete-orphan",
+        order_by="AssetAttachment.position",
     )
 
 

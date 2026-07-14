@@ -6,6 +6,10 @@ import { useCategories, useCreateAsset } from '../hooks/queries';
 import { CATEGORY_SLUGS } from '../utils/helpers';
 import { ImageUploader } from '../components/assets/ImageUploader';
 import { VideoUrlInput } from '../components/assets/VideoUrlInput';
+import {
+  FileUploader,
+  type AttachmentEntry,
+} from '../components/assets/FileUploader';
 import type { CategorySlug } from '../types';
 
 interface FormValues {
@@ -29,6 +33,7 @@ export function AddAsset() {
 
   const [imageUrls, setImageUrls] = useState<string[]>([]);
   const [videoUrls, setVideoUrls] = useState<string[]>([]);
+  const [attachments, setAttachments] = useState<AttachmentEntry[]>([]);
   const [preferences, setPreferences] = useState<
     { category_slug: CategorySlug; cash_accepted: boolean }[]
   >([]);
@@ -82,6 +87,12 @@ export function AddAsset() {
       liquidity_score: Number(values.liquidity_score),
       images,
       videos,
+      attachments: attachments.map((a, position) => ({
+        url: a.url,
+        filename: a.filename,
+        mime_type: a.mime_type,
+        position,
+      })),
       preferences: preferences.map((p) => ({
         category_slug: p.category_slug,
         cash_accepted: p.cash_accepted,
@@ -143,6 +154,13 @@ export function AddAsset() {
         <section className="bg-white border border-beige-200 rounded-xl p-6 space-y-4">
           <h2 className="font-semibold text-beige-900">{t('addAsset.videos')}</h2>
           <VideoUrlInput value={videoUrls} onChange={setVideoUrls} />
+        </section>
+
+        {/* Attachments */}
+        <section className="bg-white border border-beige-200 rounded-xl p-6 space-y-4">
+          <h2 className="font-semibold text-beige-900">{t('addAsset.attachments')}</h2>
+          <p className="text-sm text-beige-500">{t('addAsset.attachmentsHint')}</p>
+          <FileUploader value={attachments} onChange={setAttachments} />
         </section>
 
         {/* Location + value */}

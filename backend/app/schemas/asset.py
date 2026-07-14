@@ -50,6 +50,23 @@ class AssetVideoOut(BaseModel):
     position: int
 
 
+class AssetAttachmentIn(BaseModel):
+    url: str
+    filename: str
+    mime_type: str = ""
+    position: int = 0
+
+
+class AssetAttachmentOut(BaseModel):
+    model_config = ConfigDict(from_attributes=True)
+
+    id: int
+    url: str
+    filename: str
+    mime_type: str
+    position: int
+
+
 class ExchangePreferenceIn(BaseModel):
     category_slug: str
     cash_accepted: bool = False
@@ -78,6 +95,7 @@ class AssetCreate(BaseModel):
     liquidity_score: int = Field(default=50, ge=0, le=100)
     images: list[AssetImageIn] = Field(default_factory=list, max_length=20)
     videos: list[AssetVideoIn] = Field(default_factory=list, max_length=5)
+    attachments: list[AssetAttachmentIn] = Field(default_factory=list, max_length=10)
     preferences: list[ExchangePreferenceIn] = Field(default_factory=list)
 
 
@@ -94,6 +112,7 @@ class AssetUpdate(BaseModel):
     status: str | None = None
     images: list[AssetImageIn] | None = None
     videos: list[AssetVideoIn] | None = None
+    attachments: list[AssetAttachmentIn] | None = None
     preferences: list[ExchangePreferenceIn] | None = None
 
 
@@ -117,6 +136,7 @@ class AssetOut(BaseModel):
     owner: UserPublic
     images: list[AssetImageOut] = Field(default_factory=list)
     videos: list[AssetVideoOut] = Field(default_factory=list)
+    attachments: list[AssetAttachmentOut] = Field(default_factory=list)
     preferences: list[ExchangePreferenceOut] = Field(default_factory=list)
 
 

@@ -148,7 +148,8 @@
     "selectAsset": "Select an asset…",
     "message": "Message",
     "messagePlaceholder": "Introduce your offer…",
-    "sendProposal": "Send Proposal"
+    "sendProposal": "Send Proposal",
+    "attachments": "Attachments"
   },
   "addAsset": {
     "title": "Publish Asset",
@@ -176,7 +177,9 @@
     "preferredExchange": "Preferred Exchange Assets",
     "preferredSubtitle": "Select categories you'd accept in exchange.",
     "plusCash": "+ cash",
-    "publish": "Publish Asset"
+    "publish": "Publish Asset",
+    "attachments": "Attachments",
+    "attachmentsHint": "Upload documents related to this asset (PDF, Word, Excel, CSV, TXT)."
   },
   "editAsset": {
     "title": "Edit Asset",
@@ -387,6 +390,10 @@
     "maxSize": "Max 10 MB per file",
     "cover": "Cover",
     "images": "images"
+  },
+  "fileUploader": {
+    "dropOrClick": "Drag & drop files here, or click to browse",
+    "files": "files"
   },
   "videoUrl": {
     "placeholder": "Paste a YouTube, Vimeo, or other video URL",

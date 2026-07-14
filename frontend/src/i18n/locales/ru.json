@@ -148,7 +148,8 @@
     "selectAsset": "Выберите актив…",
     "message": "Сообщение",
     "messagePlaceholder": "Опишите ваше предложение…",
-    "sendProposal": "Отправить предложение"
+    "sendProposal": "Отправить предложение",
+    "attachments": "Вложения"
   },
   "addAsset": {
     "title": "Опубликовать актив",
@@ -176,7 +177,9 @@
     "preferredExchange": "Активы для обмена",
     "preferredSubtitle": "Выберите категории, которые вы готовы принять в обмен.",
     "plusCash": "+ доплата",
-    "publish": "Опубликовать актив"
+    "publish": "Опубликовать актив",
+    "attachments": "Вложения",
+    "attachmentsHint": "Загрузите документы, связанные с этим активом (PDF, Word, Excel, CSV, TXT)."
   },
   "editAsset": {
     "title": "Редактировать актив",
@@ -387,6 +390,10 @@
     "maxSize": "Макс. 10 МБ на файл",
     "cover": "Обложка",
     "images": "изображений"
+  },
+  "fileUploader": {
+    "dropOrClick": "Перетащите файлы сюда или нажмите для выбора",
+    "files": "файлов"
   },
   "videoUrl": {
     "placeholder": "Вставьте ссылку на YouTube, Vimeo или другое видео",

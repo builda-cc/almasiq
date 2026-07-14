@@ -56,3 +56,16 @@ export async function uploadFile(file: File): Promise<{ url: string; filename: s
   );
   return data;
 }
+
+export async function uploadDocument(
+  file: File,
+): Promise<{ url: string; filename: string }> {
+  const formData = new FormData();
+  formData.append('file', file);
+  const { data } = await api.post<{ url: string; filename: string }>(
+    '/uploads/document',
+    formData,
+    { headers: { 'Content-Type': 'multipart/form-data' } },
+  );
+  return data;
+}

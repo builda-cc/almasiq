@@ -5,7 +5,15 @@ from sqlalchemy import func, select
 from sqlalchemy.orm import Session, selectinload
 
 from ..db.session import get_db
-from ..models import Asset, AssetImage, AssetVideo, Category, ExchangePreference, User
+from ..models import (
+    Asset,
+    AssetImage,
+    AssetAttachment,
+    AssetVideo,
+    Category,
+    ExchangePreference,
+    User,
+)
 from ..schemas.asset import (
     AssetCreate,
     AssetListResponse,
@@ -22,6 +30,7 @@ _LOAD_OPTS = (
     selectinload(Asset.owner),
     selectinload(Asset.images),
     selectinload(Asset.videos),
+    selectinload(Asset.attachments),
     selectinload(Asset.preferences),
 )
 
@@ -161,6 +170,15 @@ def create_asset(
         AssetImage(url=img.url, position=img.position) for img in payload.images
     ]
     asset.videos = [AssetVideo(url=v.url, position=v.position) for v in payload.videos]
+    asset.attachments = [
+        AssetAttachment(
+            url=a.url,
+            filename=a.filename,
+            mime_type=a.mime_type,
+            position=a.position,
+        )
+        for a in payload.attachments
+    ]
     asset.preferences = [
         ExchangePreference(
             category_slug=p.category_slug,
@@ -190,6 +208,7 @@ def update_asset(
     data = payload.model_dump(exclude_unset=True)
     images = data.pop("images", None)
     videos = data.pop("videos", None)
+    attachments = data.pop("attachments", None)
     preferences = data.pop("preferences", None)
     category_slug = data.pop("category_slug", None)
     if category_slug is not None:
@@ -204,6 +223,16 @@ def update_asset(
     if videos is not None:
         asset.videos = [
             AssetVideo(url=v["url"], position=v.get("position", 0)) for v in videos
+        ]
+    if attachments is not None:
+        asset.attachments = [
+            AssetAttachment(
+                url=a["url"],
+                filename=a["filename"],
+                mime_type=a.get("mime_type", ""),
+                position=a.get("position", 0),
+            )
+            for a in attachments
         ]
     if preferences is not None:
         asset.preferences = [

@@ -51,6 +51,14 @@ export interface AssetVideo {
   position: number;
 }
 
+export interface AssetAttachment {
+  id: number;
+  url: string;
+  filename: string;
+  mime_type: string;
+  position: number;
+}
+
 export interface ExchangePreference {
   id: number;
   category_slug: CategorySlug;
@@ -75,6 +83,7 @@ export interface Asset {
   owner: User;
   images: AssetImage[];
   videos: AssetVideo[];
+  attachments: AssetAttachment[];
   preferences: ExchangePreference[];
 }
 

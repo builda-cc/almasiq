@@ -23,6 +23,7 @@ import {
 import { useAuthStore } from '../store/authStore';
 import { useUIStore } from '../store/uiStore';
 import { formatKzt, formatDate, categoryName, resolveImageUrl } from '../utils/helpers';
+import { AssetAttachments } from '../components/assets/AssetAttachments';
 
 const PLACEHOLDER =
   'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=1200';
@@ -192,6 +193,8 @@ export function AssetDetails() {
             )}
 
             <p className="mt-4 text-beige-700 whitespace-pre-line">{asset.description}</p>
+
+            <AssetAttachments attachments={asset.attachments} />
 
             {asset.preferences.length > 0 && (
               <div className="mt-6">

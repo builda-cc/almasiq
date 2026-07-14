@@ -42,6 +42,18 @@ class Settings(BaseSettings):
     max_upload_size_mb: int = 10
     allowed_image_types: str = "image/jpeg,image/png,image/webp,image/gif"
 
+    # File uploads (attachments / documents)
+    max_attachment_size_mb: int = 50
+    allowed_attachment_types: str = (
+        "application/pdf,"
+        "application/msword,"
+        "application/vnd.openxmlformats-officedocument.wordprocessingml.document,"
+        "application/vnd.ms-excel,"
+        "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,"
+        "text/csv,"
+        "text/plain"
+    )
+
     # Public base URL of the backend (no trailing slash). Used to build
     # absolute image URLs so the frontend can load them from a different origin.
     # Example: https://your-app.up.railway.app

@@ -148,7 +148,8 @@
     "selectAsset": "Активті таңдаңыз…",
     "message": "Хабарлама",
     "messagePlaceholder": "Ұсынысыңызды сипаттаңыз…",
-    "sendProposal": "Ұсынысты жіберу"
+    "sendProposal": "Ұсынысты жіберу",
+    "attachments": "Тіркемелер"
   },
   "addAsset": {
     "title": "Активті жариялау",
@@ -176,7 +177,9 @@
     "preferredExchange": "Қалаулы айырбас активтері",
     "preferredSubtitle": "Айырбасқа қабылдайтын санаттарды таңдаңыз.",
     "plusCash": "+ қосымша ақша",
-    "publish": "Активті жариялау"
+    "publish": "Активті жариялау",
+    "attachments": "Тіркемелер",
+    "attachmentsHint": "Осы активге қатысты құжаттарды жүктеңіз (PDF, Word, Excel, CSV, TXT)."
   },
   "editAsset": {
     "title": "Активті өңдеу",
@@ -387,6 +390,10 @@
     "maxSize": "Әр файл үшін макс. 10 MB",
     "cover": "Мұқаба",
     "images": "сурет"
+  },
+  "fileUploader": {
+    "dropOrClick": "Файлдарды осында сүйреп апарыңыз немесе шолу үшін басыңыз",
+    "files": "файл"
   },
   "videoUrl": {
     "placeholder": "YouTube, Vimeo немесе басқа видео URL-ды жабыстырыңыз",

@@ -148,7 +148,8 @@
     "selectAsset": "选择一个资产…",
     "message": "留言",
     "messagePlaceholder": "介绍您的提议…",
-    "sendProposal": "发送提议"
+    "sendProposal": "发送提议",
+    "attachments": "附件"
   },
   "addAsset": {
     "title": "发布资产",
@@ -176,7 +177,9 @@
     "preferredExchange": "偏好的交换资产",
     "preferredSubtitle": "选择您接受交换的分类。",
     "plusCash": "+ 现金",
-    "publish": "发布资产"
+    "publish": "发布资产",
+    "attachments": "附件",
+    "attachmentsHint": "上传与此资产相关的文档（PDF、Word、Excel、CSV、TXT）。"
   },
   "editAsset": {
     "title": "编辑资产",
@@ -387,6 +390,10 @@
     "maxSize": "每个文件最大 10 MB",
     "cover": "封面",
     "images": "张图片"
+  },
+  "fileUploader": {
+    "dropOrClick": "拖放文件到这里，或点击浏览",
+    "files": "个文件"
   },
   "videoUrl": {
     "placeholder": "粘贴 YouTube、Vimeo 或其他视频链接",

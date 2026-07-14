@@ -7,6 +7,7 @@ Importing this package registers every model on ``Base.metadata`` so that
 from .ai_match import AIMatch
 from .ai_valuation import AIValuation
 from .asset import Asset, AssetImage, AssetVideo, ExchangePreference
+from .attachment import AssetAttachment
 from .category import Category
 from .exchange import (
     ContactUnlock,
@@ -22,6 +23,7 @@ __all__ = [
     "AIMatch",
     "AIValuation",
     "Asset",
+    "AssetAttachment",
     "AssetImage",
     "AssetVideo",
     "ExchangePreference",
