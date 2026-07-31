@@ -31,7 +31,7 @@ const gold = {
   300: '#E4C288', // primary-fixed-dim / inverse-primary
   400: '#C9A86A',
   500: '#B0915C', // primary-container (Gold Base)
-  600: '#745A2B', // primary (deep bronze — primary CTAs / surface-tint)
+  600: '#FFBF00', // primary (amber — primary CTAs / surface-tint)
   700: '#5A4315', // on-primary-fixed-variant (darker brand)
   800: '#3F2A00', // on-primary-container
   900: '#271900', // on-primary-fixed
@@ -182,7 +182,7 @@ export default {
       },
       backgroundImage: {
         // Brand gradient for primary buttons: primary-container -> primary.
-        'gold-gradient': 'linear-gradient(135deg, #B0915C 0%, #745A2B 100%)',
+        'gold-gradient': 'linear-gradient(135deg, #B0915C 0%, #FFBF00 100%)',
         'gold-gradient-hover': 'linear-gradient(135deg, #9A7C4B 0%, #5A4315 100%)',
         // Subtle hero radial wash from the Stitch hero-gradient.
         'hero-gradient':
