@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { SearchHero } from '../components/home/SearchHero';
+import { CategoryGrid } from '../components/home/CategoryGrid';
 import { ListingsGrid } from '../components/home/ListingsGrid';
 import { AIHighlights } from '../components/home/AIHighlights';
 import { HowItWorks } from '../components/home/HowItWorks';
@@ -38,6 +39,7 @@ export function Home() {
   return (
     <>
       <SearchHero />
+      <CategoryGrid />
       <HowItWorks />
       <ListingsGrid revealRef={listings.ref} revealClass={listings.className} />
       <AIHighlights revealRef={highlights.ref} revealClass={highlights.className} />
